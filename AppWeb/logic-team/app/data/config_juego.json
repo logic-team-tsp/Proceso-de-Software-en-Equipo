@@ -131,6 +131,26 @@
     "penalizacion_por_fallo": 5,
     "penalizacion_maxima": 50
   },
+  "ordenar_algoritmos": {
+    "_ayuda": "CU-09. Un juego son los 'niveles' en orden, uno por algoritmo (RN07); 'algoritmo' es el id de app/data/algoritmos.json y 'numeros' el tamaño de la lista al azar (RN06), con números de 'minimo' a 'maximo' sin repetir y al menos 'movimientos_minimos' movimientos. Estrellas según los errores (RN01, RN03), con la misma forma que minijuego_codigo; si el sistema tuvo que mostrar un paso (FE3, 'errores_por_paso' errores en el mismo paso) el nivel da como máximo 'estrellas_si_se_muestra'. Cada error resta penalizacion_por_error % de la XP, hasta penalizacion_maxima % (RN05).",
+    "niveles": [
+      { "numero": 1, "algoritmo": "burbuja", "xp_base": 30, "numeros": 5 },
+      { "numero": 2, "algoritmo": "seleccion", "xp_base": 40, "numeros": 6 },
+      { "numero": 3, "algoritmo": "insercion", "xp_base": 50, "numeros": 6 }
+    ],
+    "minimo": 1,
+    "maximo": 99,
+    "movimientos_minimos": 3,
+    "errores_por_paso": 3,
+    "estrellas_si_se_muestra": 1,
+    "estrellas": [
+      { "estrellas": 3, "fallos_max": 0, "porcentaje_xp": 100 },
+      { "estrellas": 2, "fallos_max": 2, "porcentaje_xp": 75 },
+      { "estrellas": 1, "fallos_max": null, "porcentaje_xp": 50 }
+    ],
+    "penalizacion_por_error": 5,
+    "penalizacion_maxima": 50
+  },
   "finales": {
     "completada": {
       "titulo": "Fin del Capítulo",

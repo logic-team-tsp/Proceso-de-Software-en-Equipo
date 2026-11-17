@@ -1,13 +1,13 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from app.services import conseguir_vidas, escenarios, minijuego_codigo
+from app.services import conseguir_vidas, escenarios, minijuego_codigo, ordenar
 
 
 class Command(BaseCommand):
     help = (
         "Valida config_juego.json, los escenarios de app/data/escenarios/*.json, las "
-        "afirmaciones del CU-06 (app/data/preguntas_vidas.json) y los programas del CU-04 "
-        "(app/data/niveles_codigo/*.json)."
+        "afirmaciones del CU-06 (app/data/preguntas_vidas.json), los programas del CU-04 "
+        "(app/data/niveles_codigo/*.json) y los algoritmos del CU-09 (app/data/algoritmos.json)."
     )
 
     def handle(self, *args, **options):
@@ -15,6 +15,7 @@ class Command(BaseCommand):
         if not errores:
             errores = conseguir_vidas.validar()  # CU-06: necesita los escenarios sin errores
         errores += minijuego_codigo.validar()  # CU-04
+        errores += ordenar.validar()  # CU-09
         if errores:
             for error in errores:
                 self.stderr.write(self.style.ERROR(f"- {error}"))
@@ -44,5 +45,12 @@ class Command(BaseCommand):
                 f"Minijuego de código válido: {len(codigo['niveles'])} niveles con "
                 f"{len(codigo['programas'])} programas y {variantes} variantes, en "
                 f"{len(minijuego_codigo.LENGUAJES)} lenguajes."
+            )
+        )
+        algoritmos = ordenar.cargar()
+        nombres = ", ".join(a["nombre"] for a in algoritmos["algoritmos"].values())
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Ordenar algoritmos válido: {len(algoritmos['niveles'])} niveles ({nombres})."
             )
         )
