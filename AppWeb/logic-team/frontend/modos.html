@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{% static 'css/personalizar.css' %}">
   <link rel="stylesheet" href="{% static 'css/taller.css' %}">
   <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ordenar.css' %}">
 {% endblock %}
 
 {% block loader %}{% endblock %}
@@ -50,6 +51,32 @@
           {% endif %}
         </div>
         <a class="book-btn go" id="btn-codigo" href="{% url 'codigo_inicio' %}">Jugar minijuego ➔</a>
+      </div>
+
+      {# CU09: Ordenar algoritmos, se juega en el libro (views_ordenar.py) #}
+      <div class="perfil-card c5-modo desbloqueado">
+        {% if not ordenar.estrellas and ordenar.siguiente == 1 %}<span class="c5-nuevo">¡NUEVO!</span>{% endif %}
+        <div class="perfil-head"><span class="perfil-class">modo <b>OrdenarAlgoritmos</b></span></div>
+        <div class="emblem" aria-hidden="true">🔢</div>
+        <h3>Ordenar algoritmos</h3>
+        <p>Ordena las tarjetas paso a paso como lo haría cada algoritmo.</p>
+        <ol class="c9-niv-menu" aria-label="Niveles de Ordenar algoritmos">
+          {% for n in ordenar.niveles %}
+            <li class="{% if n.estado == 'actual' %}actual{% elif n.estado == 'pendiente' %}bloq{% endif %}">
+              <span>{{ n.numero }} · {{ n.nombre }}</span>
+              {% if n.estado == "hecho" %}
+                <span class="c9-est" aria-label="{{ n.estrellas }} de 3 estrellas">{% for i in "123" %}{% if forloop.counter <= n.estrellas %}★{% else %}<span class="off">☆</span>{% endif %}{% endfor %}</span>
+              {% elif n.estado == "actual" %}
+                <span aria-label="el que sigue">➔</span>
+              {% else %}
+                <span aria-label="todavía no">🔒</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+        <a class="book-btn go" id="btn-ordenar" href="{% url 'ordenar_inicio' %}">
+          {% if ordenar.completo %}🔁 Volver a jugar{% elif ordenar.siguiente == 1 and not ordenar.estrellas %}Jugar ➔{% else %}Continuar · Nivel {{ ordenar.siguiente }} ➔{% endif %}
+        </a>
       </div>
 
       {% if resumen.desbloqueado %}

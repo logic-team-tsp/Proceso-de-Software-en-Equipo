@@ -1,0 +1,78 @@
+{
+  "_ayuda": "CU-09 Ordenar algoritmos. Explicación, pseudocódigo y ejemplo de cada algoritmo (precondición del caso de uso). En el pseudocódigo, **palabra** se pinta como palabra clave; 'linea_actual' es la línea (desde 0) que se resalta mientras se juega. En el ejemplo, 'comp' son las posiciones que se comparan y 'ord' las que ya quedaron en su lugar. 'indicacion' es la frase de la mesa: {pasada}, {lugar} y {paso} se cambian por el avance. Los niveles, la XP y el tamaño de las listas están en config_juego.json > ordenar_algoritmos.",
+  "algoritmos": [
+    {
+      "id": "burbuja",
+      "nombre": "Burbuja",
+      "explicacion": "La burbuja recorre la lista de izquierda a derecha comparando cada par de vecinos. Si están al revés, los intercambia. Al final de cada pasada, el número más grande «sube» hasta la derecha, como una burbuja.",
+      "como_se_juega": "Haz el siguiente movimiento que haría el algoritmo. En burbuja, intercambia dos tarjetas vecinas: haz clic en las dos, arrástralas o usa el teclado (← → para moverte, Espacio para elegir).",
+      "pseudocodigo": [
+        "**para** i ← 0 **hasta** n−2",
+        "  **para** j ← 0 **hasta** n−2−i",
+        "    **si** A[j] > A[j+1] **entonces**",
+        "      intercambiar A[j], A[j+1]",
+        "    **fin si**",
+        "  **fin para**",
+        "**fin para**"
+      ],
+      "linea_actual": 2,
+      "indicacion": "Pasada {pasada} · compara vecinos de izquierda a derecha",
+      "ejemplo": [
+        { "lista": [5, 3, 8], "comp": [0, 1], "ord": [], "texto": "Compara 5 y 3: están al revés." },
+        { "lista": [3, 5, 8], "comp": [], "ord": [], "texto": "Los intercambia." },
+        { "lista": [3, 5, 8], "comp": [1, 2], "ord": [], "texto": "Compara 5 y 8: ya están en orden." },
+        { "lista": [3, 5, 8], "comp": [], "ord": [2], "texto": "El 8 queda en su lugar. Nueva pasada." }
+      ]
+    },
+    {
+      "id": "seleccion",
+      "nombre": "Selección",
+      "explicacion": "La selección busca el número más chico de la parte que falta ordenar y lo pone en el primer lugar de esa parte, intercambiándolo con el que estaba ahí. Así, la parte ordenada crece de izquierda a derecha, un lugar a la vez.",
+      "como_se_juega": "Haz el siguiente movimiento que haría el algoritmo. En selección, intercambia el menor de la parte sin ordenar con el lugar que toca: haz clic en las dos tarjetas, arrástralas o usa el teclado. Si el menor ya está en su lugar, presiona «Ya está en su lugar».",
+      "pseudocodigo": [
+        "**para** i ← 0 **hasta** n−2",
+        "  min ← i",
+        "  **para** j ← i+1 **hasta** n−1",
+        "    **si** A[j] < A[min] **entonces**",
+        "      min ← j",
+        "    **fin si**",
+        "  **fin para**",
+        "  intercambiar A[i], A[min]",
+        "**fin para**"
+      ],
+      "linea_actual": 7,
+      "indicacion": "Lugar {lugar} · busca el menor de la parte sin ordenar",
+      "ejemplo": [
+        { "lista": [7, 4, 9], "comp": [0, 1], "ord": [], "texto": "El menor de 7, 4 y 9 es el 4." },
+        { "lista": [4, 7, 9], "comp": [], "ord": [0], "texto": "Lo intercambia con el primer lugar." },
+        { "lista": [4, 7, 9], "comp": [1], "ord": [0], "texto": "El menor de 7 y 9 es el 7: ya está en su lugar." },
+        { "lista": [4, 7, 9], "comp": [], "ord": [0, 1, 2], "texto": "La lista quedó ordenada." }
+      ]
+    },
+    {
+      "id": "insercion",
+      "nombre": "Inserción",
+      "explicacion": "La inserción ordena como cuando acomodas cartas en la mano: toma el primer número de la parte sin ordenar y lo mete en su lugar dentro de la parte ordenada, recorriendo a la derecha los que son mayores.",
+      "como_se_juega": "Haz el siguiente movimiento que haría el algoritmo. En inserción, toma la primera tarjeta sin ordenar y suéltala en su lugar dentro de la parte ordenada: haz clic en la tarjeta y luego en el hueco, arrástrala o usa el teclado. Si ya está en su lugar, presiona «Ya está en su lugar».",
+      "pseudocodigo": [
+        "**para** i ← 1 **hasta** n−1",
+        "  clave ← A[i]",
+        "  j ← i − 1",
+        "  **mientras** j ≥ 0 **y** A[j] > clave",
+        "    A[j+1] ← A[j]",
+        "    j ← j − 1",
+        "  **fin mientras**",
+        "  A[j+1] ← clave",
+        "**fin para**"
+      ],
+      "linea_actual": 3,
+      "indicacion": "Paso {paso} de {total} · mete el primer número sin ordenar en su lugar",
+      "ejemplo": [
+        { "lista": [6, 2, 9], "comp": [0, 1], "ord": [0], "texto": "Toma el 2: es menor que el 6." },
+        { "lista": [2, 6, 9], "comp": [], "ord": [0, 1], "texto": "Lo mete antes del 6." },
+        { "lista": [2, 6, 9], "comp": [1, 2], "ord": [0, 1], "texto": "Toma el 9: es mayor que el 6, ya está en su lugar." },
+        { "lista": [2, 6, 9], "comp": [], "ord": [0, 1, 2], "texto": "La lista quedó ordenada." }
+      ]
+    }
+  ]
+}

@@ -225,3 +225,61 @@ class IntentoCodigo(models.Model):
 
     def __str__(self):
         return f"{self.usuario_id or self.sesion} · {self.nivel_id} ({self.estado})"
+
+
+class IntentoOrdenar(models.Model):
+    """Un nivel de «Ordenar algoritmos» (CU-09): ordenar una lista como lo haría un algoritmo.
+
+    Se juega desde el menú de modos y no depende de una partida. Es del usuario con sesión
+    iniciada o, si no hay, de la sesión del navegador. La lista se genera al presionar «Empezar»
+    (paso 3); antes de eso el intento existe, pero solo se ve la explicación del algoritmo.
+    Los movimientos que tocan no se guardan: el servidor los vuelve a calcular con la lista
+    inicial (app/services/ordenar.py), así el navegador nunca los recibe.
+    """
+
+    EN_CURSO = "en_curso"
+    RESUELTO = "resuelto"
+    ABANDONADO = "abandonado"
+    ESTADOS = [
+        (EN_CURSO, "En curso"),
+        (RESUELTO, "Resuelto"),
+        (ABANDONADO, "Abandonado (sin XP)"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="intentos_ordenar",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    # Juego del jugador (1, 2, 3...): los niveles 1 a 3 en orden; «Volver a jugar» empieza otro
+    juego = models.PositiveIntegerField(default=1)
+    nivel = models.PositiveSmallIntegerField()
+    algoritmo = models.CharField(max_length=20)
+
+    # Lista al azar (RN06) y cómo va: null hasta que el jugador presiona «Empezar»
+    lista_inicial = models.JSONField(null=True, blank=True)
+    lista = models.JSONField(null=True, blank=True)
+    paso = models.PositiveSmallIntegerField(default=0)  # movimientos que ya hizo bien
+    errores = models.PositiveSmallIntegerField(default=0)  # movimientos incorrectos y pistas (RN02)
+    pistas = models.PositiveSmallIntegerField(default=0)
+    errores_paso = models.PositiveSmallIntegerField(default=0)  # para FE3
+    mostrado = models.BooleanField(default=False)  # FE3: el sistema mostró un paso
+
+    estrellas = models.PositiveSmallIntegerField(null=True, blank=True)
+    xp_obtenida = models.PositiveIntegerField(default=0)
+    resultado = models.JSONField(null=True, blank=True)  # resumen de la calificación
+    estado = models.CharField(max_length=12, choices=ESTADOS, default=EN_CURSO)
+
+    creado = models.DateTimeField(auto_now_add=True)
+    actualizado = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-creado"]
+
+    def __str__(self):
+        dueno = self.usuario_id or self.sesion
+        return f"{dueno} · juego {self.juego} nivel {self.nivel} ({self.estado})"

@@ -1,0 +1,220 @@
+/* CU09 · Ordenar algoritmos (ordenar.html y la tarjeta de modos.html).
+   Sigue el mockup Mockup_CU09_Ordenar_algoritmos: el libro de libro.css con las tarjetas,
+   el pseudocódigo y los contadores. Los estados de las tarjetas usan color y además borde e
+   ícono, para no depender solo del color. */
+
+/* ---------- Menú de modos ---------- */
+.c9-niv-menu { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 2px; }
+.c9-niv-menu li { display: flex; justify-content: space-between; gap: 8px; padding: 4px 2px; font-size: 0.98rem; border-bottom: 1px dotted rgba(110, 70, 30, 0.5); }
+.c9-niv-menu li.actual { font-weight: 700; color: var(--crimson); }
+.c9-niv-menu li.bloq { color: var(--ink-soft); }
+.c9-est { letter-spacing: 2px; color: #a87c12; white-space: nowrap; }
+.c9-est .off { color: rgba(110, 70, 30, 0.35); }
+
+/* ---------- Libro ---------- */
+.stamp.c9-oro { color: #6b4e0c; border-color: var(--gold); background: rgba(201, 161, 58, 0.14); }
+.c9-libro .stamps { margin-top: 0; }
+.book-btn.chico { padding: 8px 14px; font-size: 0.78rem; }
+.book-btn:disabled { opacity: 0.45; cursor: not-allowed; filter: grayscale(0.4); transform: none; }
+
+/* Avance de niveles */
+.c9-niveles { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 12px; padding: 0; list-style: none; }
+.c9-niveles li {
+  display: flex; align-items: center; gap: 6px; padding: 3px 10px 3px 3px;
+  font-size: 0.85rem; background: rgba(255, 250, 235, 0.5);
+  border: 1.5px solid rgba(110, 70, 30, 0.4); border-radius: 999px;
+}
+.c9-niveles .m {
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.78rem; background: rgba(110, 70, 30, 0.2);
+}
+.c9-niveles li.hecho .m { color: #fff; background: #3f6b2a; }
+.c9-niveles li.actual { border-color: var(--crimson); background: rgba(255, 244, 214, 0.95); font-weight: 700; }
+.c9-niveles li.actual .m { color: var(--gold-bright); background: radial-gradient(circle at 35% 30%, #7d2a2a, #3a1010); }
+.c9-niveles li.bloq { opacity: 0.6; }
+
+/* Pseudocódigo con la línea actual resaltada */
+.c9-pseudo {
+  margin: 0 0 12px; padding: 8px 0; list-style: none; counter-reset: l;
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, 'Courier New', monospace; font-size: 0.86rem; line-height: 1.6;
+  background: rgba(255, 250, 235, 0.55);
+  border: 1.5px solid rgba(110, 70, 30, 0.35); border-left: 5px solid var(--gold); border-radius: 2px 10px 10px 2px;
+}
+.c9-pseudo li { position: relative; counter-increment: l; padding: 0 10px 0 34px; white-space: pre-wrap; }
+.c9-pseudo li::before { content: counter(l); position: absolute; left: 9px; font-size: 0.75rem; color: var(--ink-soft); opacity: 0.7; }
+.c9-pseudo li.actual { font-weight: 700; background: rgba(201, 161, 58, 0.32); box-shadow: inset 3px 0 0 var(--crimson); }
+.c9-pseudo li.actual::before { content: "▶"; color: var(--crimson); opacity: 1; }
+.c9-pseudo .kw { color: var(--crimson); font-weight: 700; }
+
+/* Contadores */
+.c9-contadores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.c9-cont { padding: 7px 4px; text-align: center; background: rgba(255, 250, 235, 0.6); border: 1.5px solid rgba(110, 70, 30, 0.35); border-radius: 6px; }
+.c9-cont b { display: block; font-family: 'Cinzel', serif; font-size: 1.45rem; line-height: 1.1; }
+.c9-cont span { font-family: 'MedievalSharp', cursive; font-size: 0.74rem; color: var(--crimson); }
+.c9-cont.err b { color: var(--crimson); }
+
+/* ---------- Mesa de trabajo ---------- */
+.c9-estado { margin: 0 0 8px; text-align: center; font-style: italic; color: var(--ink-soft); }
+.c9-estado b { font-style: normal; font-family: 'Cinzel', serif; color: var(--ink); }
+.c9-mesa {
+  position: relative; margin: 0 0 10px; padding: 30px 10px 34px;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.4), transparent 70%), rgba(120, 80, 30, 0.12);
+  border: 1.5px dashed rgba(110, 70, 30, 0.45); border-radius: 10px;
+}
+.c9-fila { display: flex; justify-content: center; align-items: flex-end; gap: 8px; }
+.c9-carta {
+  position: relative; flex: 0 1 56px; min-width: 0; height: 80px; padding: 0;
+  display: grid; place-items: center;
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.5rem; color: var(--ink);
+  background: linear-gradient(180deg, #fffaf0, #f1e2bd);
+  border: 2px solid rgba(110, 70, 30, 0.55); border-radius: 7px;
+  box-shadow: 0 3px 0 rgba(70, 40, 10, 0.35);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.c9-carta::after {
+  content: attr(data-lugar); position: absolute; bottom: -21px; left: 0; right: 0; text-align: center;
+  font-family: 'IM Fell English', serif; font-weight: 400; font-size: 0.75rem; color: var(--ink-soft);
+}
+.c9-carta:not(:disabled):hover { transform: translateY(-4px); }
+.c9-carta:focus-visible { outline: 3px solid var(--crimson); outline-offset: 3px; }
+.c9-carta:disabled { cursor: default; }
+.c9-carta.encima { box-shadow: 0 0 0 4px var(--gold-bright), 0 3px 0 rgba(70, 40, 10, 0.35); }
+.c9-b {
+  position: absolute; top: -11px; right: -9px; z-index: 2;
+  width: 23px; height: 23px; border-radius: 50%; display: grid; place-items: center;
+  font-family: system-ui, sans-serif; font-size: 0.72rem; font-weight: 700;
+  border: 1.5px solid #fff8e6; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+/* Parte ordenada: verde + borde sólido + ✔ */
+.c9-carta.ord { color: #1f3d12; background: linear-gradient(180deg, #eef6e4, #d3e6c0); border: 2.5px solid #3f6b2a; }
+.c9-carta.ord .c9-b { color: #fff; background: #3f6b2a; }
+/* Elegida: se levanta, borde carmesí */
+.c9-carta.tomada { transform: translateY(-16px); border: 3px solid var(--crimson); box-shadow: 0 14px 16px rgba(70, 40, 10, 0.35); background: #fff6df; }
+.c9-carta.tomada .c9-b { color: var(--gold-bright); background: var(--crimson); }
+/* Comparando (pista o paso mostrado): dorado + borde punteado + ícono */
+.c9-carta.comp { border: 3px dashed #a87c12; background: #fff1c4; box-shadow: 0 0 0 4px rgba(255, 217, 106, 0.6), 0 0 18px rgba(255, 190, 60, 0.6); }
+.c9-carta.comp .c9-b { color: #3a2a05; background: var(--gold-bright); }
+/* Movimiento incorrecto: rojo + ✘ */
+.c9-carta.mal { color: var(--crimson); background: #fadad4; border: 3px solid var(--crimson); animation: c9-temblor 360ms ease; }
+.c9-carta.mal .c9-b { color: #fff; background: var(--crimson); }
+/* Turno (selección e inserción): el lugar que toca acomodar */
+.c9-carta.turno { border: 3px double var(--crimson); background: #fff6df; }
+.c9-carta.turno .c9-b { color: var(--gold-bright); background: var(--crimson); }
+
+@keyframes c9-temblor {
+  0%, 100% { translate: 0; }
+  25% { translate: -5px 0; }
+  75% { translate: 5px 0; }
+}
+
+/* Inserción: huecos para soltar la tarjeta tomada */
+.c9-mesa.con-huecos .c9-fila { gap: 2px; }
+.c9-hueco-btn {
+  flex: 0 0 18px; align-self: stretch; height: 80px; padding: 0; margin: 0;
+  display: grid; place-items: center; cursor: pointer;
+  color: var(--crimson); font-size: 0.8rem;
+  background: transparent; border: 0; border-radius: 4px;
+}
+.c9-hueco-btn span { display: grid; place-items: center; width: 6px; height: 100%; border-radius: 3px; background: rgba(168, 46, 46, 0.25); color: transparent; }
+.c9-hueco-btn:hover span,
+.c9-hueco-btn:focus-visible span,
+.c9-hueco-btn.encima span { width: 8px; background: var(--crimson); box-shadow: 0 0 10px rgba(168, 46, 46, 0.6); }
+.c9-hueco-btn:focus-visible { outline: 2px solid var(--crimson); }
+
+.c9-leyenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; margin: 0 0 6px; font-size: 0.82rem; color: var(--ink-soft); }
+.c9-leyenda span { display: inline-flex; align-items: center; gap: 4px; }
+.c9-leyenda i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+.c9-leyenda .l-ord { background: #d3e6c0; border: 2px solid #3f6b2a; }
+.c9-leyenda .l-tom { background: #fff6df; border: 2px solid var(--crimson); }
+.c9-leyenda .l-comp { background: #fff1c4; border: 2px dashed #a87c12; }
+.c9-leyenda .l-turno { background: #fff6df; border: 3px double var(--crimson); }
+
+.c9-ayuda { margin: 0 0 10px; font-size: 0.92rem; font-style: italic; text-align: center; color: var(--ink-soft); }
+.c9-ayuda.centrada { text-align: center; }
+
+.c9-msg { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 10px; padding: 9px 12px; font-size: 0.97rem; line-height: 1.4; border: 2px solid; border-radius: 6px; }
+.c9-msg b { display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; }
+.c9-msg.mal { color: #3a0c0e; background: #fbe4e4; border-color: var(--crimson); }
+.c9-msg.info { color: #4a3608; background: #fbf0cf; border-color: var(--gold); }
+.c9-msg.ok { color: #1f3d12; background: #e6f1db; border-color: #3f6b2a; }
+
+.c9-ya { display: flex; justify-content: center; margin: 0 0 12px; }
+.c9-acciones { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
+.c9-acciones .grupo { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Explicación (paso 2) ---------- */
+.c9-ejemplo { display: grid; gap: 6px; margin: 4px 0 10px; padding: 10px 12px; background: rgba(255, 250, 235, 0.55); border: 1.5px solid rgba(110, 70, 30, 0.35); border-radius: 8px; }
+.c9-ejemplo .cab { display: flex; justify-content: space-between; font-family: 'MedievalSharp', cursive; font-size: 0.82rem; color: var(--crimson); }
+.c9-paso-ej { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; font-size: 0.92rem; transition: opacity 300ms ease; }
+.c9-ejemplo.animado .c9-paso-ej { opacity: 0.4; }
+.c9-ejemplo.animado .c9-paso-ej.activo { opacity: 1; }
+.c9-mini { display: flex; gap: 4px; }
+.c9-mini span { width: 28px; height: 36px; display: grid; place-items: center; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem; background: #fffaf0; border: 1.5px solid rgba(110, 70, 30, 0.55); border-radius: 4px; }
+.c9-mini span.comp { background: #fff1c4; border: 2px dashed #a87c12; }
+.c9-mini span.ord { background: #d3e6c0; border: 2px solid #3f6b2a; color: #1f3d12; }
+.c9-mini.final { justify-content: center; margin: 8px 0 10px; }
+.c9-como { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.45; color: var(--ink-soft); }
+.c9-como b { color: var(--ink); }
+
+/* ---------- Resumen del nivel y del juego ---------- */
+.c9-estrellas { margin: 0 0 4px; text-align: center; font-size: 2.6rem; letter-spacing: 6px; color: #b98a14; text-shadow: 0 2px 0 rgba(70, 40, 10, 0.35); }
+.c9-estrellas .off { color: rgba(110, 70, 30, 0.28); text-shadow: none; }
+.c9-estrellas-txt { text-align: center; margin: 0 0 8px; font-style: italic; color: var(--ink-soft); }
+.c9-xp { margin: 6px auto 8px; text-align: center; font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.9rem; color: #8a6012; }
+.c9-libro .sheet-row.total { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; }
+.c9-tabla-niv .sheet-row .v { white-space: nowrap; }
+
+.c9-graf { display: grid; gap: 12px; margin: 4px 0 10px; }
+.c9-alg { display: grid; grid-template-columns: 6.2rem 1fr; gap: 3px 10px; align-items: center; }
+.c9-alg > b { grid-row: span 2; font-family: 'Cinzel', serif; font-size: 0.92rem; }
+.c9-bar { display: grid; grid-template-columns: 1fr 2.4rem; gap: 6px; align-items: center; font-size: 0.85rem; }
+.c9-bar .pista { height: 13px; background: rgba(110, 70, 30, 0.12); border-radius: 0 4px 4px 0; }
+.c9-bar i { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+.c9-bar.c i { background: var(--crimson); }
+.c9-bar.s i { background: var(--gold); background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.45) 0 3px, transparent 3px 6px); border: 1px solid #a87c12; }
+.c9-bar em { font-style: normal; font-family: 'Cinzel', serif; font-weight: 700; text-align: right; }
+.c9-graf-ley { display: flex; gap: 14px; justify-content: center; font-size: 0.85rem; color: var(--ink-soft); }
+.c9-graf-ley i { display: inline-block; width: 18px; height: 10px; margin-right: 4px; vertical-align: 0; }
+.c9-graf-ley .c { background: var(--crimson); }
+.c9-graf-ley .s { background: var(--gold); background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.45) 0 3px, transparent 3px 6px); border: 1px solid #a87c12; }
+
+/* ---------- Ventanas (¿Cómo funciona? y Salir) ---------- */
+.c9-velo {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; background: rgba(13, 7, 5, 0.72);
+}
+.c9-velo[hidden] { display: none; }
+.c9-dialogo {
+  width: min(25rem, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
+  padding: 20px 22px; text-align: center; color: var(--ink);
+  background: radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.5), transparent 45%), var(--parchment);
+  border: 2px solid var(--crimson); border-radius: 8px;
+  box-shadow: 0 0 0 5px var(--leather-2), 0 0 0 6px rgba(214, 170, 70, 0.6), 0 24px 50px rgba(0, 0, 0, 0.7);
+}
+.c9-dialogo h2 { margin: 0 0 8px; font-family: 'Cinzel', serif; font-size: 1.15rem; }
+.c9-dialogo p { margin: 0 0 8px; font-size: 1.05rem; line-height: 1.45; }
+.c9-dialogo .btn-row { justify-content: center; flex-wrap: wrap; }
+.c9-dialogo.ancho { width: min(36rem, 100%); text-align: left; }
+.c9-dialogo.ancho h2 { text-align: center; }
+.c9-dialogo.ancho .c9-pseudo { font-size: 0.8rem; }
+
+/* ---------- Pantallas chicas ---------- */
+@media (max-width: 820px) {
+  .c9-carta { flex-basis: 46px; height: 68px; font-size: 1.25rem; }
+  .c9-hueco-btn { height: 68px; flex-basis: 14px; }
+  .c9-fila { gap: 6px; }
+}
+@media (max-width: 400px) {
+  .c9-carta { flex-basis: 40px; height: 60px; font-size: 1.05rem; }
+  .c9-mesa { padding-left: 4px; padding-right: 4px; }
+  .c9-fila { gap: 5px; }
+}
+
+/* CU03 movimiento reducido y preferencia del sistema: sin animaciones */
+html[data-movimiento="reducido"] .c9-carta,
+html[data-movimiento="reducido"] .c9-paso-ej { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .c9-carta, .c9-paso-ej { transition: none !important; animation: none !important; }
+}

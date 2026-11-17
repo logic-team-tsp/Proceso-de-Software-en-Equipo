@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
-from .services import cuestionario, escenarios, minijuego_codigo, tecnicismos
+from .services import cuestionario, escenarios, minijuego_codigo, ordenar, tecnicismos
 
 
 def _cuerpo_json(request):
@@ -35,15 +35,20 @@ def _error_catalogo(exc):
 @ensure_csrf_cookie
 @require_GET
 def menu_modos(request):
-    """Pasos 1 y 2: «Iniciar juego» muestra «Historia narrativa», «Minijuego de código» (CU04)
-    y «Cuestionario súbito»."""
+    """Pasos 1 y 2: «Iniciar juego» muestra «Historia narrativa», «Minijuego de código» (CU04),
+    «Cuestionario súbito» y «Ordenar algoritmos» (CU09)."""
     jugador = tecnicismos.jugador_de(request)
     try:
         resumen = cuestionario.resumen_jugador(jugador)
         codigo = minijuego_codigo.resumen_jugador(jugador)
+        algoritmos = ordenar.resumen_jugador(jugador)
     except escenarios.CatalogoError as exc:
         return render(request, "partida_error.html", {"errores": exc.errores}, status=500)
-    return render(request, "modos.html", {"resumen": resumen, "codigo": codigo})
+    return render(
+        request,
+        "modos.html",
+        {"resumen": resumen, "codigo": codigo, "ordenar": algoritmos},
+    )
 
 
 @ensure_csrf_cookie

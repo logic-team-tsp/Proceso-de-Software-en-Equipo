@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ordenar algoritmos — {{ estado.nivel.nombre }}{% endblock %}
+
+{% block extra_head %}
+  {# ?v= cambia cada vez que se modifica el CSS o el JS (views_ordenar.py), así el navegador no usa una copia vieja #}
+  <link rel="stylesheet" href="{% static 'css/ordenar.css' %}?v={{ version }}">
+{% endblock %}
+
+{% block loader %}{% endblock %}
+
+{# CU09: el libro de «Ordenar algoritmos». js/ordenar.js llena las dos páginas: primero la #}
+{# explicación del algoritmo (paso 2), luego la mesa de trabajo con las tarjetas (pasos 3 a 6) y al #}
+{# final el resumen del nivel (pasos 7 a 9) o del juego (FA5). #}
+{% block page %}
+<div class="book visible c9-libro" id="main-book"
+     data-empezar="{% url 'ordenar_empezar' estado.intento_id %}"
+     data-mover="{% url 'ordenar_mover' estado.intento_id %}"
+     data-pista="{% url 'ordenar_pista' estado.intento_id %}"
+     data-salir="{% url 'ordenar_salir' estado.intento_id %}">
+  <div class="ribbon" id="or-ribbon">NIVEL<b>{{ estado.nivel.numero }}</b></div>
+
+  <div class="pages">
+    <div class="spread active">
+      <section class="page left" id="or-izq" aria-live="polite">
+        <div class="chapter-label">ORDENAR ALGORITMOS · NIVEL {{ estado.nivel.numero }}</div>
+        <h1 class="chapter-title">{{ estado.nivel.nombre }}</h1>
+        <div class="ornament" aria-hidden="true"></div>
+        <noscript><p class="story">Este modo necesita JavaScript para poder jugarse.</p></noscript>
+      </section>
+      <section class="page right" id="or-der"></section>
+    </div>
+  </div>
+</div>
+
+<div class="c9-velo" id="or-velo" hidden></div>
+
+{{ estado|json_script:"or-estado" }}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/ordenar.js' %}?v={{ version }}"></script>
+{% endblock %}
