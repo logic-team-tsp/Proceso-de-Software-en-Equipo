@@ -7,14 +7,14 @@ js/partida.js. Las reglas del juego viven en app/services/motor_partida.py y el 
 
 import json
 
-from django.db import transaction
+from django.db import DatabaseError, transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import Partida
-from .services import conseguir_vidas, escenarios, motor_partida, tecnicismos
+from .services import conseguir_vidas, escenarios, logros, motor_partida, tecnicismos
 from .services.motor_partida import ReglaError
 
 
@@ -65,11 +65,23 @@ def partida_libro(request, partida_id):
 
 @require_GET
 def partida_fin(request, partida_id):
-    """Pantalla Post Game: puntuacion, porcentaje de aciertos, logros y mapa de decisiones."""
+    """Pantalla Post Game: puntuacion, porcentaje de aciertos, logros y mapa de decisiones.
+
+    CU08 pasos 7-9: también muestra la puntuación del ranking personal con su desglose, la
+    posición, «¡Nuevo récord!» (o FA5) y los logros obtenidos en la partida.
+    """
     partida = _partida_del_usuario(request, partida_id)
     if partida.estado == Partida.EN_CURSO or partida.resultado_pendiente is not None:
         return redirect("partida_libro", partida_id=partida.id)
-    return render(request, "post_game.html", {"resumen": motor_partida.resumen_final(partida)})
+    try:
+        ranking = logros.resultado_partida(tecnicismos.jugador_de(request), partida)
+    except (escenarios.CatalogoError, DatabaseError):
+        ranking = None  # el Post Game se muestra igual, sin la sección del CU08
+    return render(
+        request,
+        "post_game.html",
+        {"resumen": motor_partida.resumen_final(partida), "ranking": ranking},
+    )
 
 
 # ---------------------------------------------------------------- API (js/partida.js)
@@ -82,12 +94,48 @@ def api_estado(request, partida_id):
         return _error_catalogo(exc)
 
 
+# ---------------------------------------------------------------- CU08 Obtener logros
+def _foto(partida):
+    """Lo que hace falta comparar antes y después de una acción para saber qué pasó."""
+    return {
+        "hp": partida.hp,
+        "xp": partida.xp,
+        "estado": partida.estado,
+        "ronda": conseguir_vidas.ronda_en_juego(partida),
+        "recuperadas": conseguir_vidas.recuperadas(partida),
+    }
+
+
+def _eventos_logros(antes, partida):
+    """CU08 pasos 1-2: XP ganada (nivel del jugador), vidas perdidas o recuperadas, ronda de
+    CU06 terminada y final (RN05)."""
+    eventos = [
+        logros.evento_xp(partida.xp - antes["xp"]),
+        logros.evento_vidas_perdidas(antes["hp"] - partida.hp),
+        logros.evento_vidas_recuperadas(
+            conseguir_vidas.recuperadas(partida) - antes["recuperadas"]
+        ),
+    ]
+    if antes["ronda"] and not conseguir_vidas.ronda_en_juego(partida):
+        ronda = (partida.vidas_extra or {}).get("ronda")  # None si la abandonó (CU06 FE2)
+        eventos.append(logros.evento_minijuego("vidas", bool(ronda and ronda.get("exito"))))
+    if antes["estado"] == Partida.EN_CURSO and partida.estado != Partida.EN_CURSO:
+        eventos.append(logros.evento_final(partida))
+    return eventos
+
+
 def _accion(request, partida_id, funcion, *args):
     try:
         with transaction.atomic():
             partida = _partida_del_usuario(request, partida_id, bloquear=True)
+            antes = _foto(partida)
             funcion(partida, *args)
             estado = _estado(request, partida)
+        cu08 = logros.registrar(
+            tecnicismos.jugador_de(request), _eventos_logros(antes, partida), partida
+        )
+        if cu08:
+            estado["cu08"] = cu08
         return JsonResponse(estado)
     except ReglaError as exc:
         return _error(str(exc), 409)

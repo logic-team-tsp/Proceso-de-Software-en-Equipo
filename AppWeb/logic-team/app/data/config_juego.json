@@ -151,6 +151,31 @@
     "penalizacion_por_error": 5,
     "penalizacion_maxima": 50
   },
+  "ranking": {
+    "_ayuda": "CU-08. Puntuación del ranking personal al llegar a un final (RN05, RN06): la suma de los componentes. 'puntos' es lo que vale cada uno: decisiones correctas, cada vida que conservaste y cada ronda ganada del minijuego de vidas (CU-06). El bonus por riesgo es el que ya dio la partida al superar pruebas de probabilidad. 'top' es cuántas puntuaciones muestra el ranking (RN04).",
+    "top": 10,
+    "puntos": {
+      "decision_correcta": 100,
+      "vida_conservada": 100,
+      "minijuego_ganado": 120
+    }
+  },
+  "nivel_jugador": {
+    "_ayuda": "CU-08. Nivel del jugador: se acumula entre partidas y minijuegos y no se reinicia. Pasar del nivel n al n+1 cuesta xp_base × n de XP (con 100: 100, 200, 300...), así que cada nivel cuesta más. Suma la XP de las decisiones correctas de la partida, la de los niveles resueltos del minijuego de código y de ordenar algoritmos, xp_cuestionario_por_acierto por cada acierto de un cuestionario y xp_ronda_vidas_ganada por cada ronda ganada del minijuego de vidas. 'titulos': el título que se gana desde cada nivel (el primero debe ser desde 1).",
+    "xp_base": 100,
+    "maximo": 20,
+    "xp_cuestionario_por_acierto": 5,
+    "xp_ronda_vidas_ganada": 20,
+    "titulos": [
+      { "desde": 1, "titulo": "Becario" },
+      { "desde": 3, "titulo": "Practicante" },
+      { "desde": 5, "titulo": "Desarrollador Junior" },
+      { "desde": 8, "titulo": "Desarrollador" },
+      { "desde": 11, "titulo": "Desarrollador Senior" },
+      { "desde": 15, "titulo": "Líder técnico" },
+      { "desde": 20, "titulo": "Arquitecto de software" }
+    ]
+  },
   "finales": {
     "completada": {
       "titulo": "Fin del Capítulo",

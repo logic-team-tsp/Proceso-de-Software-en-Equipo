@@ -18,7 +18,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import IntentoOrdenar
-from .services import escenarios, ordenar, tecnicismos
+from .services import escenarios, logros, ordenar, tecnicismos
 from .services.ordenar import FueraDeOrden, MovimientoInvalido, ReglaOrdenar
 
 
@@ -95,9 +95,14 @@ def _accion(request, intento_id, funcion, con_datos=False):
             jugador = tecnicismos.jugador_de(request)
             consulta = IntentoOrdenar.objects.select_for_update().filter(**jugador.filtro())
             intento = get_object_or_404(consulta, pk=intento_id)
+            antes = intento.estado
             argumentos = [_cuerpo_json(request)] if con_datos else []
             resultado = funcion(intento, *argumentos)
-        return JsonResponse({"ordenar": resultado})
+        respuesta = {"ordenar": resultado}
+        cu08 = logros.registrar(jugador, logros.eventos_intento("ordenar", antes, intento))
+        if cu08:
+            respuesta["cu08"] = cu08
+        return JsonResponse(respuesta)
     except MovimientoInvalido as exc:
         return _error(str(exc), 400)
     except ReglaOrdenar as exc:

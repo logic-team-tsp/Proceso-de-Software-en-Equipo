@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
-from .services import cuestionario, escenarios, minijuego_codigo, ordenar, tecnicismos
+from .services import cuestionario, escenarios, logros, minijuego_codigo, ordenar, tecnicismos
 
 
 def _cuerpo_json(request):
@@ -85,9 +85,10 @@ def api_resultado(request):
     201 si se guardó; 200 si ese cuestionario ya estaba guardado (reintento).
     """
     datos = _cuerpo_json(request)
+    jugador = tecnicismos.jugador_de(request)
     try:
         resultado, creado = cuestionario.guardar_resultado(
-            tecnicismos.jugador_de(request),
+            jugador,
             datos.get("token"),
             datos.get("respuestas"),
             fecha=datos.get("fecha"),
@@ -99,4 +100,12 @@ def api_resultado(request):
         return _error(str(exc), 400)
     except escenarios.CatalogoError as exc:
         return _error_catalogo(exc)
+    if creado:  # CU08: un reintento de FE1 del cuestionario no cuenta dos veces
+        perfecto = resultado["aciertos"] == resultado["total"]
+        evento = logros.evento_minijuego(
+            "cuestionario", True, perfecto=perfecto, aciertos=resultado["aciertos"]
+        )
+        cu08 = logros.registrar(jugador, [evento])
+        if cu08:
+            resultado = {**resultado, "cu08": cu08}
     return JsonResponse(resultado, status=201 if creado else 200)

@@ -2,8 +2,11 @@
 from django.contrib import admin
 
 from .models import (
+    EstadisticaJugador,
     IntentoCodigo,
+    LogroJugador,
     Partida,
+    Puntuacion,
     RegistroDecision,
     ResultadoCuestionario,
     TecnicismoRegistrado,
@@ -58,3 +61,24 @@ class IntentoCodigoAdmin(admin.ModelAdmin):
     )
     list_filter = ("nivel_id", "estado")
     readonly_fields = ("tablero", "huella", "resultado")
+
+
+# CU08 - Obtener logros
+@admin.register(LogroJugador)
+class LogroJugadorAdmin(admin.ModelAdmin):
+    list_display = ("logro_id", "usuario", "sesion", "partida", "fecha")
+    list_filter = ("logro_id",)
+    search_fields = ("logro_id", "usuario__username", "sesion")
+
+
+@admin.register(Puntuacion)
+class PuntuacionAdmin(admin.ModelAdmin):
+    list_display = ("total", "final_titulo", "usuario", "sesion", "nuevo_record", "fecha")
+    list_filter = ("final_id", "nuevo_record")
+    readonly_fields = ("desglose",)
+
+
+@admin.register(EstadisticaJugador)
+class EstadisticaJugadorAdmin(admin.ModelAdmin):
+    list_display = ("usuario", "sesion", "actualizada")
+    readonly_fields = ("contadores", "procesados")
