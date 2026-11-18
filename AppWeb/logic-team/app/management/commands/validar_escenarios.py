@@ -1,13 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from app.services import conseguir_vidas, escenarios, minijuego_codigo, ordenar
+from app.services import conseguir_vidas, escenarios, logros, minijuego_codigo, ordenar
 
 
 class Command(BaseCommand):
     help = (
         "Valida config_juego.json, los escenarios de app/data/escenarios/*.json, las "
         "afirmaciones del CU-06 (app/data/preguntas_vidas.json), los programas del CU-04 "
-        "(app/data/niveles_codigo/*.json) y los algoritmos del CU-09 (app/data/algoritmos.json)."
+        "(app/data/niveles_codigo/*.json), los algoritmos del CU-09 (app/data/algoritmos.json) y "
+        "los logros del CU-08 (app/data/logros.json)."
     )
 
     def handle(self, *args, **options):
@@ -16,6 +17,8 @@ class Command(BaseCommand):
             errores = conseguir_vidas.validar()  # CU-06: necesita los escenarios sin errores
         errores += minijuego_codigo.validar()  # CU-04
         errores += ordenar.validar()  # CU-09
+        if not errores:
+            errores = logros.validar()  # CU-08: necesita los escenarios sin errores
         if errores:
             for error in errores:
                 self.stderr.write(self.style.ERROR(f"- {error}"))
@@ -52,5 +55,14 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(
                 f"Ordenar algoritmos válido: {len(algoritmos['niveles'])} niveles ({nombres})."
+            )
+        )
+        catalogo_logros = logros.cargar()
+        ocultos = sum(1 for lg in catalogo_logros["logros"] if lg.get("oculto"))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Logros del CU-08 válidos: {len(catalogo_logros['logros'])} logros "
+                f"({ocultos} ocultos) en {len(catalogo_logros['categorias'])} categorías y "
+                f"{catalogo_logros['total_finales']} finales."
             )
         )

@@ -283,3 +283,113 @@ class IntentoOrdenar(models.Model):
     def __str__(self):
         dueno = self.usuario_id or self.sesion
         return f"{dueno} · juego {self.juego} nivel {self.nivel} ({self.estado})"
+
+
+# ---------------------------------------------------------------- CU08 Obtener logros
+# Igual que CU04, CU05 y CU09, el progreso es del usuario con sesión iniciada o, si no hay, de
+# la sesión del navegador. El catálogo de logros vive en app/data/logros.json y las reglas en
+# app/services/logros.py.
+class EstadisticaJugador(models.Model):
+    """Contadores del jugador que revisan los logros (paso 2): vidas perdidas, finales..."""
+
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="estadistica_logros",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    # {"vidas_perdidas": 3, "finales": ["intro-programacion:completada", ...], ...}
+    contadores = models.JSONField(default=dict)
+    # Eventos ya aplicados: un reintento de FE1 no los vuelve a contar
+    procesados = models.JSONField(default=list)
+    actualizada = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["sesion"],
+                condition=models.Q(usuario__isnull=True),
+                name="estadistica_unica_por_sesion",
+            ),
+        ]
+
+    def __str__(self):
+        return f"Estadísticas de {self.usuario_id or self.sesion}"
+
+
+class LogroJugador(models.Model):
+    """Logro desbloqueado (paso 5). Se obtiene una sola vez y no se pierde (RN01)."""
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="logros_obtenidos",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    logro_id = models.CharField(max_length=60)
+    # Partida en la que se obtuvo (para el informe de puntuación); null si fue en un minijuego
+    partida = models.ForeignKey(
+        Partida, null=True, blank=True, on_delete=models.SET_NULL, related_name="logros_cu08"
+    )
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["fecha"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["usuario", "logro_id"],
+                condition=models.Q(usuario__isnull=False),
+                name="logro_unico_por_usuario",
+            ),
+            models.UniqueConstraint(
+                fields=["sesion", "logro_id"],
+                condition=models.Q(usuario__isnull=True),
+                name="logro_unico_por_sesion",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.usuario_id or self.sesion} -> {self.logro_id}"
+
+
+class Puntuacion(models.Model):
+    """Puntuación de una historia que llegó a un final: el ranking personal (pasos 7 a 9).
+
+    Solo se crea al llegar a un final (RN05); si el jugador sale antes no hay puntuación (FE3).
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="puntuaciones",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    partida = models.OneToOneField(
+        Partida, on_delete=models.CASCADE, related_name="puntuacion_cu08"
+    )
+    # Materias de la partida (las «historias» del ranking) y el final alcanzado
+    temas = models.JSONField(default=list)
+    final_id = models.CharField(max_length=30)
+    final_titulo = models.CharField(max_length=120)
+    total = models.PositiveIntegerField()
+    desglose = models.JSONField(default=list)  # RN06: [{id, nombre, cantidad, valor, puntos}]
+    vidas_perdidas = models.PositiveSmallIntegerField(default=0)
+    minijuegos_jugados = models.PositiveSmallIntegerField(default=0)
+    minijuegos_ganados = models.PositiveSmallIntegerField(default=0)
+    mejor_anterior = models.PositiveIntegerField(null=True, blank=True)
+    nuevo_record = models.BooleanField(default=False)
+    fecha = models.DateTimeField()
+
+    class Meta:
+        # RN04: de mayor a menor; en empate va primero la más antigua
+        ordering = ["-total", "fecha"]
+
+    def __str__(self):
+        return f"{self.usuario_id or self.sesion} · {self.total} pts ({self.final_titulo})"

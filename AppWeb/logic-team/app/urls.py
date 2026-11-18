@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, views_codigo, views_cuestionario, views_ordenar
+from . import views, views_codigo, views_cuestionario, views_logros, views_ordenar
 
 urlpatterns = [
     path("health/", views.health, name="health"),
@@ -25,4 +25,14 @@ urlpatterns = [
     path("ordenar/<uuid:intento_id>/mover/", views_ordenar.api_mover, name="ordenar_mover"),
     path("ordenar/<uuid:intento_id>/pista/", views_ordenar.api_pista, name="ordenar_pista"),
     path("ordenar/<uuid:intento_id>/salir/", views_ordenar.api_salir, name="ordenar_salir"),
+    # CU08 - Obtener logros (API que usa js/logros.js)
+    path("logros/", views_logros.api_resumen, name="logros_resumen"),
+    path("logros/nivel/", views_logros.api_nivel, name="logros_nivel"),
+    path("logros/ranking/", views_logros.api_ranking, name="logros_ranking"),
+    path(
+        "logros/puntuacion/<uuid:puntuacion_id>/",
+        views_logros.api_informe,
+        name="logros_informe",
+    ),
+    path("logros/reintentar/", views_logros.api_reintentar, name="logros_reintentar"),
 ]

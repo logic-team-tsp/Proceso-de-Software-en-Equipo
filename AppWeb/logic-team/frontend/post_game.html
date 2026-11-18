@@ -19,12 +19,85 @@
 {% block loader_title %}{{ resumen.titulo }}{% endblock %}
 {% block loader_sub %}{% if resumen.completada %}escribiendo el epílogo...{% else %}cerrando el libro...{% endif %}{% endblock %}
 
-{# CU01 FA1 / FE1: resumen Post Game con puntuación, logros y mapa de decisiones. #}
+{# CU01 FA1 / FE1: resumen Post Game con puntuación, logros y mapa de decisiones.
+   CU08 pasos 7-9: antes, una hoja con la puntuación del ranking personal y su desglose. #}
 {% block book %}
   <div class="ribbon">FIN<b>{% if resumen.completada %}✔{% else %}✘{% endif %}</b></div>
 
   <div class="pages">
-    <div class="spread active">
+    {% if ranking %}
+    <div class="spread active lg-res" id="pg-resultados">
+      <section class="page left">
+        <div class="chapter-label">HISTORIA · {{ ranking.historia|upper }}</div>
+        <h1 class="chapter-title">{% if ranking.completada %}¡Historia terminada!{% else %}Fin de la historia{% endif %}</h1>
+        <div class="ornament" aria-hidden="true"></div>
+        <p class="lg-final-txt">Final alcanzado: <b>«{{ ranking.final }}»</b></p>
+        <div class="lg-puntaje{% if not ranking.en_top %} gris{% endif %}" role="img" aria-label="Puntuación {{ ranking.total }}">
+          <div><b>{{ ranking.total_txt }}</b><span>puntos</span></div>
+        </div>
+        {% if ranking.nuevo_record %}
+          <span class="lg-record">🏆 ¡NUEVO RÉCORD!</span>
+        {% elif not ranking.en_top %}
+          {# FA5 #}
+          <div class="lg-nota-marca">Esta vez no entraste al top {{ ranking.tamano_top }}.<br><b>Tu mejor marca sigue siendo {{ ranking.mejor_marca_txt }} puntos.</b></div>
+        {% endif %}
+        <div class="sheet">
+          <div class="sheet-row"><span class="k">Posición en tu ranking</span><span class="v">{% if ranking.en_top %}#{{ ranking.posicion }} de {{ ranking.posiciones }}{% else %}Fuera del top {{ ranking.tamano_top }}{% endif %}</span></div>
+          {% if ranking.nuevo_record and ranking.mejor_anterior is not None %}
+            <div class="sheet-row"><span class="k">Mejor marca anterior</span><span class="v">{{ ranking.mejor_anterior_txt }} pts</span></div>
+          {% endif %}
+          <div class="sheet-row"><span class="k">Fecha</span><span class="v">{{ ranking.fecha }}</span></div>
+          <div class="sheet-row"><span class="k">Nivel de jugador</span><span class="v">⭐ {{ ranking.nivel.nivel }} · {{ ranking.nivel.titulo }} <small class="lg-xp-ganada">(+{{ ranking.xp_partida }} XP)</small></span></div>
+        </div>
+        {% with n=ranking.nivel %}
+          <div class="lg-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ n.porcentaje }}"
+               aria-label="{% if n.es_maximo %}Nivel máximo{% else %}{{ n.xp_en_nivel }} de {{ n.xp_necesaria }} XP para el nivel {{ n.nivel|add:1 }}{% endif %}">
+            <span class="pista"><i style="width:{{ n.porcentaje }}%"></i></span>
+            <span class="txt">{% if n.es_maximo %}Nivel máximo{% else %}{{ n.xp_en_nivel }}/{{ n.xp_necesaria }} XP para el nivel {{ n.nivel|add:1 }}{% endif %}</span>
+          </div>
+        {% endwith %}
+        {% if not ranking.en_top %}
+          <div class="stamps"><span class="stamp pt-stamp-oro">✔ Guardada en tu historial</span></div>
+        {% endif %}
+        <div class="page-num">– I –</div>
+      </section>
+
+      <section class="page right">
+        <h2 class="lg-subt">Desglose de puntuación</h2>
+        <table class="lg-desglose">
+          <thead><tr><th scope="col">Componente</th><th scope="col" class="n">Cantidad</th><th scope="col" class="p">Puntos</th></tr></thead>
+          <tbody>
+            {% for fila in ranking.desglose %}
+              <tr><td>{{ fila.nombre }}</td><td class="n">{{ fila.cantidad_txt }}</td><td class="p">{{ fila.puntos_txt }}</td></tr>
+            {% endfor %}
+          </tbody>
+          <tfoot><tr><td colspan="2">Total</td><td class="p">{{ ranking.total_txt }}</td></tr></tfoot>
+        </table>
+
+        <h2 class="lg-subt">Logros de esta partida{% if ranking.logros %} ({{ ranking.logros|length }}){% endif %}</h2>
+        <div class="lg-lista">
+          {% for logro in ranking.logros %}
+            <div class="lg-logro obtenido">
+              <div class="ico" aria-hidden="true">{{ logro.icono }}</div>
+              <div><h4>{{ logro.nombre }}</h4><p>{{ logro.descripcion }}</p></div>
+              <div class="lg-estado"><span class="lg-sello" aria-hidden="true">✔</span><span class="t">OBTENIDO</span><span class="f">{{ logro.fecha }}</span></div>
+            </div>
+          {% empty %}
+            <p class="lg-ayuda">No obtuviste logros nuevos en esta partida.</p>
+          {% endfor %}
+        </div>
+
+        <div class="btn-row">
+          <a class="book-btn" href="{% url 'home' %}">⬅ Portada</a>
+          <button type="button" class="book-btn" data-lg-abrir="ranking">🏆 Ver mi ranking</button>
+          <button type="button" class="book-btn go" data-pg-ir="pg-mapa">Mapa de decisiones ➔</button>
+        </div>
+        <div class="page-num">– II –</div>
+      </section>
+    </div>
+    {% endif %}
+
+    <div class="spread{% if not ranking %} active{% endif %}" id="pg-mapa">
       <section class="page left">
         <div class="chapter-label">POST GAME</div>
         <h1 class="chapter-title">{{ resumen.titulo }}</h1>
@@ -46,7 +119,7 @@
             {% endfor %}
           </div>
         {% endif %}
-        <div class="page-num">– I –</div>
+        <div class="page-num">{% if ranking %}– III –{% else %}– I –{% endif %}</div>
       </section>
 
       <section class="page right">
@@ -67,11 +140,28 @@
         </ol>
 
         <div class="btn-row">
-          <a class="book-btn" href="{% url 'home' %}">⬅ Portada</a>
+          {% if ranking %}<button type="button" class="book-btn" data-pg-ir="pg-resultados">⬅ Resultados</button>{% else %}<a class="book-btn" href="{% url 'home' %}">⬅ Portada</a>{% endif %}
           <a class="book-btn go" href="{% url 'personalizar_perfil' %}">Comenzar nueva partida ➔</a>
         </div>
-        <div class="page-num">– II –</div>
+        <div class="page-num">{% if ranking %}– IV –{% else %}– II –{% endif %}</div>
       </section>
     </div>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+  {# CU08: pasar la página entre los resultados del ranking y el mapa de decisiones #}
+  <script>
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("[data-pg-ir]");
+      if (!b) return;
+      var destino = document.getElementById(b.dataset.pgIr);
+      document.querySelectorAll(".pages .spread").forEach(function (s) { s.classList.remove("active"); });
+      void destino.offsetWidth;
+      destino.classList.add("active");
+      var foco = destino.querySelector("[data-pg-ir], a, button");
+      if (foco) foco.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 {% endblock %}

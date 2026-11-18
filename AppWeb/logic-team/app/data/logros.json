@@ -1,0 +1,277 @@
+{
+  "_ayuda": "CU-08 Obtener logros. Catálogo de logros (RN03). La categoría nivel usa el nivel del jugador (config_juego.json > nivel_jugador): cada logro mira una 'estadistica' del jugador y se desbloquea cuando llega a 'meta' (RN02). Con meta mayor que 1 es progresivo y el panel muestra su avance (FA2). 'meta': \"todos\" usa el total de finales del juego. 'oculto': true muestra «???» hasta obtenerlo (RN08). Estadísticas válidas: ver ESTADISTICAS en app/services/logros.py. Los puntos de la puntuación del ranking (RN06) están en config_juego.json > ranking. Valida con: python manage.py validar_escenarios.",
+  "categorias": [
+    { "id": "historia", "nombre": "Historia y finales", "icono": "📕" },
+    { "id": "puntuacion", "nombre": "Puntuación", "icono": "💯" },
+    { "id": "vidas", "nombre": "Vidas", "icono": "❤️" },
+    { "id": "minijuegos", "nombre": "Minijuegos", "icono": "🎲" },
+    { "id": "nivel", "nombre": "Nivel", "icono": "⭐" }
+  ],
+  "logros": [
+    {
+      "id": "primer-capitulo",
+      "categoria": "historia",
+      "nombre": "Primer capítulo cerrado",
+      "descripcion": "Termina tu primera historia.",
+      "icono": "📕",
+      "estadistica": "historias_terminadas",
+      "meta": 1
+    },
+    {
+      "id": "hasta-el-final",
+      "categoria": "historia",
+      "nombre": "Hasta el final",
+      "descripcion": "Completa una historia sin quedarte sin vidas.",
+      "icono": "🏁",
+      "estadistica": "historias_completadas",
+      "meta": 1
+    },
+    {
+      "id": "lector-constante",
+      "categoria": "historia",
+      "nombre": "Lector constante",
+      "descripcion": "Termina 5 historias.",
+      "icono": "📚",
+      "estadistica": "historias_terminadas",
+      "meta": 5
+    },
+    {
+      "id": "coleccionista-1",
+      "categoria": "historia",
+      "nombre": "Coleccionista I",
+      "descripcion": "Desbloquea 5 finales.",
+      "icono": "🗝",
+      "estadistica": "finales",
+      "meta": 5
+    },
+    {
+      "id": "coleccionista-2",
+      "categoria": "historia",
+      "nombre": "Coleccionista II",
+      "descripcion": "Desbloquea 10 finales.",
+      "icono": "🗝",
+      "estadistica": "finales",
+      "meta": 10
+    },
+    {
+      "id": "todos-los-caminos",
+      "categoria": "historia",
+      "nombre": "Todos los caminos",
+      "descripcion": "Desbloquea todos los finales.",
+      "icono": "📜",
+      "estadistica": "finales",
+      "meta": "todos"
+    },
+    {
+      "id": "explorador",
+      "categoria": "historia",
+      "nombre": "Explorador de materias",
+      "descripcion": "Termina historias de las 4 materias.",
+      "icono": "🧭",
+      "estadistica": "materias_terminadas",
+      "meta": 4,
+      "oculto": true
+    },
+    {
+      "id": "mil-puntos",
+      "categoria": "puntuacion",
+      "nombre": "Mil puntos",
+      "descripcion": "Alcanza 1 000 puntos en una partida.",
+      "icono": "💰",
+      "estadistica": "mejor_puntuacion",
+      "meta": 1000
+    },
+    {
+      "id": "gran-puntuacion",
+      "categoria": "puntuacion",
+      "nombre": "Gran puntuación",
+      "descripcion": "Alcanza 1 600 puntos en una partida.",
+      "icono": "💯",
+      "estadistica": "mejor_puntuacion",
+      "meta": 1600
+    },
+    {
+      "id": "leyenda",
+      "categoria": "puntuacion",
+      "nombre": "Leyenda",
+      "descripcion": "Alcanza 2 500 puntos en una partida.",
+      "icono": "👑",
+      "estadistica": "mejor_puntuacion",
+      "meta": 2500
+    },
+    {
+      "id": "superacion",
+      "categoria": "puntuacion",
+      "nombre": "Superación",
+      "descripcion": "Supera tu mejor marca.",
+      "icono": "📈",
+      "estadistica": "records_superados",
+      "meta": 1
+    },
+    {
+      "id": "tesoro-acumulado",
+      "categoria": "puntuacion",
+      "nombre": "Tesoro acumulado",
+      "descripcion": "Acumula 10 000 puntos en total.",
+      "icono": "🪙",
+      "estadistica": "puntos_acumulados",
+      "meta": 10000
+    },
+    {
+      "id": "primera-cicatriz",
+      "categoria": "vidas",
+      "nombre": "Primera cicatriz",
+      "descripcion": "Pierde una vida por primera vez.",
+      "icono": "💔",
+      "estadistica": "vidas_perdidas",
+      "meta": 1
+    },
+    {
+      "id": "diez-cicatrices",
+      "categoria": "vidas",
+      "nombre": "Diez cicatrices",
+      "descripcion": "Pierde 10 vidas en total.",
+      "icono": "🩹",
+      "estadistica": "vidas_perdidas",
+      "meta": 10
+    },
+    {
+      "id": "intachable",
+      "categoria": "vidas",
+      "nombre": "Intachable",
+      "descripcion": "Completa una historia sin perder vidas.",
+      "icono": "🛡",
+      "estadistica": "historias_sin_perder_vidas",
+      "meta": 1
+    },
+    {
+      "id": "tres-de-tres",
+      "categoria": "vidas",
+      "nombre": "Tres de tres",
+      "descripcion": "Completa 3 historias seguidas sin perder vidas.",
+      "icono": "🐾",
+      "estadistica": "racha_sin_perder_vidas",
+      "meta": 3
+    },
+    {
+      "id": "segunda-oportunidad",
+      "categoria": "vidas",
+      "nombre": "Segunda oportunidad",
+      "descripcion": "Recupera una vida con el minijuego de vidas.",
+      "icono": "💗",
+      "estadistica": "vidas_recuperadas",
+      "meta": 1
+    },
+    {
+      "id": "sin-vidas",
+      "categoria": "vidas",
+      "nombre": "Fin abrupto",
+      "descripcion": "Quédate sin vidas en una historia.",
+      "icono": "☠",
+      "estadistica": "derrotas",
+      "meta": 1,
+      "oculto": true
+    },
+    {
+      "id": "primer-reto",
+      "categoria": "minijuegos",
+      "nombre": "Primer reto",
+      "descripcion": "Juega un minijuego por primera vez.",
+      "icono": "🎲",
+      "estadistica": "minijuegos_jugados",
+      "meta": 1
+    },
+    {
+      "id": "primera-victoria",
+      "categoria": "minijuegos",
+      "nombre": "Primera victoria",
+      "descripcion": "Completa un minijuego por primera vez.",
+      "icono": "🎯",
+      "estadistica": "minijuegos_completados",
+      "meta": 1
+    },
+    {
+      "id": "variedad",
+      "categoria": "minijuegos",
+      "nombre": "Variedad",
+      "descripcion": "Completa los 4 tipos de minijuego.",
+      "icono": "🧩",
+      "estadistica": "tipos_minijuego_completados",
+      "meta": 4
+    },
+    {
+      "id": "maestro-minijuegos",
+      "categoria": "minijuegos",
+      "nombre": "Maestro de minijuegos",
+      "descripcion": "Completa 25 minijuegos.",
+      "icono": "🏅",
+      "estadistica": "minijuegos_completados",
+      "meta": 25
+    },
+    {
+      "id": "sin-titubeos",
+      "categoria": "minijuegos",
+      "nombre": "Sin titubeos",
+      "descripcion": "Completa un cuestionario sin errores.",
+      "icono": "⚡",
+      "estadistica": "cuestionarios_perfectos",
+      "meta": 1
+    },
+    {
+      "id": "perfeccionista",
+      "categoria": "minijuegos",
+      "nombre": "Perfeccionista",
+      "descripcion": "Resuelve 5 niveles de código o de ordenar con 3 estrellas.",
+      "icono": "⭐",
+      "estadistica": "niveles_tres_estrellas",
+      "meta": 5,
+      "oculto": true
+    },
+    {
+      "id": "nivel-2",
+      "categoria": "nivel",
+      "nombre": "Primeros pasos",
+      "descripcion": "Alcanza el nivel 2.",
+      "icono": "🌱",
+      "estadistica": "nivel_jugador",
+      "meta": 2
+    },
+    {
+      "id": "nivel-5",
+      "categoria": "nivel",
+      "nombre": "Aprendiz constante",
+      "descripcion": "Alcanza el nivel 5.",
+      "icono": "📘",
+      "estadistica": "nivel_jugador",
+      "meta": 5
+    },
+    {
+      "id": "nivel-10",
+      "categoria": "nivel",
+      "nombre": "Veterano del código",
+      "descripcion": "Alcanza el nivel 10.",
+      "icono": "🎖",
+      "estadistica": "nivel_jugador",
+      "meta": 10
+    },
+    {
+      "id": "nivel-15",
+      "categoria": "nivel",
+      "nombre": "Mano derecha del equipo",
+      "descripcion": "Alcanza el nivel 15.",
+      "icono": "🧠",
+      "estadistica": "nivel_jugador",
+      "meta": 15
+    },
+    {
+      "id": "nivel-20",
+      "categoria": "nivel",
+      "nombre": "Arquitecto de software",
+      "descripcion": "Alcanza el nivel máximo (20).",
+      "icono": "🏛",
+      "estadistica": "nivel_jugador",
+      "meta": 20,
+      "oculto": true
+    }
+  ]
+}

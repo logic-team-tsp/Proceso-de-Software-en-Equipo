@@ -1,0 +1,58 @@
+{% comment %}
+  CU08 - Obtener logros.
+  Botón de Logros (trofeo) junto al engranaje de CU03, notificaciones «¡Logro desbloqueado!»,
+  aviso de FE1 y el panel con las pestañas Ranking personal / Logros / Finales.
+  Lo incluyen base.html e index.html, así que está en TODAS las pantallas (1 clic desde
+  cualquiera). La lógica está en js/logros.js y los estilos en css/logros.css.
+{% endcomment %}
+<div id="logros-root" class="lg-root"
+     data-api-resumen="{% url 'logros_resumen' %}"
+     data-api-ranking="{% url 'logros_ranking' %}"
+     data-api-nivel="{% url 'logros_nivel' %}"
+     data-api-informe="{% url 'logros_resumen' %}puntuacion/"
+     data-api-reintentar="{% url 'logros_reintentar' %}"
+     data-url-jugar="{% url 'menu_modos' %}">
+
+  <button type="button" id="logros-btn" class="ajustes-btn logros-btn" title="Logros y ranking"
+          aria-label="Logros y ranking personal" aria-haspopup="dialog"
+          aria-expanded="false" aria-controls="logros-velo">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M7 2h10v2h4v3.5A4.5 4.5 0 0 1 16.9 12a5.5 5.5 0 0 1-3.9 3.4V18h3v2H8v-2h3v-2.6A5.5 5.5 0 0 1 7.1 12 4.5 4.5 0 0 1 3 7.5V4h4V2zm0 4H5v1.5a2.5 2.5 0 0 0 2.2 2.5A5.6 5.6 0 0 1 7 8.5V6zm10 0v2.5c0 .5-.07 1-.2 1.5A2.5 2.5 0 0 0 19 7.5V6h-2zM6 21h12v1.5H6z"/>
+    </svg>
+    {# Nivel del jugador (se acumula entre partidas y minijuegos) #}
+    <span class="lg-nivel-badge" id="logros-nivel-badge" aria-hidden="true" hidden></span>
+  </button>
+
+  {# Pasos 6 y FA1: las notificaciones aparecen aquí, una tras otra #}
+  <div id="logros-toasts" class="lg-toasts" role="status" aria-live="polite"></div>
+
+  {# FE1: no se pudo guardar el progreso #}
+  <div id="logros-aviso" class="lg-aviso" role="alert" hidden>
+    <span aria-hidden="true">⚠️</span>
+    <div><b>No se pudo guardar tu progreso, se reintentará.</b> <em id="logros-aviso-txt"></em></div>
+  </div>
+
+  {# Pasos 11 a 16: el panel. js/logros.js llena el cuerpo de cada pestaña. #}
+  <div id="logros-velo" class="lg-velo" hidden>
+    <div class="lg-panel" role="dialog" aria-modal="true" aria-labelledby="logros-titulo" tabindex="-1">
+      <div class="lg-hoja">
+        <div class="lg-cab">
+          <h2 id="logros-titulo">🏆 Logros y récords</h2>
+          <span class="lg-pausa" id="logros-pausa" hidden>⏸ Partida en pausa</span>
+          <button type="button" class="lg-cerrar" id="logros-cerrar" aria-label="Cerrar panel">✕</button>
+        </div>
+        {# Nivel y título del jugador, con su avance hacia el siguiente nivel #}
+        <div class="lg-nivel" id="logros-nivel" hidden></div>
+        <div class="lg-tabs" role="tablist" aria-label="Secciones">
+          <button type="button" class="lg-tab" role="tab" id="lg-tab-ranking" data-tab="ranking"
+                  aria-selected="false" aria-controls="logros-cuerpo">📜 Ranking personal</button>
+          <button type="button" class="lg-tab" role="tab" id="lg-tab-logros" data-tab="logros"
+                  aria-selected="true" aria-controls="logros-cuerpo">🏅 Logros<span class="pct" id="lg-pct-logros"></span></button>
+          <button type="button" class="lg-tab" role="tab" id="lg-tab-finales" data-tab="finales"
+                  aria-selected="false" aria-controls="logros-cuerpo">🗝 Finales<span class="pct" id="lg-pct-finales"></span></button>
+        </div>
+        <div class="lg-cuerpo" id="logros-cuerpo" role="tabpanel" aria-live="polite" tabindex="0"></div>
+      </div>
+    </div>
+  </div>
+</div>

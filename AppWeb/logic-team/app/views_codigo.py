@@ -19,7 +19,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import IntentoCodigo
-from .services import escenarios, minijuego_codigo, tecnicismos
+from .services import escenarios, logros, minijuego_codigo, tecnicismos
 from .services.minijuego_codigo import FueraDeOrden, ProgramaInvalido, ReglaCodigo
 
 
@@ -116,9 +116,16 @@ def _accion(request, intento_id, funcion, con_programa=True):
     try:
         with transaction.atomic():
             intento = _intento_del_jugador(request, intento_id, bloquear=True)
+            antes = intento.estado
             argumentos = [_cuerpo_json(request)] if con_programa else []
             resultado = funcion(intento, *argumentos)
-        return JsonResponse({"codigo": resultado})
+        respuesta = {"codigo": resultado}
+        cu08 = logros.registrar(
+            tecnicismos.jugador_de(request), logros.eventos_intento("codigo", antes, intento)
+        )  # CU08: nivel resuelto o abandonado
+        if cu08:
+            respuesta["cu08"] = cu08
+        return JsonResponse(respuesta)
     except ProgramaInvalido as exc:
         return _error(str(exc), 400)
     except ReglaCodigo as exc:

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cinzel+Decorative:wght@700;900&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/libro.css' %}">
   <link rel="stylesheet" href="{% static 'css/ajustes.css' %}">
+  <link rel="stylesheet" href="{% static 'css/logros.css' %}">
   <!-- CU03: aplica las preferencias guardadas antes de pintar la página (evita parpadeos) -->
   <script>
     (function () {
@@ -49,8 +50,12 @@
   <!-- CU03: engranaje de ajustes, visible en todas las pantallas -->
   {% include "ajustes_panel.html" %}
 
+  <!-- CU08: botón de Logros (junto al engranaje), notificaciones y panel de logros -->
+  {% include "logros_panel.html" %}
+
   <script src="{% static 'js/libro.js' %}"></script>
   <script src="{% static 'js/ajustes.js' %}"></script>
+  <script src="{% static 'js/logros.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>
