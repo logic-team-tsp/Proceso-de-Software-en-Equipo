@@ -1,0 +1,71 @@
+{
+  "id": "academia-magia",
+  "nombre": "Academia de magia",
+  "icono": "🔮",
+  "orden": 4,
+  "precio": 15,
+  "descripcion": "El director de la academia te pide hechizos y tu círculo de magos te ayuda.",
+  "vista_previa": "ip-tipos-n",
+  "portada": {
+    "color": "#3b2a6b",
+    "sello": "✨"
+  },
+  "capitulos": {
+    "II": "Primeros Hechizos",
+    "III": "El Grimorio Prohibido",
+    "IV": "La Torre de los Magos"
+  },
+  "glosario": {
+    "cliente": {
+      "el cliente": "el director",
+      "del cliente": "del director",
+      "al cliente": "al director",
+      "un cliente": "un mago",
+      "ningún cliente": "ningún mago"
+    },
+    "clientes": {
+      "los clientes": "los alumnos",
+      "clientes": "alumnos"
+    },
+    "proyecto": {
+      "el proyecto": "el hechizo",
+      "del proyecto": "del hechizo",
+      "otro proyecto": "otro hechizo",
+      "otros proyectos": "otros hechizos"
+    },
+    "equipo": {
+      "el equipo": "el círculo de magos",
+      "del equipo": "del círculo de magos",
+      "al equipo": "al círculo de magos",
+      "tu equipo": "tu círculo de magos"
+    },
+    "empresa": {
+      "la empresa": "la academia",
+      "la startup": "la academia"
+    },
+    "gerente": {
+      "el gerente": "el archimago",
+      "la gerente": "la archimaga"
+    },
+    "lider": {
+      "tu líder técnica": "tu mentora",
+      "tu líder": "tu mentor"
+    },
+    "companero": {
+      "un compañero": "un aprendiz de mago",
+      "tu compañero": "tu aprendiz de mago",
+      "otro compañero": "otro aprendiz de mago",
+      "una compañera": "una aprendiz de maga",
+      "dos compañeros": "dos aprendices de mago"
+    },
+    "dueno": {
+      "el dueño": "el alquimista",
+      "la dueña": "la alquimista"
+    },
+    "clienta": {
+      "la clienta": "la directora",
+      "de la clienta": "de la directora",
+      "a la clienta": "a la directora"
+    }
+  }
+}

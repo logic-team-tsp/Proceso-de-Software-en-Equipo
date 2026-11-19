@@ -17,7 +17,7 @@ from django.urls import reverse
 
 from app.models import Partida, RegistroDecision
 
-from . import conseguir_vidas, escenarios, tecnicismos
+from . import conseguir_vidas, escenarios, tecnicismos, tematicas
 
 
 class ReglaError(Exception):
@@ -101,12 +101,13 @@ def nivel_de(xp, config):
 
 
 @transaction.atomic
-def crear_partida(perfil, subtemas, usuario=None, semilla=None):
+def crear_partida(perfil, subtemas, usuario=None, semilla=None, tematica=tematicas.CLASICA):
     """Crea una partida lista para jugarse. La llama CU-02 al pulsar "Comenzar Aventura".
 
     perfil: dict de CU-02 (id, titulo, descripcion, vidas, xp y los atributos
             teoria/equipo/inteligencia como enteros de 1 a 10).
     subtemas: ids de subtema de CU-02, por ejemplo ["intro-programacion:0"]. Minimo uno (RF-24).
+    tematica: CU-07, id de la temática ya validada con tematicas.para_partida() (RN06).
     """
     config, catalogo = escenarios.cargar()
     subtemas = list(dict.fromkeys(subtemas or []))
@@ -138,6 +139,7 @@ def crear_partida(perfil, subtemas, usuario=None, semilla=None):
         temas=subtemas,
         secuencia=secuencia,
         semilla=semilla,
+        tematica=tematica or tematicas.CLASICA,
     )
 
 
@@ -420,7 +422,8 @@ def estado_publico(partida):
         datos["tecnicismos"] = tecnicismos.publicos(
             evento.get("tecnicismos", []), catalogo["tecnicismos"]
         )
-    return datos
+    # CU-07: la historia se narra con la temática de la partida (RN04, RN05)
+    return tematicas.tematizar_estado(datos, partida.tematica)
 
 
 def final_de(partida, config):
@@ -441,7 +444,7 @@ def resumen_final(partida):
     final, etiqueta = final_de(partida, config)
     logros = {logro["id"]: logro for logro in config["logros"]}
     decisiones = partida.decisiones
-    return {
+    resumen = {
         "completada": completada,
         "titulo": final["titulo"],
         "texto": final["texto"],
@@ -456,3 +459,4 @@ def resumen_final(partida):
         "logros": [logros[i] for i in partida.logros if i in logros],
         "mapa": list(partida.registros.all()),
     }
+    return tematicas.tematizar_final(resumen, partida.tematica)  # CU-07

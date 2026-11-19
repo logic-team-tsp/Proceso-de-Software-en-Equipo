@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Vista previa — {{ vista.tematica.nombre }}{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/partida.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
+{% endblock %}
+
+{# La vista previa debe abrir en menos de 1 s: sin pantalla de carga #}
+{% block loader %}{% endblock %}
+
+{# CU07 pasos 3 y 4: la misma escena en la Clásica (izquierda) y con la temática (derecha) #}
+{% block page %}
+  {% with t=vista.tematica %}
+  <span class="c7-chip-top">Tu saldo: <b id="c7-saldo-top">★ {{ vista.saldo }}</b></span>
+
+  <div class="book visible c7-libro" id="main-book">
+    {% if t.precio %}<div class="ribbon" aria-label="Precio: {{ t.precio }} estrellas">PRECIO<b>★{{ t.precio }}</b></div>{% endif %}
+    <div class="pages"><div class="spread active">
+      <section class="page left">
+        <div class="chapter-label">VISTA PREVIA · UN EVENTO REAL</div>
+        <h1 class="chapter-title">{{ vista.clasica.icono }} {{ vista.clasica.nombre }}</h1>
+        <div class="ornament" aria-hidden="true"></div>
+        <p class="choose-sub">{{ vista.clasica.capitulo }}</p>
+        <p class="c7-titulo-evento">{% include "_c7_texto.html" with trozos=vista.clasica.titulo %}</p>
+        <p class="c7-texto">{% include "_c7_texto.html" with trozos=vista.clasica.contexto %}</p>
+        <div class="c7-opciones">
+          {% for op in vista.clasica.opciones %}
+          <div class="choice renglon"><div class="medallion">{% cycle "A" "B" "C" "D" %}</div><div><p class="pt-opcion">{% include "_c7_texto.html" with trozos=op %}</p></div></div>
+          {% endfor %}
+        </div>
+        {% if vista.glosario %}
+        <p class="c7-subt">LO QUE CAMBIA CON {{ t.nombre|upper }} (GLOSARIO)</p>
+        <ul class="c7-glosario">
+          {% for g in vista.glosario %}<li><span>{{ g.de }}</span><span aria-hidden="true">→</span><span>{{ g.a }}</span></li>{% endfor %}
+        </ul>
+        {% endif %}
+        <div class="page-num">– 1 –</div>
+      </section>
+
+      <section class="page right">
+        <div class="chapter-label">LA MISMA ESCENA CON</div>
+        <h1 class="chapter-title">{{ t.icono }} {{ t.nombre }}</h1>
+        <div class="ornament" aria-hidden="true"></div>
+        <span class="c7-sello-adq" id="c7-sello" {% if t.estado != "adquirida" %}hidden{% endif %}>✔ ADQUIRIDA</span>
+        <p class="choose-sub">{{ vista.escena.capitulo }}</p>
+        <p class="c7-titulo-evento">{% include "_c7_texto.html" with trozos=vista.escena.titulo %}</p>
+        <p class="c7-texto">{% include "_c7_texto.html" with trozos=vista.escena.contexto %}</p>
+        <div class="c7-opciones">
+          {% for op in vista.escena.opciones %}
+          <div class="choice renglon"><div class="medallion">{% cycle "A" "B" "C" "D" %}</div><div><p class="pt-opcion">{% include "_c7_texto.html" with trozos=op %}</p></div></div>
+          {% endfor %}
+        </div>
+        <div class="c7-ley"><span><span class="c7-term">término</span> cambia con la temática</span><span><span class="c7-tec">tecnicismo</span> nunca cambia</span></div>
+        <p class="c5-ayuda">Mismas opciones, misma respuesta correcta, mismas vidas y XP.</p>
+
+        <div class="c7-avisos" id="c7-avisos" role="alert"></div>
+
+        <div class="c7-compra" id="c7-compra" data-estado="{{ t.estado }}">
+          {% if t.estado == "adquirida" %}
+            {# FA3: ya la tiene; en lugar de «Comprar» se ofrece usarla #}
+            {% if vista.compra %}<div class="fila"><span class="k">Comprada</span><span class="v">{{ vista.compra.fecha|date:"j M Y" }} · ★ {{ vista.compra.precio }}</span></div>{% endif %}
+            <div class="fila"><span class="k">Tu saldo</span><span class="v">★ {{ vista.saldo }}</span></div>
+            <div class="btn-row">
+              <a class="book-btn" href="{% url 'tienda' %}">⬅ Tienda</a>
+              <form method="post" action="{{ vista.urls.usar }}">{% csrf_token %}<button class="book-btn go" type="submit">Usar en mi próxima partida ➔</button></form>
+            </div>
+          {% else %}
+            <div class="fila"><span class="k">Precio</span><span class="v">★ {{ t.precio }}</span></div>
+            <div class="fila"><span class="k">Tu saldo</span><span class="v" id="c7-saldo">★ {{ vista.saldo }}</span></div>
+            {# FA1: le faltan estrellas; el botón queda deshabilitado y se le dice cuántas #}
+            <p class="c7-falta" id="c7-falta" {% if t.estado != "faltan" %}hidden{% endif %}>
+              Te faltan <b id="c7-faltan">{{ t.faltan }}</b> ★. Gánalas en el <a href="{{ vista.urls.codigo }}">Minijuego de código</a> o en <a href="{{ vista.urls.ordenar }}">Ordenar algoritmos</a>.
+            </p>
+            <div class="btn-row">
+              <a class="book-btn" href="{% url 'tienda' %}">⬅ Tienda</a>
+              <button class="book-btn go" type="button" id="c7-comprar" {% if t.estado == "faltan" %}disabled{% endif %}>
+                {% if t.estado == "faltan" %}🔒 Comprar por {{ t.precio }} ★{% else %}Comprar por {{ t.precio }} ★{% endif %}
+              </button>
+            </div>
+          {% endif %}
+        </div>
+        <div class="page-num">– 2 –</div>
+      </section>
+    </div></div>
+  </div>
+
+  {# Pasos 5 y 6: confirmación con el precio y el saldo que le quedará (FA2: cancelar) #}
+  <div class="c5-velo" id="c7-confirmar" hidden>
+    <div class="c5-dialogo" role="alertdialog" aria-modal="true" aria-labelledby="c7-confirmar-titulo">
+      <div class="emblem c7-dlg-emblem" aria-hidden="true">{{ t.icono }}</div>
+      <h2 id="c7-confirmar-titulo">¿Comprar la temática {{ t.nombre }}?</h2>
+      <div class="sheet c7-cuenta">
+        <div class="sheet-row"><span class="k">Tu saldo</span><span class="v" id="c7-dlg-saldo">★ {{ vista.saldo }}</span></div>
+        <div class="sheet-row"><span class="k">Precio</span><span class="v">− ★ {{ t.precio }}</span></div>
+        <div class="sheet-row total"><span class="k">Te quedarán</span><span class="v" id="c7-dlg-queda">★ {{ vista.queda }}</span></div>
+      </div>
+      <p class="c5-ayuda">La compra es permanente y no tiene reembolso. Las estrellas de las tarjetas de los minijuegos no cambian; solo baja tu saldo de la tienda.</p>
+      <div class="btn-row c7-velo-acciones">
+        <button class="book-btn" type="button" id="c7-cancelar">Cancelar</button>
+        <button class="book-btn go" type="button" id="c7-confirmar-btn">Confirmar compra</button>
+      </div>
+    </div>
+  </div>
+
+  {# Paso 9: ¡Temática desbloqueada! #}
+  <div class="c5-velo" id="c7-listo" hidden>
+    <div class="c5-dialogo c7-desbloq" role="dialog" aria-modal="true" aria-labelledby="c7-listo-titulo">
+      <div class="emblem c7-dlg-emblem" aria-hidden="true">{{ t.icono }}</div>
+      <h2 id="c7-listo-titulo">¡Temática desbloqueada!</h2>
+      <p>Ya puedes jugar la Historia narrativa con la temática <b>{{ t.nombre }}</b>.</p>
+      <div class="sheet c7-cuenta">
+        <div class="sheet-row"><span class="k">Saldo anterior</span><span class="v" id="c7-listo-antes">★ {{ vista.saldo }}</span></div>
+        <div class="sheet-row total"><span class="k">Saldo actual</span><span class="v" id="c7-listo-saldo">★ {{ vista.queda }}</span></div>
+      </div>
+      <div class="btn-row c7-velo-acciones">
+        <a class="book-btn" href="{% url 'tienda' %}" id="c7-seguir">Seguir en la tienda</a>
+        <form method="post" action="{{ vista.urls.usar }}">{% csrf_token %}<button class="book-btn go" type="submit">Usar en mi próxima partida ➔</button></form>
+      </div>
+    </div>
+  </div>
+  {% endwith %}
+
+  {{ vista_json|json_script:"c7-datos" }}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/tienda.js' %}"></script>
+{% endblock %}

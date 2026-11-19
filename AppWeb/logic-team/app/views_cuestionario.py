@@ -7,12 +7,21 @@ app/data/tecnicismos.json.
 
 import json
 
+from django.db import DatabaseError
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
-from .services import cuestionario, escenarios, logros, minijuego_codigo, ordenar, tecnicismos
+from .services import (
+    cuestionario,
+    escenarios,
+    logros,
+    minijuego_codigo,
+    ordenar,
+    tecnicismos,
+    tematicas,
+)
 
 
 def _cuerpo_json(request):
@@ -44,10 +53,14 @@ def menu_modos(request):
         algoritmos = ordenar.resumen_jugador(jugador)
     except escenarios.CatalogoError as exc:
         return render(request, "partida_error.html", {"errores": exc.errores}, status=500)
+    try:  # CU07 paso 1: acceso a la tienda con el saldo a la vista
+        tienda = tematicas.resumen_menu(jugador)
+    except (tematicas.CatalogoError, DatabaseError):
+        tienda = None  # FE6: el botón abre la tienda, que muestra «Reintentar»
     return render(
         request,
         "modos.html",
-        {"resumen": resumen, "codigo": codigo, "ordenar": algoritmos},
+        {"resumen": resumen, "codigo": codigo, "ordenar": algoritmos, "tienda": tienda},
     )
 
 

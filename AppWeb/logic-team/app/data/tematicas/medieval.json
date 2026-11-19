@@ -1,0 +1,71 @@
+{
+  "id": "medieval",
+  "nombre": "Medieval",
+  "icono": "🏰",
+  "orden": 2,
+  "precio": 6,
+  "descripcion": "El rey te pide encargos para el castillo y el gremio de aprendices te ayuda.",
+  "vista_previa": "ip-tipos-n",
+  "portada": {
+    "color": "#5b3a1a",
+    "sello": "🛡️"
+  },
+  "capitulos": {
+    "II": "Los Cimientos del Castillo",
+    "III": "La Prueba del Escudero",
+    "IV": "El Reino Real"
+  },
+  "glosario": {
+    "cliente": {
+      "el cliente": "el rey",
+      "del cliente": "del rey",
+      "al cliente": "al rey",
+      "un cliente": "un noble",
+      "ningún cliente": "ningún noble"
+    },
+    "clientes": {
+      "los clientes": "los súbditos",
+      "clientes": "súbditos"
+    },
+    "proyecto": {
+      "el proyecto": "el encargo",
+      "del proyecto": "del encargo",
+      "otro proyecto": "otro encargo",
+      "otros proyectos": "otros encargos"
+    },
+    "equipo": {
+      "el equipo": "el gremio",
+      "del equipo": "del gremio",
+      "al equipo": "al gremio",
+      "tu equipo": "tu gremio"
+    },
+    "empresa": {
+      "la empresa": "la corte",
+      "la startup": "la corte"
+    },
+    "gerente": {
+      "el gerente": "el consejero real",
+      "la gerente": "la consejera real"
+    },
+    "lider": {
+      "tu líder técnica": "tu maestra de forja",
+      "tu líder": "tu maestro de forja"
+    },
+    "companero": {
+      "un compañero": "un aprendiz",
+      "tu compañero": "tu aprendiz",
+      "otro compañero": "otro aprendiz",
+      "una compañera": "una aprendiz",
+      "dos compañeros": "dos aprendices"
+    },
+    "dueno": {
+      "el dueño": "el señor",
+      "la dueña": "la señora"
+    },
+    "clienta": {
+      "la clienta": "la reina",
+      "de la clienta": "de la reina",
+      "a la clienta": "a la reina"
+    }
+  }
+}

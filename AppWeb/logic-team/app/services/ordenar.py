@@ -549,6 +549,18 @@ def resumen_juego(intentos):
     return resumen
 
 
+def estrellas_ganadas(jugador):
+    """CU07-RN01: suma de la mejor calificación de cada nivel, en cualquier juego.
+
+    Repetir un nivel con el mismo resultado no suma; mejorarlo suma solo la diferencia.
+    """
+    mejores = {}
+    resueltos = _de_jugador(jugador).filter(estado=IntentoOrdenar.RESUELTO)
+    for nivel, estrellas in resueltos.values_list("nivel", "estrellas"):
+        mejores[nivel] = max(mejores.get(nivel, 0), estrellas or 0)
+    return sum(mejores.values())
+
+
 def resumen_jugador(jugador):
     """Para la tarjeta del menú de modos: el avance del juego en curso."""
     return resumen_juego(_de_jugador(jugador))

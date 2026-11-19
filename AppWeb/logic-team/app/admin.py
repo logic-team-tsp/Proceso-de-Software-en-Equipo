@@ -2,9 +2,11 @@
 from django.contrib import admin
 
 from .models import (
+    CompraTematica,
     EstadisticaJugador,
     IntentoCodigo,
     LogroJugador,
+    MonederoTienda,
     Partida,
     Puntuacion,
     RegistroDecision,
@@ -23,8 +25,10 @@ class RegistroDecisionInline(admin.TabularInline):
 
 @admin.register(Partida)
 class PartidaAdmin(admin.ModelAdmin):
-    list_display = ("id", "perfil_nombre", "estado", "hp", "xp", "indice", "puntuacion", "creada")
-    list_filter = ("estado",)
+    list_display = (
+        "id", "perfil_nombre", "tematica", "estado", "hp", "xp", "indice", "puntuacion", "creada"
+    )
+    list_filter = ("estado", "tematica")
     inlines = [RegistroDecisionInline]
 
 
@@ -82,3 +86,16 @@ class PuntuacionAdmin(admin.ModelAdmin):
 class EstadisticaJugadorAdmin(admin.ModelAdmin):
     list_display = ("usuario", "sesion", "actualizada")
     readonly_fields = ("contadores", "procesados")
+
+
+# CU07 - Comprar módulos temáticos de partida
+@admin.register(CompraTematica)
+class CompraTematicaAdmin(admin.ModelAdmin):
+    list_display = ("tematica_id", "precio", "usuario", "sesion", "fecha")
+    list_filter = ("tematica_id",)
+    search_fields = ("tematica_id", "usuario__username", "sesion")
+
+
+@admin.register(MonederoTienda)
+class MonederoTiendaAdmin(admin.ModelAdmin):
+    list_display = ("usuario", "sesion", "gastadas", "actualizado")

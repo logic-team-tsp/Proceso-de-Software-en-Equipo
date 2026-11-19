@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{% static 'css/taller.css' %}">
   <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
   <link rel="stylesheet" href="{% static 'css/ordenar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
 {% endblock %}
 
 {% block loader %}{% endblock %}
@@ -24,6 +25,19 @@
     {# FE1: aquí aparece el aviso si hay resultados del cuestionario pendientes de sincronizar #}
     <div class="tl-aviso info c5-pendientes" id="c5-pendientes" role="status" hidden></div>
 
+    {# CU07 paso 1: la tienda se abre en 1 clic, con el saldo a la vista #}
+    <a class="perfil-card c7-acceso" id="btn-tienda" href="{% url 'tienda' %}">
+      <span class="emblem" aria-hidden="true">🏪</span>
+      <span class="c7-acceso-txt">
+        <span class="c7-acceso-titulo">Tienda de temáticas</span>
+        <span class="c7-acceso-desc">Cambia la ambientación de tu historia con las estrellas de los minijuegos: Medieval, Samurái, Academia de magia…</span>
+      </span>
+      <span class="der">
+        {% if tienda %}<span class="c7-saldo-chip" aria-label="Tu saldo: {{ tienda.saldo }} estrellas">★ {{ tienda.saldo }}</span>{% endif %}
+        <span class="book-btn go">Abrir tienda ➔</span>
+      </span>
+    </a>
+
     <div class="c5-modos">
       {# FA2: Historia narrativa ejecuta el CU01 (pasando por CU02 para armar la partida) #}
       <div class="perfil-card c5-modo desbloqueado">
@@ -31,7 +45,7 @@
         <div class="emblem" aria-hidden="true">📖</div>
         <h3>Historia narrativa</h3>
         <p>Vive tu primer proyecto como ingeniero: toma decisiones, enfrenta pruebas y descubre nuevos tecnicismos.</p>
-        <div class="tags"><span class="stamp">🎭 Elige tu perfil</span><span class="stamp">📚 Elige tus temas</span></div>
+        <div class="tags"><span class="stamp">🎭 Elige tu perfil</span><span class="stamp">📚 Elige tus temas</span>{% if tienda and tienda.adquiridas > 1 %}<span class="stamp">🏰 {{ tienda.adquiridas }} temáticas</span>{% endif %}</div>
         <a class="book-btn go" id="btn-historia" href="{% url 'personalizar_perfil' %}">Jugar historia ➔</a>
       </div>
 

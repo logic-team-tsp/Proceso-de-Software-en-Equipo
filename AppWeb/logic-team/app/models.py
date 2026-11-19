@@ -58,6 +58,9 @@ class Partida(models.Model):
     # CU-06 Conseguir vidas (app/services/conseguir_vidas.py): conteo de eventos para la
     # sugerencia, preguntas vistas, vidas recuperadas y la ronda en juego.
     vidas_extra = models.JSONField(default=dict, blank=True)
+    # CU-07: temática con la que se narra la historia (app/data/tematicas/). Se elige en CU-02
+    # y no cambia hasta que la partida termina (RN06). «clasica» es la historia sin cambios.
+    tematica = models.CharField(max_length=40, default="clasica", blank=True)
 
     creada = models.DateTimeField(auto_now_add=True)
     actualizada = models.DateTimeField(auto_now=True)
@@ -393,3 +396,74 @@ class Puntuacion(models.Model):
 
     def __str__(self):
         return f"{self.usuario_id or self.sesion} · {self.total} pts ({self.final_titulo})"
+
+
+# ---------------------------------------------------------------- CU07 Comprar módulos temáticos
+# Igual que CU04, CU05, CU08 y CU09, las compras son del usuario con sesión iniciada o, si no
+# hay, de la sesión del navegador. El catálogo vive en app/data/tematicas/*.json y las reglas en
+# app/services/tematicas.py. El saldo no se guarda: son las estrellas ganadas en CU04 y CU09
+# menos las gastadas (RN01).
+class MonederoTienda(models.Model):
+    """Estrellas gastadas por el jugador en la tienda.
+
+    Hay uno por jugador y se bloquea durante una compra: así dos compras al mismo tiempo (dos
+    pestañas, FE3) no pueden gastar las mismas estrellas.
+    """
+
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="monedero_tienda",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    gastadas = models.PositiveIntegerField(default=0)
+    actualizado = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["sesion"],
+                condition=models.Q(usuario__isnull=True),
+                name="monedero_unico_por_sesion",
+            ),
+        ]
+
+    def __str__(self):
+        return f"Monedero de {self.usuario_id or self.sesion}: {self.gastadas} gastadas"
+
+
+class CompraTematica(models.Model):
+    """Temática comprada en la tienda: permanente y sin reembolso (RN03)."""
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="compras_tematica",
+    )
+    sesion = models.CharField(max_length=40, blank=True, db_index=True)
+    tematica_id = models.CharField(max_length=40)
+    precio = models.PositiveIntegerField()  # el precio que pagó, aunque después cambie
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["fecha"]
+        constraints = [
+            # Se compra una sola vez (RN03); un doble clic no cobra dos veces (FE2)
+            models.UniqueConstraint(
+                fields=["usuario", "tematica_id"],
+                condition=models.Q(usuario__isnull=False),
+                name="compra_unica_por_usuario",
+            ),
+            models.UniqueConstraint(
+                fields=["sesion", "tematica_id"],
+                condition=models.Q(usuario__isnull=True),
+                name="compra_unica_por_sesion",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.usuario_id or self.sesion} -> {self.tematica_id} ({self.precio}★)"
