@@ -598,6 +598,11 @@ def _mejores(jugador):
     return mejores
 
 
+def estrellas_ganadas(jugador):
+    """CU07-RN01: suma de la mejor calificación de cada nivel (por lenguaje) resuelto."""
+    return sum(_mejores(jugador).values())
+
+
 def lenguaje_para(jugador, pedido=None):
     """El lenguaje que se pidio o, si no, el del ultimo intento del jugador."""
     if pedido in LENGUAJES:

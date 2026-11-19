@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tienda de temáticas{% endblock %}
+{% block body_class %}pagina-plana{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/personalizar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
+  <link rel="stylesheet" href="{% static 'css/partida.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
+{% endblock %}
+
+{% block loader %}{% endblock %}
+
+{# CU07 paso 2: saldo (RN01) y catálogo de temáticas con su estado #}
+{% block page %}
+  <header class="pc-topbar"><span class="file">tienda_de_tematicas</span><span class="ext">.jsx</span></header>
+
+  <main class="pc-main">
+    <h1 class="pc-title">Tienda de temáticas</h1>
+    <p class="pc-sub">Cambia la ambientación de la Historia narrativa con las estrellas que ganas en los minijuegos. La historia, las opciones y los tecnicismos no cambian.</p>
+
+    {% if error_carga %}
+      {# FE6: no se pudo leer el catálogo o el saldo; las compras no se ven afectadas #}
+      <div class="c7-banner error" role="alert">
+        <span class="ico" aria-hidden="true">⚠️</span>
+        <div class="txt"><b>No se pudo cargar la tienda</b>Tus compras anteriores están a salvo. Inténtalo otra vez en un momento.</div>
+        <div class="btns"><a class="book-btn go" href="{% url 'tienda' %}" id="c7-reintentar">↻ Reintentar</a></div>
+      </div>
+    {% else %}
+      <div class="perfil-card c7-saldo" aria-label="Tu saldo">
+        <div class="big"><b>★ {{ tienda.saldo }}</b><span>tu saldo</span></div>
+        <p class="formula"><b>{{ tienda.ganadas }}</b> estrella{{ tienda.ganadas|pluralize }} ganada{{ tienda.ganadas|pluralize }} − <b>{{ tienda.gastadas }}</b> gastada{{ tienda.gastadas|pluralize }} = <b>{{ tienda.saldo }}</b> para gastar</p>
+        <div class="detalle">
+          {% for d in tienda.detalle %}<span class="stamp pt-stamp-oro">{{ d.nombre }} · {{ d.estrellas }}★</span>{% endfor %}
+        </div>
+      </div>
+
+      {% if tienda.sin_estrellas %}
+        {# FA4: todavía no ha ganado estrellas; puede ver el catálogo y las vistas previas #}
+        <div class="c7-banner info" role="status">
+          <span class="ico" aria-hidden="true">⭐</span>
+          <div class="txt"><b>Completa minijuegos para ganar estrellas</b>Cada nivel del Minijuego de código y de Ordenar algoritmos da hasta 3 estrellas. Mientras, puedes ver las vistas previas.</div>
+          <div class="btns">
+            <a class="book-btn" href="{% url 'codigo_inicio' %}">🧩 Minijuego de código</a>
+            <a class="book-btn" href="{% url 'ordenar_inicio' %}">🔢 Ordenar algoritmos</a>
+          </div>
+        </div>
+      {% elif tienda.todas %}
+        {# FA5: ya compró todo el catálogo #}
+        <div class="c7-banner ok" role="status">
+          <span class="ico" aria-hidden="true">🏆</span>
+          <div class="txt"><b>¡Tienes todas las temáticas!</b>Tu saldo se queda guardado para las temáticas que lleguen después.</div>
+        </div>
+      {% endif %}
+
+      <div class="c7-grid">
+        {% for t in tienda.tematicas %}
+        <div class="perfil-card c7-tema {{ t.estado }}">
+          <div class="emblem" aria-hidden="true">{{ t.icono }}</div>
+          <h3>{{ t.nombre }}</h3>
+          <p>{{ t.descripcion }}</p>
+          <p class="c7-precio">{% if t.precio %}<span class="c7-e" aria-hidden="true">★</span> {{ t.precio }} estrellas{% else %}Gratis{% endif %}</p>
+          {% if t.estado == "adquirida" %}
+            <span class="c7-estado">✔ ADQUIRIDA</span>
+          {% elif t.estado == "disponible" %}
+            <span class="c7-estado">★ DISPONIBLE</span>
+          {% else %}
+            <span class="c7-estado">🔒 FALTAN {{ t.faltan }} ★</span>
+          {% endif %}
+          <a class="book-btn{% if t.estado == 'disponible' %} go{% endif %}" href="{% url 'tienda_vista' t.id %}"
+             aria-label="Ver vista previa de {{ t.nombre }}">Ver vista previa{% if t.estado == 'disponible' %} ➔{% endif %}</a>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# FA7: regresa al menú de modos sin hacer cambios #}
+    <div class="pc-volver"><a class="book-btn" href="{% url 'menu_modos' %}">⬅ Volver</a></div>
+  </main>
+{% endblock %}

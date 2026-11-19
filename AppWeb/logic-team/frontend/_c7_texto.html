@@ -1,0 +1,1 @@
+{# CU07: texto de la vista previa. «termino» cambia con la temática (RN05); «tec» es un tecnicismo, que nunca cambia (RN04). #}{% for s in trozos %}{% if s.tipo == "termino" %}<span class="c7-term">{{ s.texto }}</span>{% elif s.tipo == "tec" %}<span class="c7-tec">{{ s.texto }}</span>{% else %}{{ s.texto }}{% endif %}{% endfor %}

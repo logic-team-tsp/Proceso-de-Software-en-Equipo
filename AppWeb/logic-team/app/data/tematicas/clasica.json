@@ -1,0 +1,63 @@
+{
+  "_ayuda": "CU07. La Clásica es la historia tal como está en app/data/escenarios/. Es gratis y siempre está adquirida (RN02). 'terminos' son los términos reemplazables (RN05): cada temática debe dar el reemplazo de cada forma. Una forma es la frase exacta como aparece en los eventos, en minúsculas; las mayúsculas del texto se respetan solas. Nunca pongas aquí un tecnicismo (app/data/tecnicismos.json).",
+  "id": "clasica",
+  "nombre": "Clásica",
+  "icono": "📖",
+  "orden": 1,
+  "precio": 0,
+  "descripcion": "La historia tal como la conoces: una empresa de software, sus clientes y tu equipo.",
+  "vista_previa": "ip-tipos-n",
+  "terminos": {
+    "cliente": [
+      "el cliente",
+      "del cliente",
+      "al cliente",
+      "un cliente",
+      "ningún cliente"
+    ],
+    "clientes": [
+      "los clientes",
+      "clientes"
+    ],
+    "proyecto": [
+      "el proyecto",
+      "del proyecto",
+      "otro proyecto",
+      "otros proyectos"
+    ],
+    "equipo": [
+      "el equipo",
+      "del equipo",
+      "al equipo",
+      "tu equipo"
+    ],
+    "empresa": [
+      "la empresa",
+      "la startup"
+    ],
+    "gerente": [
+      "el gerente",
+      "la gerente"
+    ],
+    "lider": [
+      "tu líder técnica",
+      "tu líder"
+    ],
+    "companero": [
+      "un compañero",
+      "tu compañero",
+      "otro compañero",
+      "una compañera",
+      "dos compañeros"
+    ],
+    "dueno": [
+      "el dueño",
+      "la dueña"
+    ],
+    "clienta": [
+      "la clienta",
+      "de la clienta",
+      "a la clienta"
+    ]
+  }
+}

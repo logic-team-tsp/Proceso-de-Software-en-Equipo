@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from app.services import conseguir_vidas, escenarios, logros, minijuego_codigo, ordenar
+from app.services import conseguir_vidas, escenarios, logros, minijuego_codigo, ordenar, tematicas
 
 
 class Command(BaseCommand):
@@ -8,7 +8,8 @@ class Command(BaseCommand):
         "Valida config_juego.json, los escenarios de app/data/escenarios/*.json, las "
         "afirmaciones del CU-06 (app/data/preguntas_vidas.json), los programas del CU-04 "
         "(app/data/niveles_codigo/*.json), los algoritmos del CU-09 (app/data/algoritmos.json) y "
-        "los logros del CU-08 (app/data/logros.json)."
+        "los logros del CU-08 (app/data/logros.json) y las temáticas del CU-07 "
+        "(app/data/tematicas/*.json)."
     )
 
     def handle(self, *args, **options):
@@ -19,6 +20,8 @@ class Command(BaseCommand):
         errores += ordenar.validar()  # CU-09
         if not errores:
             errores = logros.validar()  # CU-08: necesita los escenarios sin errores
+        if not errores:
+            errores = tematicas.validar()  # CU-07: necesita los escenarios sin errores
         if errores:
             for error in errores:
                 self.stderr.write(self.style.ERROR(f"- {error}"))
@@ -64,5 +67,18 @@ class Command(BaseCommand):
                 f"Logros del CU-08 válidos: {len(catalogo_logros['logros'])} logros "
                 f"({ocultos} ocultos) en {len(catalogo_logros['categorias'])} categorías y "
                 f"{catalogo_logros['total_finales']} finales."
+            )
+        )
+        catalogo_tematicas = tematicas.cargar()
+        de_pago = [
+            catalogo_tematicas["tematicas"][i]
+            for i in catalogo_tematicas["orden"]
+            if catalogo_tematicas["tematicas"][i]["precio"]
+        ]
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Temáticas del CU-07 válidas: la Clásica y {len(de_pago)} de pago "
+                f"({', '.join(t['nombre'] for t in de_pago)}), con "
+                f"{len(catalogo_tematicas['terminos'])} términos en el glosario."
             )
         )

@@ -79,5 +79,16 @@
     }
   });
 
+  // CU07 paso B1: la hoja de personaje muestra la temática elegida
+  const prevTematica = document.getElementById("prev-tematica");
+  form.querySelectorAll('input[name="tematica"]').forEach((r) =>
+    r.addEventListener("change", () => {
+      if (!prevTematica || !r.checked) return;
+      const card = r.closest(".c7-op-tematica");
+      prevTematica.textContent =
+        card.querySelector(".emblem").textContent + " " + card.querySelector(".c7-op-nombre").textContent;
+    })
+  );
+
   actualizar(); // por si el servidor devolvió temas ya elegidos
 })();

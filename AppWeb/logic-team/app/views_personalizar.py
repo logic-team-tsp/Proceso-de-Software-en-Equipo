@@ -11,7 +11,7 @@ import json
 
 from django.shortcuts import redirect, render
 
-from .services import escenarios, motor_partida
+from .services import escenarios, motor_partida, tecnicismos, tematicas
 
 # Atributos de 1 a 10 (los mismos del juego, ver app/data/config_juego.json).
 # Equilibrio: todos los perfiles reparten 9 puntos y empiezan con 3 vidas y 0 XP;
@@ -176,10 +176,25 @@ def personalizar_modulo(request):
 
     error = None
     marcados = [t for t in request.session.get("temas_ids", []) if t in TEMAS]
+    # CU-07 paso B1: la Clásica y las temáticas adquiridas. «Usar en mi próxima partida» deja
+    # la temática elegida en la sesión para que aparezca ya seleccionada.
+    jugador = tecnicismos.jugador_de(request)
+    try:
+        opciones_tematica = tematicas.adquiridas(jugador)
+    except tematicas.CatalogoError:
+        opciones_tematica = []  # FE6: la partida se juega con la Clásica
+    tematica_elegida = tematicas.para_partida(
+        jugador, request.session.get("tematica_elegida", tematicas.CLASICA)
+    )
 
     if request.method == "POST":
         # sin repetidos, en el orden recibido
         marcados = list(dict.fromkeys(request.POST.getlist("tema")))
+        # FA6: sin cambiar el selector queda la Clásica; FE5: una no adquirida también
+        tematica_elegida = tematicas.para_partida(
+            jugador, request.POST.get("tematica", tematicas.CLASICA)
+        )
+        request.session["tematica_elegida"] = tematica_elegida
         if not marcados or any(t not in TEMAS for t in marcados):
             # RN02: toda partida necesita al menos un tema educativo
             error = "Debes seleccionar al menos un tema para continuar."
@@ -192,6 +207,7 @@ def personalizar_modulo(request):
                 "vidas": perfil["vidas"],
                 "xp": perfil["xp"],
                 "temas": marcados,
+                "tematica": tematica_elegida,  # CU-07 (RN06)
             }
             return redirect("partida_inicio")
 
@@ -202,6 +218,8 @@ def personalizar_modulo(request):
             "perfil": perfil,
             "modulos": MODULOS,
             "marcados": marcados,
+            "tematicas": opciones_tematica,
+            "tematica_elegida": tematica_elegida,
             "max_eventos": escenarios.cargar()[0]["max_eventos_por_partida"],
             "error": error,
         },
@@ -218,11 +236,16 @@ def partida_inicio(request):
             "personalizar_perfil"
         )
     perfil = next((p for p in PERFILES if p["id"] == datos.get("perfil_id")), None)
+    # CU-07 paso B3: se vuelve a revisar que la temática sea del jugador (FE4, FE5)
+    tematica = tematicas.para_partida(
+        tecnicismos.jugador_de(request), datos.get("tematica", tematicas.CLASICA)
+    )
     try:
         partida = motor_partida.crear_partida(
             perfil,
             datos.get("temas", []),
             usuario=request.user if request.user.is_authenticated else None,
+            tematica=tematica,
         )
     except motor_partida.ReglaError:
         return redirect("personalizar_perfil" if perfil is None else "personalizar_modulo")

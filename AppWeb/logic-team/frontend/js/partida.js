@@ -234,6 +234,22 @@
 
   // ------------------------------------------------------------ fases
   // Flujo normal paso 1 (y FA2.1): situación, estado del jugador y opciones.
+  // CU07: la temática de la partida (RN04). La cubierta del libro toma su color y el evento
+  // lleva un sello con su nombre; con la Clásica no cambia nada.
+  function aplicarTematica(e) {
+    const libro = document.getElementById("main-book");
+    const t = e.tematica;
+    if (!libro || !t) return;
+    libro.dataset.tematica = t.id;
+    if (t.color) libro.style.setProperty("--c7-portada", t.color);
+  }
+
+  function marcaTematica(e) {
+    const t = e.tematica;
+    if (!t || t.id === "clasica") return null;
+    return con(el("div", "c7-tematica-tag"), sello(`${t.icono} Temática ${t.nombre}`, "pt-stamp-oro"));
+  }
+
   function pintarEvento(e) {
     const ev = e.evento;
     const probabilidad = ev.tipo === "probabilidad";
@@ -244,6 +260,7 @@
       el("div", "chapter-label", `CAPÍTULO ${e.bloque.capitulo} · ${e.bloque.nombre.toUpperCase()}`),
       el("h1", "chapter-title", ev.titulo),
       ornamento(),
+      marcaTematica(e), // CU07
       el("p", "pt-tema", `${ev.tema} · ${ev.subtema}`),
       historia,
       tec ? tec.tira(e.tecnicismos, e.tecnicismos_nuevos) : null, // RF-40 y aviso de RF-41
@@ -414,6 +431,7 @@
     }
     vaciar(izq);
     vaciar(der);
+    aplicarTematica(e); // CU07
     listonCap.textContent = e.bloque.capitulo;
     if (e.fase === "resultado") pintarResultado(e);
     else if (e.fase === "mejora") pintarMejora(e);
