@@ -66,6 +66,18 @@
       "la clienta": "la reina",
       "de la clienta": "de la reina",
       "a la clienta": "a la reina"
+    },
+    "practicante": {
+      "el practicante": "el escudero",
+      "la practicante": "la escudera",
+      "un practicante": "un escudero",
+      "una practicante": "una escudera"
+    },
+    "jefe": {
+      "tu jefe": "tu capitán",
+      "tu jefa": "tu capitana",
+      "el jefe": "el capitán",
+      "la jefa": "la capitana"
     }
   }
 }

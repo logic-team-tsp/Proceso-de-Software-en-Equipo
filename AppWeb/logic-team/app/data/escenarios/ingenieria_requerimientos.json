@@ -59,6 +59,138 @@
       ]
     },
     {
+      "id": "ir-fund-n2",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "Simulacro o Alerta Real",
+      "contexto": "Protección civil del municipio encarga un sistema para enviar alertas a los celulares. En el borrador, «Simulacro» y «Alerta real» son dos opciones juntas en la misma lista desplegable. En 2018, un error así envió una alerta falsa de misil a todo Hawái. Debes decidir qué requerimiento agregar.",
+      "tecnicismos": [
+        "usabilidad",
+        "requerimiento-no-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Un requerimiento no funcional de usabilidad: separar el simulacro de la alerta real, pedir una confirmación distinta y permitir enviar una corrección en segundos.",
+          "correcta": true,
+          "retroalimentacion": "La usabilidad incluye prevenir errores humanos: un sistema crítico debe hacer difícil equivocarse y fácil corregir.",
+          "desenlace": "Con pantallas distintas, una confirmación escribiendo «REAL» y un botón para enviar corrección, los simulacros se hacen sin riesgo. La autoridad municipal aprueba el diseño. El primer simulacro sale perfecto."
+        },
+        {
+          "id": "b",
+          "texto": "Agregar una función para enviar más tipos de alerta.",
+          "correcta": false,
+          "retroalimentacion": "Más funciones no resuelven el riesgo; el problema es cómo el usuario elige, no qué puede enviar.",
+          "desenlace": "El menú crece con diez opciones y las dos peligrosas siguen juntas. En el siguiente simulacro alguien vuelve a elegir mal. La ciudad entera recibe una alerta de sismo que no existía."
+        },
+        {
+          "id": "c",
+          "texto": "Capacitar mejor al personal y dejar la interfaz igual.",
+          "correcta": false,
+          "retroalimentacion": "La capacitación ayuda, pero un diseño que facilita el error seguirá produciéndolo, sobre todo bajo presión.",
+          "desenlace": "El personal toma el curso, pero en un cambio de turno a las 8 de la mañana alguien se confunde. La alerta falsa llega a todos los celulares. La ciudad tarda casi una hora en desmentirla."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-n3",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "Los Interesados Olvidados",
+      "contexto": "La app para pedir comida en la cafetería escolar se diseñó entrevistando solo al director. En la primera semana, las cocineras no saben cuándo preparar los pedidos y los papás preguntan cómo pagar. Debes corregir el proceso de elicitación.",
+      "tecnicismos": [
+        "stakeholder",
+        "elicitacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Identificar a todos los interesados (alumnos, papás, cocineras, caja) y entrevistarlos.",
+          "correcta": true,
+          "retroalimentacion": "Los stakeholders son todos a quienes afecta el sistema; una elicitación que escucha solo a quien paga deja fuera requerimientos clave.",
+          "desenlace": "Al entrevistar a cocineras, papás y alumnos aparecen requerimientos que nadie había pensado, como un horario límite para pedir. La segunda versión funciona en toda la escuela. El director reconoce que no conocía esos detalles."
+        },
+        {
+          "id": "b",
+          "texto": "Seguir preguntando solo al director, porque él aprueba el presupuesto.",
+          "correcta": false,
+          "retroalimentacion": "Quien paga no siempre conoce las necesidades de quien usa el sistema; hay que considerar a todos los interesados.",
+          "desenlace": "El director aprueba cambios que no resuelven nada en la cocina. Las cocineras dejan de usar la app y vuelven a las listas en papel. El proyecto queda como un gasto inútil."
+        },
+        {
+          "id": "c",
+          "texto": "Agregar un buzón de sugerencias dentro de la app y esperar.",
+          "correcta": false,
+          "retroalimentacion": "Un buzón pasivo recoge quejas tarde; la elicitación requiere buscar activamente a los interesados.",
+          "desenlace": "Llegan sugerencias sueltas y contradictorias, pero nadie de la cocina usa el buzón. Los problemas siguen durante todo el semestre. La app pierde usuarios cada semana."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-n4",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "¿Esto También es un Requerimiento?",
+      "contexto": "Al levantar requerimientos para el sistema de una biblioteca, la directora dice: «el sistema debe correr en los servidores de la universidad, con su sistema operativo actual, y no podemos pagar licencias». Tu compañero lo anota como requerimiento funcional.",
+      "tecnicismos": [
+        "restriccion",
+        "requerimiento-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Es una restricción: limita cómo se construye el sistema, no lo que hace.",
+          "correcta": true,
+          "retroalimentacion": "Una restricción limita las decisiones de diseño, como la tecnología, el costo o la infraestructura; no describe una función del sistema.",
+          "desenlace": "Al registrarlo como restricción, el equipo elige desde el principio tecnologías libres compatibles con los servidores. Nadie tiene que rehacer nada a medio camino. La directora firma el documento sin cambios."
+        },
+        {
+          "id": "b",
+          "texto": "Es un requerimiento funcional, porque el sistema tiene que funcionar ahí.",
+          "correcta": false,
+          "retroalimentacion": "Un requerimiento funcional describe una acción del sistema, como prestar un libro; dónde y con qué se construye es otra cosa.",
+          "desenlace": "Clasificado como funcional, el dato se pierde entre cien funciones y nadie lo toma en cuenta al elegir tecnología. A medio camino descubren que la base de datos elegida requiere licencia. Hay que migrar todo."
+        },
+        {
+          "id": "c",
+          "texto": "No es un requerimiento, solo un comentario de la directora.",
+          "correcta": false,
+          "retroalimentacion": "Las condiciones que impone el cliente sobre el sistema son requerimientos aunque no describan funciones.",
+          "desenlace": "Nadie lo registra y el sistema se construye en un servicio de pago en la nube. Al entregarlo, la universidad no puede pagarlo. El proyecto se cancela."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-n5",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "«Que Nunca Se Caiga»",
+      "contexto": "El dueño de una tienda en línea de artesanías pide: «el sistema nunca debe caerse». Tu equipo debe clasificar y redactar este requerimiento para el contrato.",
+      "tecnicismos": [
+        "disponibilidad",
+        "requerimiento-no-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Es un requerimiento funcional; se cumple programando bien.",
+          "correcta": false,
+          "retroalimentacion": "Qué tanto tiempo funciona el sistema es una cualidad, no una función; además «nunca» es imposible de garantizar.",
+          "desenlace": "El contrato queda con «nunca debe caerse» y, en la primera falla de la nube, el dueño exige una penalización. Nadie puede probar que se cumplió. La relación con el cliente termina mal."
+        },
+        {
+          "id": "b",
+          "texto": "Es un requerimiento no funcional de disponibilidad: el sistema funcionará el 99.5 % de cada mes, con mantenimientos avisados.",
+          "correcta": true,
+          "retroalimentacion": "La disponibilidad se expresa como un porcentaje de tiempo en funcionamiento; así se puede medir y acordar con el cliente.",
+          "desenlace": "Con la disponibilidad escrita en porcentaje, el equipo elige una infraestructura adecuada y el dueño entiende qué recibe. Cada mes se reporta la cifra real. La relación con el cliente se basa en datos."
+        },
+        {
+          "id": "c",
+          "texto": "No incluirlo en el contrato para no comprometerse.",
+          "correcta": false,
+          "retroalimentacion": "Omitir un requerimiento que el cliente considera clave genera expectativas falsas.",
+          "desenlace": "El dueño da por hecho que nunca se caerá y, en la primera falla, pide su dinero de vuelta. No hay nada por escrito para aclarar. Pierdes al cliente y su recomendación."
+        }
+      ]
+    },
+    {
       "id": "ir-ciclo-n",
       "subtema": "ingenieria-requerimientos:1",
       "titulo": "El Cambio de Última Hora",
@@ -88,6 +220,139 @@
           "correcta": false,
           "retroalimentacion": "Los requerimientos evolucionan; ignorar un cambio válido produce un sistema que no resuelve la necesidad real.",
           "desenlace": "Entregan a tiempo, pero el sistema sigue permitiendo solo 7 materias. Los alumnos que necesitaban 8 no pueden inscribirse, saturan control escolar y la escuela pide rehacer la entrega. Ignorar el cambio terminó costando más que atenderlo a tiempo."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n2",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "Solo un Botoncito Más",
+      "contexto": "Cada viernes, el cliente pide por mensaje «un cambio chiquito»: un botón, un reporte, un filtro. Llevas seis semanas aceptándolos y la fecha de entrega sigue igual, aunque el proyecto ya creció un 40 %. Es la historia más repetida en los foros de programadores: el famoso scope creep.",
+      "tecnicismos": [
+        "crecimiento-alcance",
+        "solicitud-cambio",
+        "analisis-impacto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Seguir aceptando los cambios para mantener contento al cliente.",
+          "correcta": false,
+          "retroalimentacion": "Aceptar cambios sin control es el crecimiento del alcance (scope creep): el proyecto crece y la fecha y el costo se vuelven imposibles.",
+          "desenlace": "Llega la fecha de entrega y la mitad del sistema está a medias. El cliente se enoja porque «se había acordado» todo. El equipo trabaja tres fines de semana seguidos sin pago extra."
+        },
+        {
+          "id": "b",
+          "texto": "Pedir cada cambio como solicitud de cambio, evaluar el impacto y acordar fecha o costo nuevo.",
+          "correcta": true,
+          "retroalimentacion": "Una solicitud de cambio formal permite evaluar el impacto de cada petición y decidir con el cliente si se ajusta la fecha, el costo o el alcance.",
+          "desenlace": "Al ver el impacto de cada cambio por escrito, el cliente decide dejar la mitad para una segunda fase. El proyecto se entrega a tiempo con lo esencial. La segunda fase se cobra aparte."
+        },
+        {
+          "id": "c",
+          "texto": "Rechazar cualquier cambio a partir de hoy.",
+          "correcta": false,
+          "retroalimentacion": "Los cambios son normales en el ciclo de vida de los requerimientos; el problema es no gestionarlos, no que existan.",
+          "desenlace": "El cliente siente que no lo escuchas y busca a otro proveedor para los cambios. El sistema se entrega, pero ya no le sirve del todo. No vuelve a contratar al equipo."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n3",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "¿Cuál es la Versión Buena?",
+      "contexto": "Los requerimientos del sistema de citas viven en un documento compartido que cualquiera edita. Tres semanas después de aprobarlos, nadie sabe qué cambió ni cuándo, y el equipo construyó dos funciones con reglas distintas.",
+      "tecnicismos": [
+        "linea-base",
+        "trazabilidad"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Establecer una línea base con la versión aprobada y mantener la trazabilidad de cada cambio posterior.",
+          "correcta": true,
+          "retroalimentacion": "La línea base es la versión aprobada de referencia; con ella cada cambio se registra y se mantiene la trazabilidad.",
+          "desenlace": "Con la línea base congelada, cada cambio queda registrado con fecha y autor. El equipo vuelve a trabajar sobre la misma versión. La clínica revisa el historial y aprueba los cambios en orden."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que cada quien trabaje con la versión que tenga descargada.",
+          "correcta": false,
+          "retroalimentacion": "Sin una versión de referencia, cada persona construye contra requerimientos distintos.",
+          "desenlace": "Al integrar, las funciones no coinciden y hay que rehacer la mitad. La clínica no entiende por qué el sistema hace cosas que no pidió. El proyecto se retrasa un mes."
+        },
+        {
+          "id": "c",
+          "texto": "Borrar el documento y empezar uno nuevo desde cero.",
+          "correcta": false,
+          "retroalimentacion": "Empezar de cero borra decisiones ya aprobadas y su historia; lo que falta es control, no un documento nuevo.",
+          "desenlace": "El documento nuevo olvida acuerdos importantes con la clínica. En la siguiente reunión, el cliente pregunta por funciones que ya habían aprobado. Se pierde la confianza."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n4",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "Trescientas Ideas en el Tablero",
+      "contexto": "El backlog de la app de un club deportivo tiene 300 ideas sin orden: desde «cobrar la mensualidad en línea» hasta «modo oscuro» y «chat con el entrenador». Solo hay tiempo para unas veinte este trimestre y hay que priorizar.",
+      "tecnicismos": [
+        "backlog",
+        "moscow",
+        "priorizacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Clasificar con MoSCoW junto con el cliente y ordenar el backlog por valor.",
+          "correcta": true,
+          "retroalimentacion": "MoSCoW separa lo imprescindible de lo deseable; ordenar el backlog por valor asegura que lo más importante se construya primero.",
+          "desenlace": "Con MoSCoW, cobrar en línea y registrar asistencias quedan como imprescindibles y el modo oscuro como deseable. El trimestre entrega lo que el club más necesitaba. Los socios empiezan a pagar desde la app."
+        },
+        {
+          "id": "b",
+          "texto": "Empezar por las ideas más fáciles para avanzar rápido.",
+          "correcta": false,
+          "retroalimentacion": "Lo fácil no siempre es lo valioso; priorizar por facilidad puede dejar fuera lo que el cliente más necesita.",
+          "desenlace": "Al final del trimestre hay modo oscuro, stickers y fondos de pantalla, pero los socios siguen pagando en efectivo. El club no ve el beneficio. Recortan el presupuesto del siguiente trimestre."
+        },
+        {
+          "id": "c",
+          "texto": "Hacer un poco de cada idea para que nadie se sienta ignorado.",
+          "correcta": false,
+          "retroalimentacion": "Repartir el esfuerzo entre todo deja muchas funciones a medias y ninguna terminada.",
+          "desenlace": "Al cierre hay cuarenta funciones iniciadas y ninguna lista para usarse. El club no puede lanzar la app. El equipo queda agotado y sin nada que mostrar."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n5",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "El Requerimiento Huérfano",
+      "contexto": "En las pruebas aparece una función para «exportar a fax» que nadie recuerda haber pedido y que consume una semana de mantenimiento. Debes averiguar si se queda o se va.",
+      "tecnicismos": [
+        "trazabilidad"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Eliminarla sin preguntar, porque nadie usa fax.",
+          "correcta": false,
+          "retroalimentacion": "Quitar una función sin saber de dónde viene puede romper un acuerdo o una necesidad real que no conoces.",
+          "desenlace": "Al quitarla descubres que el hospital socio todavía recibe órdenes por fax. Sus pedidos dejan de llegar una semana. Hay que restaurar la función con urgencia."
+        },
+        {
+          "id": "b",
+          "texto": "Rastrear su origen con la trazabilidad hasta el requerimiento y quien lo pidió, y decidir con esa persona.",
+          "correcta": true,
+          "retroalimentacion": "La trazabilidad permite seguir cada función hasta su requerimiento y su fuente; así se decide con información.",
+          "desenlace": "La trazabilidad lleva a una petición de hace dos años de un área que ya cambió de proceso. Con su visto bueno, la función se elimina. El equipo recupera una semana de trabajo cada mes."
+        },
+        {
+          "id": "c",
+          "texto": "Dejarla por si acaso, aunque cueste mantenerla.",
+          "correcta": false,
+          "retroalimentacion": "Mantener funciones sin saber para qué existen acumula costo y complejidad sin beneficio claro.",
+          "desenlace": "La función de fax se rompe con cada actualización y nadie sabe probarla. El equipo pierde horas cada mes. Nadie la usó nunca."
         }
       ]
     },
@@ -125,6 +390,138 @@
       ]
     },
     {
+      "id": "ir-esp-n2",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Dos Significados para «Pedido»",
+      "contexto": "En el sistema de una distribuidora de abarrotes, ventas llama «pedido» al carrito ya pagado y el almacén llama «pedido» al paquete que sale en el camión. Los reportes de cada área nunca coinciden y en la especificación la palabra aparece 140 veces.",
+      "tecnicismos": [
+        "glosario",
+        "especificacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar a la especificación un glosario que defina cada término y usar uno distinto para cada concepto.",
+          "correcta": true,
+          "retroalimentacion": "El glosario define los términos del negocio para que todos los entiendan igual; separar «pedido» de «envío» elimina la confusión.",
+          "desenlace": "Con el glosario, «pedido» y «envío» quedan definidos y los reportes empiezan a cuadrar. Las juntas entre ventas y almacén se acortan. El documento se vuelve referencia para el personal nuevo."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que cada área interprete la palabra como siempre lo ha hecho.",
+          "correcta": false,
+          "retroalimentacion": "Un mismo término con dos significados es una fuente constante de errores en la especificación.",
+          "desenlace": "Los reportes siguen sin coincidir y cada mes hay una junta para explicar la diferencia. Un camión sale con pedidos sin pagar. El gerente pide revisar todo el sistema."
+        },
+        {
+          "id": "c",
+          "texto": "Reemplazar «pedido» por «orden» en todo el documento.",
+          "correcta": false,
+          "retroalimentacion": "Cambiar la palabra no aclara nada si no se define qué significa; el problema son los dos conceptos, no el nombre.",
+          "desenlace": "Ahora ventas y almacén discuten qué significa «orden». La confusión sigue igual con otra palabra. El documento pierde claridad."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-n3",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Como Usuario Quiero un Botón Azul",
+      "contexto": "En el tablero del proyecto aparece la historia de usuario: «Como usuario quiero un botón azul». Nadie sabe para qué sirve ni cuándo estará terminada.",
+      "tecnicismos": [
+        "historia-usuario",
+        "criterio-aceptacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Programar el botón azul tal como está escrito.",
+          "correcta": false,
+          "retroalimentacion": "Una historia sin rol concreto ni beneficio no explica la necesidad; el resultado puede no servir para nada.",
+          "desenlace": "El botón azul aparece en la pantalla, pero no hace nada útil. El cliente pregunta para qué es y nadie sabe. Se pierde un sprint en algo que se termina quitando."
+        },
+        {
+          "id": "b",
+          "texto": "Reescribirla con rol, objetivo y beneficio, y agregar criterios de aceptación.",
+          "correcta": true,
+          "retroalimentacion": "Una buena historia de usuario dice quién, qué y para qué; los criterios de aceptación dicen cuándo está terminada.",
+          "desenlace": "La historia queda como «Como cajera quiero repetir el último pedido para atender más rápido», con tres criterios de aceptación. El equipo la termina en dos días. La cajera la usa desde el primer turno."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar la historia del tablero porque no tiene sentido.",
+          "correcta": false,
+          "retroalimentacion": "Detrás de una historia mal escrita puede haber una necesidad real; hay que aclararla antes de descartarla.",
+          "desenlace": "Resulta que la historia la había pedido la clienta para una función importante. Al no verla, reclama. Hay que rehacer la planeación del sprint."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-n4",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "El Caso de Uso Solo con Días Buenos",
+      "contexto": "El caso de uso «Pagar inscripción» de la plataforma escolar describe solo el flujo normal: el papá elige la tarjeta, paga y recibe su recibo. No dice qué pasa si la tarjeta es rechazada o si se cae la conexión.",
+      "tecnicismos": [
+        "caso-uso",
+        "flujo-alterno"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar los flujos alternos: tarjeta rechazada, pago duplicado y conexión perdida.",
+          "correcta": true,
+          "retroalimentacion": "Un caso de uso completo describe también los flujos alternos, que se desvían del flujo normal cuando algo sale mal.",
+          "desenlace": "Con los flujos alternos descritos, el equipo programa qué hacer en cada error. En la temporada de inscripciones no hay cobros dobles. Los papás reciben mensajes claros cuando algo falla."
+        },
+        {
+          "id": "b",
+          "texto": "Dejarlo así porque la mayoría de los pagos salen bien.",
+          "correcta": false,
+          "retroalimentacion": "Los errores son poco frecuentes pero muy costosos; si el caso de uso no los describe, nadie los programa.",
+          "desenlace": "Cuando una tarjeta es rechazada, el sistema se queda en una pantalla de espera infinita. Algunos papás pagan tres veces por desesperación. La escuela tiene que devolver dinero durante semanas."
+        },
+        {
+          "id": "c",
+          "texto": "Describir los errores en un documento aparte que nadie conecta con el caso de uso.",
+          "correcta": false,
+          "retroalimentacion": "Separar los flujos alternos del caso de uso rompe la especificación y se pierde en el camino.",
+          "desenlace": "El documento aparte nunca llega al equipo de desarrollo. Los errores se programan a la improvisada. Cada falla muestra un mensaje distinto."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-n5",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Las Palabras Peligrosas",
+      "contexto": "Revisas un requerimiento del sistema de un hospital: «El sistema deberá procesar los pedidos de medicamentos adecuadamente y, si es posible, notificar al personal de forma oportuna». La auditoría lo marcará si es ambiguo.",
+      "tecnicismos": [
+        "ambiguedad",
+        "criterio-medible"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Está bien, porque todos entienden qué es «adecuadamente».",
+          "correcta": false,
+          "retroalimentacion": "«Adecuadamente», «si es posible» y «oportuna» admiten muchas interpretaciones; un requerimiento así no se puede verificar.",
+          "desenlace": "Cada quien entiende «oportuna» de forma distinta y las notificaciones llegan hasta una hora tarde. La auditoría marca el requerimiento. Hay que reescribir esa sección del documento."
+        },
+        {
+          "id": "b",
+          "texto": "Reescribirlo sin ambigüedad y con un criterio medible: «notificar al personal de farmacia en menos de 5 minutos tras recibir cada pedido».",
+          "correcta": true,
+          "retroalimentacion": "Eliminar las palabras ambiguas y usar un criterio medible permite construir y comprobar el requerimiento.",
+          "desenlace": "El requerimiento queda claro y medible: cinco minutos. El equipo lo programa y lo prueba con tiempos reales. La auditoría lo aprueba sin observaciones."
+        },
+        {
+          "id": "c",
+          "texto": "Agregar más adjetivos, como «rápida y eficientemente».",
+          "correcta": false,
+          "retroalimentacion": "Más adjetivos aumentan la ambigüedad en lugar de reducirla.",
+          "desenlace": "El requerimiento suena más profesional pero sigue sin decir nada medible. La auditoría lo marca con más observaciones. El equipo pierde una semana corrigiendo."
+        }
+      ]
+    },
+    {
       "id": "ir-val-n",
       "subtema": "ingenieria-requerimientos:3",
       "titulo": "La Pregunta de la Clienta",
@@ -155,6 +552,138 @@
           "correcta": true,
           "retroalimentacion": "Verificación: ¿construimos bien el producto? Validación: ¿construimos el producto correcto? Ambas son necesarias.",
           "desenlace": "Le muestras las pruebas que verifican cada requerimiento y luego una demo donde ella misma agenda citas. La clienta confirma que resuelve su necesidad y detecta un detalle menor que se corrige ese mismo día. Firma la aceptación con confianza y recomienda al equipo con otras clínicas."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n2",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Construido Perfecto, pero No Sirve",
+      "contexto": "El sistema de registro de signos vitales pasó todas sus pruebas y cumple cada línea de la especificación. Pero las enfermeras del turno nocturno no lo usan: las pantallas brillan demasiado y obligan a usar las dos manos. ¿Qué falló?",
+      "tecnicismos": [
+        "validacion",
+        "verificacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Falló la verificación: el sistema no cumple su especificación.",
+          "correcta": false,
+          "retroalimentacion": "La verificación sí se cumplió: el sistema hace lo especificado. Lo que faltó fue confirmar que eso resuelve la necesidad real.",
+          "desenlace": "El equipo vuelve a probar todo contra la especificación y todo pasa otra vez. Pierden dos semanas buscando un error que no existe. Las enfermeras siguen anotando en papel."
+        },
+        {
+          "id": "b",
+          "texto": "Falló la validación: nadie confirmó con las enfermeras que el sistema resolviera su necesidad real.",
+          "correcta": true,
+          "retroalimentacion": "Verificar es revisar que se construyó conforme a la especificación; validar es confirmar con los usuarios que se construyó lo que necesitan.",
+          "desenlace": "Al validar con las enfermeras en su turno, aparecen requerimientos nuevos: modo nocturno y botones grandes. La siguiente versión se usa en todo el hospital. El equipo incluye pruebas con usuarios desde el inicio."
+        },
+        {
+          "id": "c",
+          "texto": "No falló nada; las enfermeras se tienen que adaptar.",
+          "correcta": false,
+          "retroalimentacion": "Un sistema que nadie usa no cumple su propósito, aunque pase todas las pruebas.",
+          "desenlace": "Las enfermeras siguen anotando en papel y el sistema queda abandonado. La dirección del hospital cuestiona la inversión. El proyecto se cancela."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n3",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Revisar Antes de Programar",
+      "contexto": "El SRS del sistema de préstamos de una biblioteca está terminado y el equipo quiere empezar a programar mañana. Tu líder técnica propone una revisión entre pares del documento; tu compañero dice que los errores se encontrarán en las pruebas.",
+      "tecnicismos": [
+        "revision-pares",
+        "srs"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Hacer una inspección del SRS con otro equipo usando una lista de verificación.",
+          "correcta": true,
+          "retroalimentacion": "La revisión entre pares encuentra defectos en los requerimientos antes de programar, cuando corregirlos cuesta mucho menos.",
+          "desenlace": "La inspección encuentra doce defectos, entre ellos dos requerimientos que se contradicen. Se corrigen en una tarde. El desarrollo avanza sin retrabajo."
+        },
+        {
+          "id": "b",
+          "texto": "Empezar a programar y esperar a las pruebas.",
+          "correcta": false,
+          "retroalimentacion": "Un defecto en los requerimientos que llega hasta las pruebas obliga a rehacer diseño, código y pruebas.",
+          "desenlace": "En las pruebas aparecen los requerimientos contradictorios y hay que rehacer dos módulos completos. El proyecto se retrasa un mes. El costo del error se multiplica."
+        },
+        {
+          "id": "c",
+          "texto": "Que el autor del SRS lo relea una vez más.",
+          "correcta": false,
+          "retroalimentacion": "El autor de un documento no suele ver sus propios errores; la revisión por otras personas es más efectiva.",
+          "desenlace": "El autor relee y no encuentra nada, porque ya conoce lo que quiso decir. Los defectos siguen ahí. Aparecen hasta que la biblioteca usa el sistema."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n4",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "El Cupo de 40",
+      "contexto": "Cada grupo de la escuela tiene cupo de 40 alumnos. Los casos de prueba de la inscripción solo prueban grupos con 10 alumnos. Tu compañero dice que con eso basta.",
+      "tecnicismos": [
+        "caso-limite",
+        "caso-prueba"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar casos límite: 39, 40 y 41 alumnos, además de un grupo vacío.",
+          "correcta": true,
+          "retroalimentacion": "Los casos límite prueban los extremos del rango permitido, donde suelen esconderse los errores.",
+          "desenlace": "Con el caso de 41 descubres que el sistema permite inscribir a uno de más. Lo corriges antes de la temporada. Ningún grupo se sobrepasa ese semestre."
+        },
+        {
+          "id": "b",
+          "texto": "Probar con 10, 20 y 30 alumnos para tener más casos.",
+          "correcta": false,
+          "retroalimentacion": "Más casos en el centro del rango no prueban el límite; el error del cupo está en 40 y 41.",
+          "desenlace": "Todos los casos pasan y el sistema sale. El primer día, un grupo queda con 43 alumnos. Hay sillas en el pasillo y una queja formal de los papás."
+        },
+        {
+          "id": "c",
+          "texto": "Dejar los casos como están, porque nunca han fallado.",
+          "correcta": false,
+          "retroalimentacion": "Que una prueba nunca falle puede significar que no prueba lo importante.",
+          "desenlace": "En la temporada de inscripciones el sistema deja pasar alumnos de más. Servicios escolares tiene que reacomodar grupos a mano. Varios alumnos pierden su horario."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n5",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Lo que Se Rompió al Arreglar Otra Cosa",
+      "contexto": "Corregiste el cálculo de descuentos de la tienda y el cambio pasó sus casos de prueba. Al día siguiente, las facturas salen con el IVA mal calculado: el arreglo afectó una función que ya funcionaba.",
+      "tecnicismos": [
+        "prueba-regresion",
+        "caso-prueba"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Correr pruebas de regresión con todos los casos de prueba después de cada cambio.",
+          "correcta": true,
+          "retroalimentacion": "Las pruebas de regresión repiten las pruebas anteriores para confirmar que un cambio no rompió lo que ya funcionaba.",
+          "desenlace": "Con la regresión automatizada, el siguiente cambio que toca el IVA se detecta antes de salir. Las facturas no vuelven a salir mal. La contadora deja de revisar cada una a mano."
+        },
+        {
+          "id": "b",
+          "texto": "Probar solo la función que se modificó.",
+          "correcta": false,
+          "retroalimentacion": "Un cambio puede afectar otras partes; probar solo lo modificado deja ciegos los efectos secundarios.",
+          "desenlace": "El siguiente cambio vuelve a romper algo, ahora los envíos. Cada semana aparece un problema nuevo. El equipo se gana fama de romper cosas."
+        },
+        {
+          "id": "c",
+          "texto": "Revertir el arreglo y dejar los descuentos como estaban.",
+          "correcta": false,
+          "retroalimentacion": "Revertir quita el problema nuevo, pero devuelve el original; falta una forma de cambiar con seguridad.",
+          "desenlace": "Los descuentos vuelven a calcularse mal y los clientes reclaman. El problema original regresa. El equipo sigue sin red de seguridad para cambiar."
         }
       ]
     }
@@ -199,6 +728,165 @@
       ]
     },
     {
+      "id": "ir-fund-p2",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "La Clienta que Dice que Sí a Todo",
+      "contexto": "La clienta de una agencia de viajes asiente a todo en las reuniones. Cuando le muestras la primera versión dice: «eso no es lo que quería». Tienes otra reunión mañana y el contrato depende de ella.",
+      "tecnicismos": [
+        "elicitacion",
+        "prototipo",
+        "requerimiento-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Mostrarle un prototipo de pantallas dibujadas para que señale qué cambiaría.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un prototipo hace concretos los requerimientos: es más fácil reaccionar a algo que se ve que a una descripción.",
+          "desenlace_exito": "Con las pantallas frente a ella, la clienta señala tres cosas que nunca había mencionado. Ajustas el diseño en la misma reunión. El contrato se firma esa semana.",
+          "desenlace_fallo": "El prototipo se ve tan terminado que la clienta cree que ya está listo y pide la entrega para el viernes. Explicar que es un boceto te cuesta toda la reunión. El contrato queda en pausa."
+        },
+        {
+          "id": "b",
+          "texto": "Hacer preguntas abiertas sobre cómo trabaja hoy, en lugar de preguntas de sí o no.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Las preguntas abiertas obligan a describir el proceso real y sacan a la luz requerimientos que un «sí» esconde.",
+          "desenlace_exito": "Al preguntarle cómo arma hoy un paquete de viaje, la clienta describe pasos que nadie conocía. Esos pasos se vuelven los requerimientos centrales. Ella siente que por fin la entienden.",
+          "desenlace_fallo": "La clienta responde con generalidades y la reunión no avanza. Sales con la misma información de antes. Tienes que pedir otra cita."
+        },
+        {
+          "id": "c",
+          "texto": "Llevar una lista de requerimientos funcionales para que la firme punto por punto.",
+          "atributo": "teoria",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Una lista firmada deja constancia, aunque una clienta que dice que sí a todo puede firmar sin entender.",
+          "desenlace_exito": "Al leer punto por punto, la clienta se detiene en dos y pide cambiarlos. La lista firmada refleja lo que quiere. El proyecto avanza con claridad.",
+          "desenlace_fallo": "La clienta firma toda la lista sin leerla. A la siguiente entrega vuelve a decir que no era lo que quería. Ahora hay un documento firmado que no sirve de mucho."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-p3",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "Un Turno en el Mostrador",
+      "contexto": "Las entrevistas de elicitación con el personal de una farmacia no revelaron problemas, pero el sistema nuevo de inventario no les acomoda. Te dan permiso de observar un turno completo antes de la siguiente versión.",
+      "tecnicismos": [
+        "elicitacion",
+        "stakeholder"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Observar el turno sin interrumpir y anotar lo que hacen de verdad.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "La observación es una técnica de elicitación que descubre lo que la gente hace sin pensarlo y no menciona en entrevistas.",
+          "desenlace_exito": "Durante el turno ves que apartan medicinas en una libreta porque el sistema no tiene esa opción. Esa función se vuelve prioridad. El personal adopta la nueva versión de inmediato.",
+          "desenlace_fallo": "Es un día tranquilo y no pasa nada fuera de lo común. Te vas sin descubrir el problema. La siguiente versión sigue sin acomodarles."
+        },
+        {
+          "id": "b",
+          "texto": "Aplicar un cuestionario a todos los interesados del turno.",
+          "atributo": "teoria",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Un cuestionario llega a muchas personas, pero sus respuestas están limitadas por las preguntas que se hacen.",
+          "desenlace_exito": "Una pregunta abierta del cuestionario revela lo de los apartados. La agregas a la siguiente versión. El personal agradece que se tomara en cuenta su opinión.",
+          "desenlace_fallo": "Las respuestas del cuestionario son «todo bien» y «sin comentarios». No aprendes nada nuevo. La siguiente versión tampoco funciona."
+        },
+        {
+          "id": "c",
+          "texto": "Analizar los datos del sistema viejo para ver qué funciones se usaban más.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los datos de uso muestran patrones reales, aunque no explican lo que se hace fuera del sistema.",
+          "desenlace_exito": "Los datos muestran que se cancelaban muchas ventas y luego se repetían. Investigas y descubres los apartados. La siguiente versión lo resuelve.",
+          "desenlace_fallo": "Los datos del sistema viejo están incompletos y no dicen nada útil. Pierdes dos días analizándolos. El problema sigue escondido."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-p4",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "Seguridad contra Comodidad",
+      "contexto": "La caja de ahorro de los maestros quiere su app. La dueña del proyecto pide entrar sin contraseña «porque los maestros mayores se confunden», pero el área de seguridad exige doble factor. Son dos requerimientos no funcionales en conflicto, seguridad y usabilidad, y la junta de aprobación es el jueves.",
+      "tecnicismos": [
+        "requerimiento-no-funcional",
+        "usabilidad",
+        "stakeholder"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Reunir a los interesados para negociar una solución que cumpla ambos requerimientos.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los conflictos entre requerimientos se resuelven con los interesados, buscando el equilibrio entre seguridad y usabilidad.",
+          "desenlace_exito": "En la reunión se acuerda usar huella digital y un código solo para operaciones grandes. Ambas partes quedan conformes. La junta aprueba el diseño el jueves.",
+          "desenlace_fallo": "La reunión se vuelve una pelea entre la dueña y el área de seguridad. Nadie cede. La junta se pospone un mes."
+        },
+        {
+          "id": "b",
+          "texto": "Proponer por escrito alternativas con sus ventajas y riesgos.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Documentar opciones con sus consecuencias ayuda a que los interesados decidan con información.",
+          "desenlace_exito": "Tu documento compara contraseña, huella y doble factor con sus riesgos. La junta elige la huella con doble factor para retiros. Tu documento queda como parte del SRS.",
+          "desenlace_fallo": "El documento es tan largo que nadie lo lee antes de la junta. Se toma una decisión apresurada. Después hay que cambiarla."
+        },
+        {
+          "id": "c",
+          "texto": "Medir con una prueba rápida cuánto tardan los maestros con cada opción.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Medir la usabilidad con usuarios reales reemplaza opiniones con datos.",
+          "desenlace_exito": "La prueba muestra que los maestros tardan lo mismo con huella que sin contraseña. Con ese dato, la dueña acepta la opción segura. La junta aprueba sin discusión.",
+          "desenlace_fallo": "La prueba se hace con maestros jóvenes que no representan a todos. Los resultados no convencen a nadie. La decisión se pospone."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-p5",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "El Tráfico del Buen Fin",
+      "contexto": "Una tienda de ropa espera veinte veces más visitas en el Buen Fin. El requerimiento dice «el sitio debe aguantar el Buen Fin». Faltan tres semanas y hay que convertirlo en un requerimiento no funcional de desempeño y probarlo.",
+      "tecnicismos": [
+        "desempeno",
+        "disponibilidad",
+        "requerimiento-no-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Hacer pruebas de carga simulando veinte veces el tráfico normal.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Las pruebas de carga verifican el desempeño bajo condiciones reales antes de que lleguen los usuarios.",
+          "desenlace_exito": "La prueba revela que el carrito se vuelve lento con cinco mil usuarios. Lo optimizas a tiempo. El Buen Fin pasa sin caídas y con récord de ventas.",
+          "desenlace_fallo": "La prueba de carga tumba el servidor de pruebas, que comparte recursos con el sitio real. La tienda se cae dos horas un martes normal. El gerente pide explicaciones."
+        },
+        {
+          "id": "b",
+          "texto": "Reescribir el requerimiento con números: tiempo de respuesta menor a 2 segundos con 10,000 usuarios a la vez y disponibilidad de 99.9 % ese fin.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Un requerimiento no funcional de desempeño debe ser medible para poder diseñar y probar contra él.",
+          "desenlace_exito": "Con números claros, el equipo dimensiona la infraestructura y la prueba. El sitio cumple las metas durante todo el Buen Fin. El documento se vuelve plantilla para otras temporadas.",
+          "desenlace_fallo": "Los números quedan bien escritos, pero nadie los prueba antes del Buen Fin. El viernes a medianoche el sitio no aguanta. El requerimiento era bueno; faltó verificarlo."
+        },
+        {
+          "id": "c",
+          "texto": "Coordinar con marketing para escalonar las promociones por horario.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Coordinarse con otras áreas puede reducir los picos de tráfico, aunque no reemplaza las pruebas.",
+          "desenlace_exito": "Marketing acepta lanzar ofertas en tres horarios y el tráfico se reparte. El sitio aguanta sin problemas. Las ventas superan la meta.",
+          "desenlace_fallo": "Marketing ya había comprado anuncios para la medianoche y no puede cambiarlos. El pico llega completo y el sitio se cae. Se pierden horas de ventas."
+        }
+      ]
+    },
+    {
       "id": "ir-ciclo-p",
       "subtema": "ingenieria-requerimientos:1",
       "titulo": "La Avalancha de Cambios",
@@ -235,6 +923,163 @@
           "retroalimentacion": "Negociar prioridades con los interesados genera acuerdos, pero requiere moderar bien las posturas.",
           "desenlace_exito": "Reúnes a quienes pidieron los cambios y, tras una plática honesta, acuerdan juntos qué va primero. Nadie siente que lo ignoraron y el equipo arranca con prioridades claras. El gimnasio empieza a hacer esas reuniones cada sprint.",
           "desenlace_fallo": "La reunión se vuelve un debate: cada quien defiende su cambio y nadie cede. Salen sin acuerdos y con más tensión que antes. El equipo pierde una semana esperando a que el cliente decida."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-p2",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "El Cambio de Ley a Mitad del Sprint",
+      "contexto": "La autoridad fiscal publica un cambio en el formato de las facturas que entra en vigor en tres semanas. El sistema de una papelería ya tenía planeados los siguientes dos sprints con otras funciones. Hay que reacomodar las prioridades.",
+      "tecnicismos": [
+        "analisis-impacto",
+        "sprint",
+        "priorizacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Hacer un análisis de impacto para saber qué partes del sistema cambian.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El análisis de impacto identifica qué requerimientos, código y pruebas se afectan, para planear con datos.",
+          "desenlace_exito": "El análisis muestra que solo tres módulos cambian. El equipo estima bien y termina con una semana de sobra. La papelería factura con el formato nuevo desde el primer día.",
+          "desenlace_fallo": "El análisis pasa por alto el módulo de cancelaciones. El primer día con el formato nuevo, las cancelaciones fallan. Hay que corregir de urgencia."
+        },
+        {
+          "id": "b",
+          "texto": "Replanear los sprints poniendo el cambio fiscal como prioridad.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Un cambio obligatorio por ley sube en las prioridades; replanear los sprints mantiene el control del ciclo de vida.",
+          "desenlace_exito": "Con los sprints replaneados, el cambio fiscal se entrega a tiempo y las otras funciones se mueven al mes siguiente. El dueño entiende la decisión. Nadie trabaja de noche.",
+          "desenlace_fallo": "Al replanear, una función que el dueño ya había prometido a sus clientes se pospone. Se molesta y pide hacer ambas cosas. El equipo termina con horas extra."
+        },
+        {
+          "id": "c",
+          "texto": "Reunirte con la contadora de la papelería para entender el cambio a detalle.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Quien conoce la regla de negocio aclara requerimientos que el texto oficial no explica.",
+          "desenlace_exito": "La contadora explica qué campos cambian en la práctica y cuáles no. El equipo evita trabajo innecesario. La entrega sale a tiempo y sin errores.",
+          "desenlace_fallo": "La contadora está en temporada de declaraciones y no tiene tiempo. El equipo interpreta el cambio por su cuenta. Una parte sale mal y hay que rehacerla."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-p3",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "Dos Directores, Dos Órdenes",
+      "contexto": "La directora de ventas pide que el sistema de pedidos aplique descuentos por volumen y el director de finanzas pide quitar todos los descuentos. Ambos te escriben el mismo día, con copia a tu jefa. Las prioridades chocan y el sprint empieza el lunes.",
+      "tecnicismos": [
+        "linea-base",
+        "priorizacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Organizar una reunión con ambos para que acuerden una sola regla.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Cuando los interesados se contradicen, el conflicto debe resolverse entre ellos; el equipo no debe elegir solo.",
+          "desenlace_exito": "En la reunión acuerdan descuentos por volumen solo para clientes con más de un año. Se registra en la línea base. Ambos quedan conformes.",
+          "desenlace_fallo": "La reunión no llega a acuerdo y cada quien sale más molesto. Tu jefa te pide resolverlo como puedas. Terminas con una regla que nadie apoya."
+        },
+        {
+          "id": "b",
+          "texto": "Documentar la decisión pendiente y no tocar la línea base hasta que se resuelva.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Proteger la línea base evita implementar cambios contradictorios; la decisión se registra hasta que se aclaren las prioridades.",
+          "desenlace_exito": "Al dejar el conflicto documentado, tu jefa lo escala a dirección y en dos días hay una decisión. El equipo implementa una sola vez. Nadie pierde trabajo.",
+          "desenlace_fallo": "Mientras esperas la decisión, el sprint avanza sin la función. Ventas te acusa de bloquear sus planes. La relación con esa área se tensa."
+        },
+        {
+          "id": "c",
+          "texto": "Analizar los datos de ventas para mostrar el efecto de cada opción.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los datos ayudan a decidir con objetividad cuando las prioridades chocan.",
+          "desenlace_exito": "Tu análisis muestra que los descuentos por volumen aumentan las ventas sin perder margen en clientes grandes. Con esa evidencia, finanzas acepta. Se implementa una regla clara.",
+          "desenlace_fallo": "Tus datos tienen un error y finanzas lo detecta en la reunión. Pierdes credibilidad. La decisión se toma sin tomar en cuenta tu análisis."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-p4",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "El Código que Ya Nadie Usaba",
+      "contexto": "Para una función nueva del sistema de inversiones de una caja popular, el equipo quiere reutilizar un indicador de configuración que activaba una función retirada hace años, cuyo código sigue ahí. Algo así provocó que una casa de bolsa perdiera 440 millones de dólares en 45 minutos en 2012.",
+      "tecnicismos": [
+        "trazabilidad",
+        "analisis-impacto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Retirar formalmente el requerimiento viejo y eliminar su código usando la trazabilidad.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un requerimiento retirado debe salir también del código y de las pruebas; la trazabilidad dice dónde está cada parte.",
+          "desenlace_exito": "Con la trazabilidad localizas todo el código de la función vieja y lo eliminas con sus pruebas. El indicador se reutiliza sin riesgo. El despliegue pasa sin sorpresas.",
+          "desenlace_fallo": "La trazabilidad estaba incompleta y queda un pedazo de código viejo en un servidor. Al activar el indicador, ese servidor hace operaciones extrañas unos minutos. Lo detienen a tiempo, pero el susto es grande."
+        },
+        {
+          "id": "b",
+          "texto": "Evaluar el impacto de reutilizar el indicador en todos los servidores antes de desplegar.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El análisis de impacto revela qué partes del sistema reaccionan a un cambio, incluso las que se creían muertas.",
+          "desenlace_exito": "Al revisar cada servidor descubres que uno todavía tiene la versión vieja. Lo actualizas antes de activar nada. La función nueva arranca sin problemas.",
+          "desenlace_fallo": "Revisas el código, pero no los servidores. Uno de ellos tiene una versión vieja y responde al indicador con la función retirada. Hay que apagarlo de emergencia."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir que otra persona revise el despliegue antes de activar el indicador.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una segunda revisión del despliegue encuentra pasos omitidos que quien lo hizo ya no ve.",
+          "desenlace_exito": "Tu compañero revisa el despliegue y nota que en un servidor no se copió el código nuevo. Lo corrigen antes de activar. Todo funciona.",
+          "desenlace_fallo": "La revisión se hace de prisa y nadie revisa el último servidor. Al activar el indicador, ese servidor ejecuta el código viejo. Se pierden horas restaurando."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-p5",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "La Demo que Parecía Terminada",
+      "contexto": "Después de ver una demo muy pulida, el cliente cree que la app de su restaurante está lista y anuncia la fecha de lanzamiento en redes. En realidad faltan la mitad de las funciones del backlog y tres sprints de trabajo.",
+      "tecnicismos": [
+        "backlog",
+        "sprint"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Mostrar el backlog con lo terminado y lo pendiente, y acordar qué entra al lanzamiento.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El backlog hace visible el avance real; usarlo para negociar el alcance del lanzamiento mantiene las expectativas alineadas.",
+          "desenlace_exito": "Al ver el backlog, el cliente entiende cuánto falta y elige lanzar con las funciones esenciales. El lanzamiento sale bien. Las demás llegan en los siguientes sprints.",
+          "desenlace_fallo": "El cliente insiste en que todo debe estar listo para la fecha anunciada. El equipo trabaja de noche y el lanzamiento sale con errores. La app recibe malas reseñas."
+        },
+        {
+          "id": "b",
+          "texto": "Negociar con el cliente una fecha nueva y ayudarle a comunicarla.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Negociar con transparencia protege la relación con el cliente, aunque es una conversación difícil.",
+          "desenlace_exito": "El cliente acepta mover la fecha dos semanas y publica un aviso divertido en redes. La expectativa crece. El lanzamiento llega con todo terminado.",
+          "desenlace_fallo": "El cliente se siente engañado y amenaza con cancelar el contrato. La reunión termina tensa. El equipo pierde parte de la confianza ganada."
+        },
+        {
+          "id": "c",
+          "texto": "Calcular la velocidad del equipo para proyectar cuándo estará todo listo.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Medir cuánto se termina por sprint permite estimar fechas con datos en lugar de suposiciones.",
+          "desenlace_exito": "Con la velocidad de los últimos sprints, muestras que todo estará listo en seis semanas. El cliente ajusta su anuncio. El lanzamiento cumple lo prometido.",
+          "desenlace_fallo": "Tu proyección es demasiado optimista y la fecha nueva tampoco se cumple. El cliente ya no cree en las estimaciones. La siguiente negociación será más difícil."
         }
       ]
     },
@@ -278,6 +1123,164 @@
       ]
     },
     {
+      "id": "ir-esp-p2",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Las Casillas del Pago Equivocado",
+      "contexto": "Especificas la pantalla de pagos de una caja popular. En 2020, un banco pagó por error unos 900 millones de dólares en lugar de 7.8 millones porque el sistema exigía marcar una combinación confusa de casillas. La clienta quiere evitar algo así y el documento se entrega el viernes.",
+      "tecnicismos": [
+        "criterio-aceptacion",
+        "flujo-alterno",
+        "ambiguedad"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Escribir criterios de aceptación que incluyan casos de error, como montos muy distintos a lo esperado.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los criterios de aceptación deben cubrir también lo que no debe pasar; así se diseña la prevención de errores.",
+          "desenlace_exito": "Tus criterios incluyen una confirmación con el monto total en grande y un aviso si supera lo habitual. El equipo los programa y la clienta los aprueba. El documento se entrega a tiempo.",
+          "desenlace_fallo": "Los criterios cubren muchos casos, pero no el de pagos parciales. En las pruebas, un pago parcial se envía completo. Hay que reabrir la especificación."
+        },
+        {
+          "id": "b",
+          "texto": "Modelar los flujos alternos con las cajeras que usan el sistema.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Quien opera el sistema conoce los errores que de verdad ocurren y los flujos alternos que hacen falta.",
+          "desenlace_exito": "Las cajeras cuentan los errores que más cometen y cada uno se vuelve un flujo alterno. La pantalla final es clara y segura. La clienta queda impresionada.",
+          "desenlace_fallo": "Las cajeras están en cierre de mes y solo una puede participar. Varios flujos alternos se quedan fuera. Aparecen hasta las pruebas."
+        },
+        {
+          "id": "c",
+          "texto": "Revisar cada frase del documento buscando ambigüedad.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Detectar la ambigüedad a tiempo evita que el equipo programe una interpretación equivocada.",
+          "desenlace_exito": "Encuentras cinco frases ambiguas, como «el monto correspondiente», y las reescribes con precisión. El equipo programa sin dudas. La clienta firma el documento.",
+          "desenlace_fallo": "Te concentras en la redacción y se te pasa una regla de negocio contradictoria. El equipo programa algo que la clienta no pidió. Hay que corregir después."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-p3",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "El SRS Copiado",
+      "contexto": "Un compañero entregó como especificación (SRS) del sistema del gimnasio un documento descargado de internet de otro proyecto, cambiando solo los nombres. La auditoría de calidad lo revisará mañana a primera hora.",
+      "tecnicismos": [
+        "srs",
+        "especificacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Rehacer las secciones clave del SRS con los requerimientos reales del gimnasio.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una especificación copiada no describe el sistema real; el SRS debe reflejar las necesidades del cliente concreto.",
+          "desenlace_exito": "Trabajas toda la noche y las secciones de requerimientos quedan con la información real del gimnasio. La auditoría aprueba el documento con observaciones menores. Tu compañero aprende la lección.",
+          "desenlace_fallo": "No alcanza la noche y varias secciones siguen hablando de «pacientes» en lugar de «socios». La auditoría lo nota de inmediato. El equipo recibe una calificación baja."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar el documento con la clienta temprano para validar lo esencial.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Validar con la clienta aclara qué partes sí aplican, aunque no corrige el documento por sí solo.",
+          "desenlace_exito": "La clienta revisa contigo y marca lo que sí aplica. Con eso corriges las secciones a tiempo. La auditoría reconoce el esfuerzo.",
+          "desenlace_fallo": "La clienta no puede tan temprano y la revisión se cancela. Llegas a la auditoría con el documento copiado. El equipo tiene que rehacerlo."
+        },
+        {
+          "id": "c",
+          "texto": "Buscar inconsistencias con una lista de verificación para corregir lo más grave.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una lista de verificación ayuda a encontrar rápido los errores más graves de la especificación.",
+          "desenlace_exito": "La lista te lleva directo a las secciones que no tienen sentido para un gimnasio. Las corriges en orden de gravedad. La auditoría pasa con pocas observaciones.",
+          "desenlace_fallo": "Encuentras tantas inconsistencias que no sabes por dónde empezar. Corriges detalles y dejas lo grave. La auditoría reprueba el documento."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-p4",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "La Historia Demasiado Grande",
+      "contexto": "La historia de usuario «Como administrador quiero gestionar el inventario» lleva tres sprints sin terminarse: incluye altas, bajas, traspasos, reportes y alertas. El cliente pregunta por qué nunca está lista.",
+      "tecnicismos": [
+        "historia-usuario",
+        "sprint",
+        "criterio-aceptacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dividirla en historias pequeñas, cada una con sus criterios de aceptación.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Una historia de usuario debe caber en un sprint; dividirla en partes con criterios claros permite entregar valor poco a poco.",
+          "desenlace_exito": "La historia se divide en cinco, cada una con criterios de aceptación. En el siguiente sprint se entregan dos completas. El cliente por fin ve avances.",
+          "desenlace_fallo": "Divides la historia, pero las partes dependen unas de otras y ninguna se puede probar sola. El sprint vuelve a cerrar sin entregas. El cliente se impacienta."
+        },
+        {
+          "id": "b",
+          "texto": "Preguntar al cliente qué parte necesita primero.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El cliente sabe qué parte le da más valor; con eso se elige qué historia pequeña va primero.",
+          "desenlace_exito": "El cliente dice que lo urgente son las alertas de producto agotado. Esa parte se entrega en una semana. Él queda contento y paciente con lo demás.",
+          "desenlace_fallo": "El cliente dice que todo es urgente. No se logra elegir una parte. La historia gigante sigue en el tablero."
+        },
+        {
+          "id": "c",
+          "texto": "Estimar con datos de sprints anteriores cuánto falta.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Estimar ayuda a comunicar fechas, pero no resuelve que la historia sea demasiado grande.",
+          "desenlace_exito": "La estimación muestra que con la historia dividida se termina en dos sprints. Con ese dato convences al equipo de dividirla. El cliente recibe una fecha creíble.",
+          "desenlace_fallo": "La estimación da una fecha lejana y el cliente se molesta. La historia sigue sin dividirse. Otro sprint se va sin entregas."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-p5",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "La Interfaz sin Unidades",
+      "contexto": "Dos grupos de trabajo integran el sistema de una planta purificadora: uno mide el cloro en miligramos por litro y otro espera partes por millón. La especificación de la interfaz solo dice «nivel de cloro». La integración es la próxima semana.",
+      "tecnicismos": [
+        "especificacion",
+        "criterio-medible"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Escribir la especificación de la interfaz con criterios medibles: unidad, formato y rango de cada dato.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Una especificación de interfaz completa indica unidades, formatos y rangos; así cada equipo construye lo mismo.",
+          "desenlace_exito": "Con la especificación completa, ambos grupos ajustan su código y la integración pasa a la primera. La planta mide el cloro correctamente. El documento sirve para futuras integraciones.",
+          "desenlace_fallo": "La especificación queda completa, pero un grupo sigue trabajando con la versión vieja. En la integración los valores no coinciden. Hay que repetir la prueba."
+        },
+        {
+          "id": "b",
+          "texto": "Hacer una prueba de integración temprana con valores conocidos.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Probar la integración con valores conocidos revela de inmediato si las unidades no coinciden.",
+          "desenlace_exito": "Envías un valor de prueba y del otro lado llega un número distinto. El problema queda en evidencia y se corrige ese mismo día. La integración final sale perfecta.",
+          "desenlace_fallo": "La prueba usa un valor donde ambas unidades coinciden por casualidad. El error no aparece. Se descubre hasta que la planta reporta niveles extraños."
+        },
+        {
+          "id": "c",
+          "texto": "Reunir a ambos grupos para acordar cada dato de la interfaz.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Acordar en persona evita suposiciones, aunque requiere coordinar a todos.",
+          "desenlace_exito": "En la reunión aparecen tres diferencias, incluida la del cloro. Las acuerdan y las anotan. La integración pasa sin problemas.",
+          "desenlace_fallo": "La reunión se pospone dos veces por agenda. Cada grupo sigue con sus supuestos. La integración falla la próxima semana."
+        }
+      ]
+    },
+    {
       "id": "ir-val-p",
       "subtema": "ingenieria-requerimientos:3",
       "titulo": "El Día de la Demo",
@@ -313,6 +1316,163 @@
           "retroalimentacion": "La matriz de trazabilidad muestra qué prueba cubre cada requerimiento y ayuda a detectar huecos.",
           "desenlace_exito": "La matriz de trazabilidad muestra que cada requerimiento tiene su prueba. La auditoría queda satisfecha y la clienta confía en que nada se quedó fuera. El equipo usa la matriz como modelo para otros proyectos.",
           "desenlace_fallo": "La matriz estaba desactualizada y deja ver un requerimiento sin probar. La auditoría lo marca como observación y la clienta duda de lo demás. Hay que actualizarla y repetir parte de las pruebas."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-p2",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Pantallas en Papel",
+      "contexto": "Antes de programar la app para que adultos mayores pidan sus medicinas, la clienta quiere validar que la entenderán. Tienes una semana y un grupo de voluntarios en la casa de día.",
+      "tecnicismos": [
+        "prototipo",
+        "validacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Probar un prototipo en papel con los voluntarios y observar dónde se confunden.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Un prototipo sencillo permite validar con usuarios reales antes de invertir en programar.",
+          "desenlace_exito": "Los voluntarios se confunden con un ícono y piden letras más grandes. Corriges el prototipo dos veces en la semana. La app final es fácil de usar desde el primer día.",
+          "desenlace_fallo": "Los voluntarios no entienden que es un prototipo y se frustran porque «no hace nada». Las observaciones no son útiles. Hay que planear otra sesión."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar el diseño con una lista de principios de usabilidad para adultos mayores.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los principios de diseño accesible ayudan a validar el diseño, aunque no reemplazan a los usuarios reales.",
+          "desenlace_exito": "La lista detecta textos pequeños y botones muy juntos. Los corriges y la clienta aprueba el diseño. Los voluntarios lo usan sin problemas después.",
+          "desenlace_fallo": "El diseño cumple todos los principios, pero los voluntarios usan la app de una forma que nadie previó. Aparecen problemas hasta el lanzamiento. Hay que hacer cambios urgentes."
+        },
+        {
+          "id": "c",
+          "texto": "Medir el tiempo que tarda cada voluntario en completar un pedido con el prototipo.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Medir el desempeño de los usuarios da datos objetivos para validar el diseño.",
+          "desenlace_exito": "Los tiempos muestran que la pantalla de pago tarda el triple que las demás. La simplificas y el tiempo baja a la mitad. La clienta valida el diseño con números.",
+          "desenlace_fallo": "Con pocos voluntarios los tiempos varían demasiado y no concluyen nada. Pierdes la semana midiendo. La validación queda incompleta."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-p3",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "El Día que la Clienta Firma",
+      "contexto": "Mañana es la prueba de aceptación del sistema de reservaciones de un hotel. Si la clienta lo acepta, firma y se cobra el proyecto; si no, se retrasa un mes.",
+      "tecnicismos": [
+        "prueba-aceptacion",
+        "criterio-aceptacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Preparar un guion de pruebas de aceptación basado en los criterios de aceptación acordados.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Una prueba de aceptación revisa el sistema contra lo acordado; un guion basado en los criterios hace la revisión objetiva.",
+          "desenlace_exito": "La clienta sigue el guion y cada criterio de aceptación se cumple frente a ella. Firma la entrega al final de la sesión. El proyecto se cobra esa semana.",
+          "desenlace_fallo": "El guion sigue los criterios, pero uno estaba mal entendido desde el principio. La clienta lo detecta y no firma. Hay que corregir y repetir la prueba."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que la clienta explore libremente el sistema y anotar sus comentarios.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "La exploración libre descubre detalles que un guion no prevé, pero puede desviar la prueba de lo acordado.",
+          "desenlace_exito": "La clienta explora con gusto y solo pide un cambio menor. Firma con una observación. El cambio se entrega en dos días.",
+          "desenlace_fallo": "La clienta se pierde en pantallas secundarias y encuentra detalles que no estaban acordados. Pide cambios antes de firmar. La entrega se retrasa."
+        },
+        {
+          "id": "c",
+          "texto": "Automatizar la prueba para mostrar todos los casos en minutos.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Una prueba automatizada es rápida y repetible, aunque la clienta necesita ver el sistema funcionando para confiar.",
+          "desenlace_exito": "La demostración automática corre todos los casos en minutos y luego la clienta prueba los principales. Queda convencida y firma. El equipo reutiliza las pruebas en mantenimiento.",
+          "desenlace_fallo": "La clienta ve pasar pantallas muy rápido y no entiende lo que pasa. Pide hacerlo a mano. La sesión se alarga y no se firma ese día."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-p4",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Los Registros que No Llegaron",
+      "contexto": "El sistema de un laboratorio exporta los resultados a una hoja de cálculo con formato antiguo que solo admite 65,536 filas; lo que sobra se descarta sin aviso. En 2020, algo así dejó fuera unos 16,000 casos de COVID del conteo oficial en Inglaterra. Hoy el reporte semanal tiene menos casos de lo esperado.",
+      "tecnicismos": [
+        "verificacion",
+        "caso-limite"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Verificar que el total de registros de origen coincida con el de destino en cada exportación.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Verificar con una conciliación de totales detecta pérdidas de datos silenciosas.",
+          "desenlace_exito": "La conciliación muestra que faltan miles de registros y se identifica el límite de filas. Cambias a un formato sin ese límite. El reporte corregido sale el mismo día.",
+          "desenlace_fallo": "Comparas totales, pero el origen también tenía duplicados y las cifras cuadran por casualidad. La pérdida pasa desapercibida otra semana. Se descubre en una auditoría."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar la especificación y probar casos límite: 65,535, 65,536 y 65,537 filas.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Los casos límite alrededor de la capacidad máxima revelan pérdidas de datos que una prueba normal no ve.",
+          "desenlace_exito": "El caso de 65,537 filas pierde la última y queda confirmado el problema. Se cambia el formato y se agrega la prueba al conjunto permanente. Nunca vuelve a pasar.",
+          "desenlace_fallo": "Preparar los archivos de prueba toma más de lo pensado. El reporte de esta semana sale incompleto. La corrección llega hasta la siguiente."
+        },
+        {
+          "id": "c",
+          "texto": "Conciliar con los laboratorios cuántos resultados enviaron.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Confirmar con la fuente de datos permite detectar diferencias, aunque depende de que respondan rápido.",
+          "desenlace_exito": "Los laboratorios responden con sus totales y la diferencia salta a la vista. Se recuperan los registros perdidos. El reporte se corrige a tiempo.",
+          "desenlace_fallo": "Solo la mitad de los laboratorios responde. La diferencia no se puede confirmar. El reporte sale incompleto."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-p5",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "La Inspección del Código de Cobro",
+      "contexto": "El módulo de cobro de la app de transporte va a producción el lunes. Las pruebas automáticas pasan, pero es la parte más delicada del sistema y nadie más lo ha revisado.",
+      "tecnicismos": [
+        "revision-pares",
+        "verificacion",
+        "caso-prueba"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Hacer una inspección formal del código con una lista de verificación.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La inspección con lista de verificación encuentra defectos que las pruebas no cubren, como redondeos o casos no contemplados.",
+          "desenlace_exito": "La inspección encuentra un redondeo que cobraba un centavo de más en cada viaje. Se corrige antes del lunes. Con millones de viajes, el ahorro para los usuarios es enorme.",
+          "desenlace_fallo": "La lista de verificación es genérica y no incluye nada sobre cobros. La inspección no encuentra nada importante. El error del redondeo sale a producción."
+        },
+        {
+          "id": "b",
+          "texto": "Pedir una revisión entre pares a dos colegas que conozcan el sistema de pagos.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Colegas con experiencia en el dominio detectan errores que el autor ya no ve.",
+          "desenlace_exito": "Una compañera con experiencia en pagos detecta que los reembolsos no se registran. Lo corrigen juntos el viernes. El lunes el módulo sale sin problemas.",
+          "desenlace_fallo": "Los colegas revisan de prisa porque tienen sus propias entregas. No encuentran nada. El lunes aparece un error en los reembolsos."
+        },
+        {
+          "id": "c",
+          "texto": "Agregar más casos de prueba automáticos con montos extremos.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Ampliar los casos de prueba con valores extremos verifica comportamientos que los casos normales no tocan.",
+          "desenlace_exito": "Los nuevos casos de prueba revelan que los viajes de cero pesos generan un error. Lo corriges y todo pasa. El lunes el módulo sale estable.",
+          "desenlace_fallo": "Escribes casos para montos grandes, pero el error estaba en los viajes con transbordo. No lo detectas. Aparece el lunes en la hora pico."
         }
       ]
     }

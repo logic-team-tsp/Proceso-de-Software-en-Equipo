@@ -51,6 +51,141 @@
       ]
     },
     {
+      "id": "poo-clases-n2",
+      "subtema": "programacion-oo:0",
+      "titulo": "El Saldo que Cualquiera Cambia",
+      "contexto": "En la app del monedero de la cafetería escolar, la clase Monedero tiene el atributo saldo público. Otro módulo le resta directamente el precio de cada compra y, cuando falla la red, deja saldos negativos. La tesorera del plantel pide que eso no vuelva a pasar.",
+      "tecnicismos": [
+        "encapsulamiento",
+        "clase",
+        "metodo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Encapsular el saldo y modificarlo solo con métodos como cobrar() y recargar() que validen.",
+          "correcta": true,
+          "retroalimentacion": "El encapsulamiento oculta los datos internos y obliga a cambiarlos mediante métodos que aplican las reglas, como no permitir saldo negativo.",
+          "desenlace": "Con el saldo encapsulado, cada cobro pasa por un método que revisa si alcanza. No vuelve a aparecer un saldo negativo. La tesorera cierra el mes sin diferencias y felicita al equipo."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar cada noche los saldos negativos y corregirlos a mano.",
+          "correcta": false,
+          "retroalimentacion": "Corregir después deja el dato expuesto: cualquier parte del programa puede seguir rompiendo la regla.",
+          "desenlace": "Cada mañana hay que ajustar decenas de saldos y algunos alumnos ya comieron sin pagar. La tesorera pierde horas cuadrando. La dirección cuestiona si el monedero sirve."
+        },
+        {
+          "id": "c",
+          "texto": "Agregar un comentario en el código que diga «no restar directamente».",
+          "correcta": false,
+          "retroalimentacion": "Un comentario no impide nada; la clase debe proteger sus propios datos.",
+          "desenlace": "Un practicante nuevo no lee el comentario y vuelve a restar el saldo directamente. Los saldos negativos regresan en la semana de exámenes. Tu líder te pide una solución de verdad."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-n3",
+      "subtema": "programacion-oo:0",
+      "titulo": "Los Seis Métodos de Pago",
+      "contexto": "La tienda en línea acepta tarjeta, transferencia, pago en tienda de conveniencia, vales, monedero y meses sin intereses. La función cobrar() es un if de 400 líneas que revisa el tipo de pago, y cada método nuevo rompe alguno anterior. El cliente quiere agregar pagos con código QR.",
+      "tecnicismos": [
+        "polimorfismo",
+        "clase",
+        "metodo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar otro elif para el pago con código QR al final del if.",
+          "correcta": false,
+          "retroalimentacion": "Crecer el if acumula riesgos: cada cambio toca el mismo bloque y puede romper los otros métodos.",
+          "desenlace": "El pago con QR funciona, pero el elif nuevo cambia una variable que usaba el pago en tienda. Durante un fin de semana nadie puede pagar en efectivo. El cliente pide explicaciones."
+        },
+        {
+          "id": "b",
+          "texto": "Crear una clase por cada método de pago con su propio método pagar() y usarlas por polimorfismo.",
+          "correcta": true,
+          "retroalimentacion": "Con polimorfismo, cada clase responde a pagar() a su manera y el código que cobra no necesita saber cuál es; agregar uno nuevo no toca a los demás.",
+          "desenlace": "Cada método de pago queda en su propia clase y el QR se agrega sin tocar las demás. Las pruebas de los otros cinco siguen pasando. El cliente estrena el pago con QR en una semana."
+        },
+        {
+          "id": "c",
+          "texto": "Copiar la función cobrar() completa y adaptarla solo para el QR.",
+          "correcta": false,
+          "retroalimentacion": "Duplicar el código multiplica el mantenimiento: cualquier corrección se tiene que hacer en dos lugares.",
+          "desenlace": "Ahora hay dos funciones casi iguales y una corrección de seguridad solo se aplica en una. Una auditoría encuentra el hueco. El equipo pasa dos semanas unificando el código."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-n4",
+      "subtema": "programacion-oo:0",
+      "titulo": "El Empleado que Heredaba de la Computadora",
+      "contexto": "Para «reutilizar» el método encender(), un compañero hizo que la clase Empleado herede de la clase Computadora. Ahora cada empleado tiene atributos como memoria_ram y los reportes de recursos humanos muestran datos absurdos. Hay que corregir el diseño.",
+      "tecnicismos": [
+        "herencia",
+        "composicion",
+        "clase"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Mantener la herencia y ocultar en los reportes los atributos que no sirven.",
+          "correcta": false,
+          "retroalimentacion": "La herencia expresa una relación «es un»; un empleado no es una computadora, y esconder atributos no corrige el modelo.",
+          "desenlace": "Los reportes se ven bien, pero un cálculo de prestaciones usa por error la memoria_ram. Un empleado recibe una cantidad rarísima en su nómina. Recursos humanos pierde la confianza en el sistema."
+        },
+        {
+          "id": "b",
+          "texto": "Usar composición: que el Empleado tenga una Computadora como atributo.",
+          "correcta": true,
+          "retroalimentacion": "La composición modela «tiene un»: el empleado contiene un objeto computadora y puede usar su método sin heredar todo lo demás.",
+          "desenlace": "Con la composición, cada empleado tiene su computadora asignada y los reportes muestran solo datos de personas. El inventario de computadoras se vuelve más fácil de llevar. Tu líder usa el ejemplo en la capacitación de nuevos ingresos."
+        },
+        {
+          "id": "c",
+          "texto": "Hacer que Computadora herede de Empleado para invertir la relación.",
+          "correcta": false,
+          "retroalimentacion": "Invertir una herencia equivocada sigue siendo herencia equivocada: una computadora tampoco es un empleado.",
+          "desenlace": "Ahora las computadoras aparecen en la nómina y el sistema les calcula vacaciones. El error se vuelve el chiste de la oficina. Hay que rehacer el diseño desde cero."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-n5",
+      "subtema": "programacion-oo:0",
+      "titulo": "El Pedido sin Dirección",
+      "contexto": "En la app de una florería, los objetos Pedido se crean vacíos y la dirección se llena después, en otra pantalla. El 14 de febrero varios pedidos salieron sin dirección porque alguien cerró la app a la mitad. Debes evitar que exista un pedido incompleto.",
+      "tecnicismos": [
+        "constructor",
+        "objeto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Exigir en el constructor los datos obligatorios, como dirección y destinatario.",
+          "correcta": true,
+          "retroalimentacion": "El constructor asigna los valores iniciales de un objeto; si exige los datos obligatorios, es imposible crear un pedido incompleto.",
+          "desenlace": "Con el constructor exigiendo la dirección, ningún pedido puede crearse sin ella. El siguiente Día de las Madres todos los ramos llegan a su destino. La dueña de la florería te manda un ramo de agradecimiento."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar al final del día los pedidos sin dirección y llamar a cada cliente.",
+          "correcta": false,
+          "retroalimentacion": "Revisar después no impide que el objeto incompleto exista; el problema se repite con cada pedido.",
+          "desenlace": "Cada noche hay que llamar a decenas de clientes y muchos no contestan. Algunos ramos se marchitan en la bodega. La florería pierde ventas de su mejor temporada."
+        },
+        {
+          "id": "c",
+          "texto": "Poner «sin dirección» como valor por omisión.",
+          "correcta": false,
+          "retroalimentacion": "Un valor por omisión engañoso hace que el objeto parezca válido aunque le falta información esencial.",
+          "desenlace": "Los repartidores reciben pedidos con «sin dirección» y no saben a dónde ir. El sistema los marca como entregados por error. Los clientes reclaman flores que nunca llegaron."
+        }
+      ]
+    },
+    {
       "id": "poo-exc-n",
       "subtema": "programacion-oo:1",
       "titulo": "El Reporte que Desaparece",
@@ -80,6 +215,141 @@
           "correcta": false,
           "retroalimentacion": "Los errores previsibles deben manejarse; confiar en que no ocurrirán deja al sistema expuesto a caídas.",
           "desenlace": "Un lunes a las 8 a.m. el archivo todavía no se ha subido y el sistema completo se cae en plena junta de resultados. La gerente presenta sin números y el director pregunta quién programó eso. Te toca arreglarlo con prisa y explicar por qué no se previó un error tan común."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n2",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Error que Nadie Vio",
+      "contexto": "Revisando por qué una tienda cobró de menos durante tres semanas, encuentras try: cobrar() except: pass. Cada vez que el banco rechazaba la conexión, el programa seguía como si nada y el pedido se enviaba sin cobrar.",
+      "tecnicismos": [
+        "try-except",
+        "excepcion",
+        "log"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Capturar la excepción específica de conexión, registrarla en el log y marcar el pedido como pendiente.",
+          "correcta": true,
+          "retroalimentacion": "Un except vacío esconde los errores; hay que capturar excepciones específicas, dejar registro en el log y decidir qué hacer con el pedido.",
+          "desenlace": "Ahora cada falla de conexión queda registrada y el pedido espera hasta que el cobro pase. En una semana descubres que el banco falla siempre a la misma hora. La tienda negocia con el banco y deja de perder dinero."
+        },
+        {
+          "id": "b",
+          "texto": "Quitar el try/except para que el programa truene y se note el error.",
+          "correcta": false,
+          "retroalimentacion": "Dejar que el error tumbe todo el sistema afecta a todos los clientes; hay que manejar la excepción, no ignorarla ni dejarla suelta.",
+          "desenlace": "El error ya se nota: cada vez que el banco falla, la tienda completa se cae. Durante el fin de semana nadie puede comprar. El dueño prefería el problema anterior."
+        },
+        {
+          "id": "c",
+          "texto": "Dejar el except: pass y revisar las ventas cada mes.",
+          "correcta": false,
+          "retroalimentacion": "Silenciar excepciones convierte errores visibles en pérdidas invisibles que se descubren tarde.",
+          "desenlace": "Al mes siguiente el faltante es todavía mayor y ya no se puede cobrar a muchos clientes. La contadora reporta pérdidas. Tu líder pide revisar todos los except del proyecto."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n3",
+      "subtema": "programacion-oo:1",
+      "titulo": "Las Conexiones que Se Acaban",
+      "contexto": "El generador de constancias abre una conexión a la base de datos, crea el PDF y la cierra. Cuando el PDF lanza una excepción, la conexión nunca se cierra y a media mañana el servidor se queda sin conexiones disponibles: nadie puede descargar nada. Es temporada de titulación.",
+      "tecnicismos": [
+        "finally",
+        "try-except",
+        "excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cerrar la conexión en un bloque finally del try/except.",
+          "correcta": true,
+          "retroalimentacion": "El bloque finally se ejecuta siempre, haya excepción o no; ahí se liberan recursos como conexiones y archivos.",
+          "desenlace": "Con el cierre en finally, cada conexión se libera aunque falle el PDF. El servidor aguanta la temporada de titulación sin caerse. Los egresados descargan sus constancias sin filas."
+        },
+        {
+          "id": "b",
+          "texto": "Reiniciar el servidor cada dos horas.",
+          "correcta": false,
+          "retroalimentacion": "Reiniciar libera las conexiones a la fuerza, pero interrumpe a todos los usuarios y no corrige la fuga.",
+          "desenlace": "Cada reinicio corta descargas a la mitad y los egresados tienen que empezar de nuevo. Servicios escolares recibe decenas de quejas al día. El problema de fondo sigue ahí."
+        },
+        {
+          "id": "c",
+          "texto": "Subir el límite de conexiones del servidor al máximo.",
+          "correcta": false,
+          "retroalimentacion": "Más conexiones solo retrasan el momento en que se acaban; la fuga continúa con cada error.",
+          "desenlace": "El servidor tarda más en llenarse, pero a media tarde se cae igual y ahora consume toda la memoria. Se afectan también otros sistemas de la universidad. El área de cómputo pide revertir el cambio."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n4",
+      "subtema": "programacion-oo:1",
+      "titulo": "La Edad de Menos Cinco",
+      "contexto": "La función que calcula el precio de un seguro escolar recibe la edad. Cuando llega una edad negativa por error de captura, la función regresa -1 sin avisar y el sistema guarda pólizas con precio -1. Debes decidir cómo debe reaccionar la función.",
+      "tecnicismos": [
+        "lanzar-excepcion",
+        "excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Regresar 0 en lugar de -1 para que no se vea raro.",
+          "correcta": false,
+          "retroalimentacion": "Regresar un valor especial sin avisar hace que el error pase desapercibido; quien llama a la función no se entera de que algo salió mal.",
+          "desenlace": "Ahora las pólizas con error salen gratis. La aseguradora detecta cientos de seguros sin cobro en su auditoría. Hay que contactar a cada familia para corregirlo."
+        },
+        {
+          "id": "b",
+          "texto": "Lanzar una excepción con un mensaje claro cuando la edad sea inválida.",
+          "correcta": true,
+          "retroalimentacion": "Lanzar una excepción con raise detiene el cálculo y avisa con claridad que el dato es inválido, para que quien llama lo corrija.",
+          "desenlace": "La función ahora lanza un error claro y la pantalla de captura pide corregir la edad. No vuelve a guardarse una póliza inválida. La aseguradora reporta cero inconsistencias ese semestre."
+        },
+        {
+          "id": "c",
+          "texto": "Convertir la edad negativa a positiva con valor absoluto.",
+          "correcta": false,
+          "retroalimentacion": "Adivinar el dato correcto puede producir resultados falsos; un error de captura debe reportarse, no ocultarse.",
+          "desenlace": "Una edad capturada como -50 se convierte en 50 y un niño queda asegurado como adulto. El precio sale altísimo y la familia reclama. Nadie entiende de dónde salió esa edad."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n5",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Error con la Contraseña a la Vista",
+      "contexto": "Cuando ocurre una excepción en el registro de la plataforma de la escuela, la página muestra la traza de error completa al usuario: rutas del servidor, consultas y hasta la contraseña de la base de datos. Un alumno sube la captura a un grupo de mensajes.",
+      "tecnicismos": [
+        "traza-error",
+        "log",
+        "excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Mostrar al usuario un mensaje amable y guardar la traza de error solo en el log del servidor.",
+          "correcta": true,
+          "retroalimentacion": "La traza de error sirve al programador y debe ir al log; al usuario se le muestra un mensaje claro sin detalles internos.",
+          "desenlace": "Los usuarios ahora ven «Algo salió mal, intenta de nuevo en unos minutos» y el equipo revisa los detalles en el log. Cambias de inmediato la contraseña expuesta. La auditoría de seguridad aprueba el cambio."
+        },
+        {
+          "id": "b",
+          "texto": "Ocultar el error con una página en blanco.",
+          "correcta": false,
+          "retroalimentacion": "Una página en blanco no ayuda al usuario ni deja registro para corregir; hay que avisar y registrar.",
+          "desenlace": "Los alumnos creen que la página está caída y llaman a control escolar. Nadie sabe qué falló porque no hay registro. El problema tarda días en encontrarse."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir al grupo que borre la captura y dejar todo igual.",
+          "correcta": false,
+          "retroalimentacion": "Pedir discreción no resuelve la exposición: la traza de error se seguirá mostrando a cualquiera que provoque el fallo.",
+          "desenlace": "Otro alumno provoca el error a propósito y obtiene la misma información. Alguien entra a la base de datos y cambia calificaciones. La escuela tiene que restaurar respaldos y presentar una denuncia."
         }
       ]
     }
@@ -126,6 +396,164 @@
       ]
     },
     {
+      "id": "poo-clases-p2",
+      "subtema": "programacion-oo:0",
+      "titulo": "La Clase que Hacía Todo",
+      "contexto": "La clase Sistema de la mueblería tiene 6,000 líneas: cobra, factura, manda correos, calcula envíos y genera reportes. Hay que agregar la factura electrónica nueva antes del 1 de enero y cada cambio rompe algo distinto.",
+      "tecnicismos": [
+        "responsabilidad-unica",
+        "clase"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Separar la clase siguiendo el principio de responsabilidad única: cobro, factura, envío y correos.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una clase con un solo motivo para cambiar se modifica sin afectar a las demás; separar responsabilidades reduce los efectos secundarios.",
+          "desenlace_exito": "Separas la facturación en su propia clase y la factura electrónica nueva se agrega sin tocar el cobro. Las pruebas siguen pasando. La mueblería emite sus facturas desde el 1 de enero sin problemas.",
+          "desenlace_fallo": "Al separar la clase olvidas que el envío dependía de una variable de la factura. Los envíos dejan de calcularse en plena temporada navideña. Hay que corregir de emergencia."
+        },
+        {
+          "id": "b",
+          "texto": "Escribir pruebas primero y mover el código a clases nuevas poco a poco.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Las pruebas dan una red de seguridad para cambiar código grande sin romper lo que ya funcionaba.",
+          "desenlace_exito": "Con las pruebas listas, cada movimiento que rompe algo se detecta al instante. En dos semanas la factura electrónica queda lista y el código mucho más claro. Tu líder técnica pide aplicar el método en otros proyectos.",
+          "desenlace_fallo": "Escribir pruebas para 6,000 líneas te toma más de lo planeado. Llega diciembre y apenas vas a la mitad. Hay que meter la factura nueva con un parche."
+        },
+        {
+          "id": "c",
+          "texto": "Repartir las partes de la clase entre el equipo para reescribirlas en paralelo.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Repartir el trabajo acelera, pero requiere acordar antes cómo se comunicarán las clases nuevas.",
+          "desenlace_exito": "El equipo acuerda las interfaces en una mañana y cada quien reescribe su parte. Todo encaja a la primera. El 1 de enero la mueblería factura sin errores.",
+          "desenlace_fallo": "Cada quien diseña su clase a su manera y al juntarlas nada encaja. Pasan una semana resolviendo conflictos. La factura electrónica sale con días de retraso."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-p3",
+      "subtema": "programacion-oo:0",
+      "titulo": "Sensores de Tres Marcas",
+      "contexto": "La red de monitoreo de calidad del aire de la ciudad usa sensores de tres fabricantes, cada uno con su propia forma de entregar los datos. El código tiene tres versiones casi iguales de todo y hoy se integra una cuarta marca. El reporte público sale mañana.",
+      "tecnicismos": [
+        "clase-base",
+        "polimorfismo",
+        "metodo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Definir una clase base Sensor con el método leer() y una subclase por fabricante, usando polimorfismo.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una clase base define lo común y cada subclase implementa leer() a su manera; el resto del sistema usa polimorfismo sin importar la marca.",
+          "desenlace_exito": "Con la clase base, la cuarta marca se integra escribiendo solo su método leer(). El reporte sale a tiempo y con datos de todos los sensores. El municipio pide integrar más estaciones.",
+          "desenlace_fallo": "Al crear la clase base unificas mal las unidades y una marca reporta partes por millón como si fueran microgramos. El reporte muestra contaminación altísima en una colonia. Hay que publicar una corrección."
+        },
+        {
+          "id": "b",
+          "texto": "Escribir un adaptador que traduzca cada marca a un formato común.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un adaptador convierte la interfaz de cada fabricante a la que espera el sistema, sin reescribir todo.",
+          "desenlace_exito": "Tu adaptador traduce las cuatro marcas al mismo formato y el código duplicado desaparece. El reporte público sale sin errores. El equipo usa el patrón en otros proyectos.",
+          "desenlace_fallo": "El adaptador funciona con tres marcas, pero la cuarta manda datos en un orden distinto. El reporte sale incompleto. Las vecinas de esa colonia reclaman falta de información."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir a los fabricantes un formato común de datos.",
+          "atributo": "equipo",
+          "probabilidad_base": 20,
+          "retroalimentacion": "Negociar con proveedores puede resolver el problema de raíz, pero depende de terceros y de sus tiempos.",
+          "desenlace_exito": "Uno de los fabricantes ya ofrecía un formato estándar y los demás aceptan usarlo. El código se simplifica muchísimo. El reporte sale a tiempo.",
+          "desenlace_fallo": "Los fabricantes contestan que lo revisarán el próximo trimestre. Mientras tanto el código sigue triplicado. El reporte sale tarde."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-p4",
+      "subtema": "programacion-oo:0",
+      "titulo": "El Paquete Escolar que Cambió Solo",
+      "contexto": "En la papelería en línea hay un paquete escolar predefinido. Cuando un comprador agrega un cuaderno a su carrito, el cuaderno aparece también en el paquete de todos los demás. Tu código copia el paquete con carrito = paquete: ambas variables son una referencia al mismo objeto.",
+      "tecnicismos": [
+        "referencia",
+        "objeto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Crear una copia nueva del objeto paquete para cada carrito.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Asignar una variable a otra solo copia la referencia; para tener objetos independientes hay que crear una copia real.",
+          "desenlace_exito": "Cada carrito recibe su propia copia del paquete y los cambios ya no se mezclan. La temporada de regreso a clases sigue sin sorpresas. Agregas una prueba para que no vuelva a pasar.",
+          "desenlace_fallo": "Haces una copia superficial y la lista de útiles dentro del paquete sigue compartida. El problema baja, pero no desaparece. Los compradores siguen viendo artículos ajenos."
+        },
+        {
+          "id": "b",
+          "texto": "Depurar imprimiendo la identidad de cada objeto para ver cuáles son el mismo.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Comparar la identidad de los objetos revela qué variables apuntan al mismo lugar en memoria.",
+          "desenlace_exito": "Al imprimir las identidades ves que todos los carritos apuntan al mismo paquete y a la misma lista. Corriges ambas copias. El error desaparece en una hora.",
+          "desenlace_fallo": "Imprimes tanta información que el registro se vuelve ilegible. Pasa la tarde sin encontrar el origen. Mientras tanto se siguen vendiendo paquetes con artículos de más."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir ayuda en el chat del equipo con una captura del problema.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Quien ya vivió el error de referencias compartidas lo reconoce en segundos.",
+          "desenlace_exito": "Un compañero ve la captura y responde «eso es una referencia compartida». Te explica cómo copiar el objeto y lo resuelves de inmediato. Le invitas un café.",
+          "desenlace_fallo": "Nadie contesta porque todos están en una junta larga. Sigues dando vueltas solo. El error dura todo el día y afecta cientos de pedidos."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-p5",
+      "subtema": "programacion-oo:0",
+      "titulo": "Los Enemigos de la Feria de Ciencias",
+      "contexto": "Tu equipo prepara un videojuego para la feria de ciencias. Hay enemigos que caminan, otros que vuelan, otros que disparan y algunos que hacen dos cosas. Con herencia ya tienen clases como EnemigoVoladorQueDispara y el diseño se volvió un laberinto. La feria es en tres días.",
+      "tecnicismos": [
+        "herencia",
+        "composicion",
+        "objeto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cambiar a composición: cada enemigo es un objeto que tiene comportamientos como mover y atacar.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La composición permite combinar comportamientos sin crear una clase por cada mezcla posible.",
+          "desenlace_exito": "Con la composición, crear un enemigo nuevo es combinar piezas en una línea. El juego queda listo un día antes. El jurado pregunta cómo lo hicieron y se llevan mención honorífica.",
+          "desenlace_fallo": "El cambio a composición toca todo el código y aparecen errores por todos lados. La víspera de la feria el juego se cierra al iniciar. Presentan un video en lugar del juego."
+        },
+        {
+          "id": "b",
+          "texto": "Mantener la herencia y aplanar la jerarquía a solo dos niveles.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Reducir niveles de herencia ayuda, aunque las combinaciones siguen obligando a duplicar algo de código.",
+          "desenlace_exito": "Aplanas la jerarquía y el código se vuelve manejable. Duplicas algunas líneas, pero el juego funciona perfecto en la feria. El público hace fila para jugar.",
+          "desenlace_fallo": "Al aplanar se pierden comportamientos y los enemigos voladores dejan de volar. Lo descubren durante la presentación. Los jueces se ríen, pero no de la forma que esperaban."
+        },
+        {
+          "id": "c",
+          "texto": "Reunir al equipo y decidir juntos qué enemigos sí entran a la versión de la feria.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Reducir el alcance con todo el equipo de acuerdo puede salvar la entrega cuando el tiempo no alcanza.",
+          "desenlace_exito": "Deciden quedarse con cuatro enemigos bien hechos en lugar de doce a medias. El juego es estable y divertido. Ganan el premio del público.",
+          "desenlace_fallo": "La reunión termina en discusión y cada quien sigue programando su enemigo favorito. Nada se integra a tiempo. Llegan a la feria con un juego lleno de errores."
+        }
+      ]
+    },
+    {
       "id": "poo-exc-p",
       "subtema": "programacion-oo:1",
       "titulo": "La App que Se Cierra Sola",
@@ -162,6 +590,163 @@
           "retroalimentacion": "Los reportes de usuarios ayudan a reproducir el error, pero no sustituyen el manejo de excepciones en el código.",
           "desenlace_exito": "Un alumno explica que entró a revisar una materia nueva sin tareas. Con eso reproduces el error al instante y lo corriges antes de la publicación. Además, agregas un formulario de reporte de errores dentro de la app.",
           "desenlace_fallo": "Nadie recuerda qué hacía cuando se cerró la app y los reportes no ayudan. Sin poder reproducir el error, la app sigue fallando el día de la publicación. Queda claro que hacía falta manejar la excepción en el código."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-p2",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Cohete del Club",
+      "contexto": "El club de cohetería reutiliza el código de su cohete anterior en uno nuevo, mucho más rápido. En la simulación, una velocidad grande se convierte a entero de 16 bits, se desborda y la excepción no manejada reinicia la computadora de vuelo. Así se perdió el Ariane 5 en 1996. El lanzamiento es en dos días.",
+      "tecnicismos": [
+        "excepcion",
+        "desbordamiento"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Proteger la conversión: validar el rango y manejar la excepción sin reiniciar el sistema.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Toda conversión que puede fallar debe protegerse; una excepción no manejada en un sistema crítico puede ser peor que el error original.",
+          "desenlace_exito": "Con la conversión protegida, la simulación aguanta velocidades altas sin reiniciar. El cohete vuela perfecto y el club recupera la carga útil. Escribes un reporte que se vuelve lectura obligatoria del club.",
+          "desenlace_fallo": "Proteges esa conversión, pero hay otra igual en el módulo de altitud. En la simulación final vuelve a reiniciarse. Se pospone el lanzamiento un mes."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar los requisitos: ese código venía de un cohete con otras condiciones de vuelo.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Reutilizar código sin revisar si sus supuestos siguen siendo válidos es riesgoso; los requisitos del sistema nuevo pueden ser distintos.",
+          "desenlace_exito": "Al revisar los requisitos descubres que esa función ni siquiera se necesita en el cohete nuevo. La quitas y el riesgo desaparece. El lanzamiento es un éxito.",
+          "desenlace_fallo": "La revisión se alarga y encuentras demasiados supuestos que validar en dos días. El equipo decide posponer el lanzamiento. Al menos nadie pierde el cohete."
+        },
+        {
+          "id": "c",
+          "texto": "Correr la simulación con datos reales del cohete nuevo junto con el equipo de propulsión.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Probar con los datos reales del nuevo sistema y con quienes lo conocen revela fallas que una revisión aislada no ve.",
+          "desenlace_exito": "El equipo de propulsión aporta las velocidades reales y la simulación muestra la falla con claridad. La corrigen juntos esa misma noche. El cohete vuela sin problemas.",
+          "desenlace_fallo": "El equipo de propulsión no tiene listos sus datos y simulan con valores viejos. La falla no aparece en la simulación. En el lanzamiento el cohete se desvía y cae en un terreno baldío."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-p3",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Pago que Falla a Veces",
+      "contexto": "La pasarela de pagos externa falla una de cada cincuenta veces con un error de tiempo de espera. Cuando pasa, la app de boletos para conciertos lanza una excepción, la compra se pierde y el asiento queda bloqueado. La preventa empieza en una hora.",
+      "tecnicismos": [
+        "excepcion",
+        "try-except"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Capturar el error de tiempo de espera con try/except y reintentar hasta tres veces con una pausa.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Algunas excepciones son temporales: capturarlas y reintentar con un límite resuelve fallas pasajeras sin ciclos infinitos.",
+          "desenlace_exito": "Con los reintentos, casi todas las compras pasan al segundo intento. La preventa se agota sin asientos bloqueados. El área de soporte casi no recibe quejas.",
+          "desenlace_fallo": "Reintentas sin pausa y, cuando la pasarela se satura, tus reintentos la saturan más. Durante diez minutos nadie puede pagar. La preventa se vuelve tendencia en redes por las fallas."
+        },
+        {
+          "id": "b",
+          "texto": "Liberar el asiento en el except y mostrar un mensaje para intentar de nuevo.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Manejar la excepción dejando el sistema en un estado consistente evita asientos bloqueados, aunque el usuario tenga que repetir.",
+          "desenlace_exito": "Cada fallo libera el asiento y muestra un mensaje claro. Algunos usuarios repiten la compra sin problema. La preventa termina sin asientos fantasma.",
+          "desenlace_fallo": "El mensaje aparece, pero el asiento se libera tarde y otra persona lo compra mientras tanto. Dos personas llegan al concierto con el mismo lugar. El organizador pide reembolsos."
+        },
+        {
+          "id": "c",
+          "texto": "Llamar al proveedor de la pasarela para que revise la falla antes de la preventa.",
+          "atributo": "equipo",
+          "probabilidad_base": 20,
+          "retroalimentacion": "El proveedor puede tener una solución, pero una hora es muy poco tiempo para que un tercero responda.",
+          "desenlace_exito": "El proveedor reconoce un problema en su servidor y lo corrige a tiempo. La preventa corre sin errores. Además te ofrecen un descuento por las molestias.",
+          "desenlace_fallo": "El proveedor abre un ticket y promete respuesta en 48 horas. La preventa empieza con la falla. Cientos de asientos quedan bloqueados."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-p4",
+      "subtema": "programacion-oo:1",
+      "titulo": "Diez Mil Filas y Una Mala",
+      "contexto": "El sistema de nómina importa un archivo de 10,000 empleados. Si una sola fila tiene un dato inválido, se lanza una excepción y no se importa nada. La nómina se paga mañana temprano.",
+      "tecnicismos": [
+        "excepcion",
+        "try-except",
+        "log"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar try/except por fila: importar las válidas y anotar las inválidas en el log para revisarlas.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Manejar el error en el nivel adecuado permite que una fila mala no detenga todo el proceso, dejando registro de lo que falló.",
+          "desenlace_exito": "Se importan 9,996 filas y el log muestra exactamente las cuatro con error. Recursos humanos corrige esas cuatro en diez minutos. La nómina se paga a tiempo.",
+          "desenlace_fallo": "Importas las válidas, pero entre las inválidas está la del director y nadie revisa el log. Él no recibe su pago. La reunión del lunes es muy incómoda."
+        },
+        {
+          "id": "b",
+          "texto": "Validar el archivo completo antes de importarlo y regresar la lista de errores.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Validar primero evita importar a medias y entrega un reporte completo para corregir de una vez.",
+          "desenlace_exito": "La validación encuentra cuatro filas con errores y las reporta juntas. Recursos humanos las corrige y el archivo se importa completo. La nómina sale impecable.",
+          "desenlace_fallo": "La validación es tan estricta que marca como error nombres con acento. Recursos humanos tiene que revisar cientos de filas en la noche. La nómina se paga con horas de retraso."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir a recursos humanos que revisen el archivo antes de enviarlo.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Revisar en el origen ayuda, pero el sistema también debe poder manejar errores.",
+          "desenlace_exito": "Recursos humanos encuentra los errores en su hoja y manda un archivo limpio. La importación pasa sin problemas. Acuerdan una plantilla con validaciones.",
+          "desenlace_fallo": "Recursos humanos no encuentra los errores a simple vista. El archivo vuelve a fallar a la medianoche. La nómina se retrasa un día."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-p5",
+      "subtema": "programacion-oo:1",
+      "titulo": "La Actualización del Viernes",
+      "contexto": "Una actualización automática de configuración llegó con un archivo mal formado y el programa de control de acceso de la escuela truena al arrancar en todas las computadoras. Hay historias reales de una actualización así que tumbó millones de computadoras en el mundo. El lunes hay examen general.",
+      "tecnicismos": [
+        "excepcion",
+        "traza-error"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Hacer que el programa maneje la excepción al leer la configuración y arranque con valores seguros.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un error al leer datos externos no debería tumbar el programa: manejar la excepción y usar valores seguros mantiene el servicio.",
+          "desenlace_exito": "Con el manejo de la excepción, el programa arranca con la configuración anterior y avisa del archivo dañado. Las computadoras vuelven a funcionar el sábado. El examen del lunes ocurre sin contratiempos.",
+          "desenlace_fallo": "Manejas la excepción, pero los valores seguros dejan las puertas sin restricción. El fin de semana cualquiera puede entrar a los laboratorios. Hay que corregir de emergencia el domingo."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar la traza de error y establecer actualizaciones graduales, primero en pocas computadoras.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "La traza de error dice exactamente dónde falló; liberar por etapas limita el daño de una actualización mala.",
+          "desenlace_exito": "La traza de error apunta a la línea que lee el archivo y la corriges. Desde ahora las actualizaciones llegan primero a cinco computadoras. El lunes todo funciona.",
+          "desenlace_fallo": "Encuentras la línea con la traza de error, pero arreglar cada computadora a mano lleva todo el fin de semana. El lunes la mitad sigue sin funcionar. El examen se aplica en dos turnos."
+        },
+        {
+          "id": "c",
+          "texto": "Organizar con soporte técnico la restauración de las computadoras una por una.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Coordinarse con soporte permite recuperar el servicio rápido, aunque no evita que vuelva a pasar.",
+          "desenlace_exito": "Con soporte técnico se reparten los salones y restauran todas las computadoras el sábado. El lunes el examen se aplica normal. Después se revisa cómo evitar otra actualización así.",
+          "desenlace_fallo": "Soporte técnico tiene solo dos personas y no se dan abasto. El lunes muchos salones siguen sin computadoras. El examen se reprograma."
         }
       ]
     }

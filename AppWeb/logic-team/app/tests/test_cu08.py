@@ -23,6 +23,7 @@ from app.models import (
 )
 from app.services import escenarios, logros, motor_partida
 from app.services.tecnicismos import Jugador
+from app.tests.test_cu01 import tiradas
 from app.views_personalizar import PERFILES
 
 PERFIL = PERFILES[0]
@@ -56,16 +57,21 @@ def _decidir(client, partida, correcta=True):
 
 
 def _jugar_hasta_el_final(client, partida, correcta=True):
-    """Juega la partida completa y regresa todos los logros nuevos que se notificaron."""
+    """Juega la partida completa y regresa todos los logros nuevos que se notificaron.
+
+    Las tiradas de los eventos de probabilidad se fijan (éxito si correcta, fallo si no) para
+    que el resultado no dependa de la suerte ni de cuántos eventos tenga la historia.
+    """
     nuevos = []
     estado = client.get(f"/partida/{partida.id}/estado/").json()
-    while estado["fase"] != "fin":
-        if estado["fase"] == "mejora":
-            estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": "teoria"})
-            estado = estado.json()
-            continue
-        nuevos += (_decidir(client, partida, correcta).get("cu08") or {}).get("nuevos", [])
-        estado = _post(client, f"/partida/{partida.id}/continuar/").json()
+    with tiradas(exito=correcta):
+        while estado["fase"] != "fin":
+            if estado["fase"] == "mejora":
+                estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": "teoria"})
+                estado = estado.json()
+                continue
+            nuevos += (_decidir(client, partida, correcta).get("cu08") or {}).get("nuevos", [])
+            estado = _post(client, f"/partida/{partida.id}/continuar/").json()
     return nuevos
 
 

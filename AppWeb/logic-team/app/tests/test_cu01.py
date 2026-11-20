@@ -1,6 +1,9 @@
 """CU01 - Realizar Partida: motor del juego, API del libro y conexion con CU02."""
 
 import json
+import random
+from types import SimpleNamespace
+from unittest import mock
 
 import pytest
 
@@ -40,14 +43,31 @@ def _post(client, url, datos=None):
     return client.post(url, json.dumps(datos or {}), content_type="application/json")
 
 
+class _TiradaFija(random.Random):
+    """Tirada de los eventos de probabilidad: siempre la más baja (éxito) o la más alta (fallo)."""
+
+    exito = True
+
+    def randint(self, a, b):
+        return a if self.exito else b
+
+
+def tiradas(exito=True):
+    """Fija las tiradas del motor para que jugar una partida completa no dependa de la suerte."""
+    _TiradaFija.exito = exito
+    falso = SimpleNamespace(Random=_TiradaFija, SystemRandom=random.SystemRandom)
+    return mock.patch.object(motor_partida, "random", falso)
+
+
 def _jugar_hasta_el_final(client, partida):
     estado = client.get(_url(partida, "estado/")).json()
-    while estado["fase"] != "fin":
-        if estado["fase"] == "mejora":
-            estado = _post(client, _url(partida, "mejorar/"), {"atributo": "teoria"}).json()
-            continue
-        _post(client, _url(partida, "decision/"), {"opcion_id": _opcion(partida)})
-        estado = _post(client, _url(partida, "continuar/")).json()
+    with tiradas(exito=True):
+        while estado["fase"] != "fin":
+            if estado["fase"] == "mejora":
+                estado = _post(client, _url(partida, "mejorar/"), {"atributo": "teoria"}).json()
+                continue
+            _post(client, _url(partida, "decision/"), {"opcion_id": _opcion(partida)})
+            estado = _post(client, _url(partida, "continuar/")).json()
     return estado
 
 
@@ -56,13 +76,14 @@ def test_los_archivos_de_escenarios_son_validos():
     assert escenarios.validar() == []
 
 
-def test_escenarios_cubren_todos_los_subtemas_de_cu02_con_un_evento_de_cada_tipo():
+def test_escenarios_cubren_todos_los_subtemas_de_cu02_con_cinco_eventos_de_cada_tipo():
     from app.views_personalizar import TEMAS
 
     _, catalogo = escenarios.cargar()
     for subtema in TEMAS:
-        tipos = sorted(e["tipo"] for e in catalogo["eventos"].values() if e["subtema"] == subtema)
-        assert tipos == [escenarios.NORMAL, escenarios.PROBABILIDAD], subtema
+        tipos = [e["tipo"] for e in catalogo["eventos"].values() if e["subtema"] == subtema]
+        assert tipos.count(escenarios.NORMAL) == 5, subtema
+        assert tipos.count(escenarios.PROBABILIDAD) == 5, subtema
 
 
 def test_desenlaces_cuentan_la_consecuencia():
@@ -112,10 +133,20 @@ def test_perfiles_equilibrados_y_lobo_solitario():
 
 
 @pytest.mark.django_db
-def test_dos_eventos_por_subtema_uno_normal_y_uno_de_probabilidad():
-    partida = _partida()
-    assert len(partida.secuencia) == 6
-    assert _tipos(partida).count(escenarios.NORMAL) == 3
+def test_la_partida_llega_al_maximo_de_eventos_sin_repetir_y_de_los_temas_elegidos():
+    config, catalogo = escenarios.cargar()
+    partida = _partida()  # 3 subtemas x 10 eventos = 30 disponibles, tope de 20
+    assert len(partida.secuencia) == config["max_eventos_por_partida"] == 20
+    assert len(set(partida.secuencia)) == len(partida.secuencia)
+    assert {catalogo["eventos"][e]["subtema"] for e in partida.secuencia} == set(TRES)
+    assert {escenarios.NORMAL, escenarios.PROBABILIDAD} == set(_tipos(partida))
+
+
+@pytest.mark.django_db
+def test_con_un_solo_subtema_se_juegan_sus_diez_eventos():
+    partida = _partida(temas=TRES[:1])
+    assert len(partida.secuencia) == 10
+    assert _tipos(partida).count(escenarios.NORMAL) == 5
 
 
 @pytest.mark.django_db
@@ -132,12 +163,16 @@ def test_el_bloque_1_solo_tiene_eventos_normales(temas, semilla):
 
 @pytest.mark.django_db
 def test_el_bloque_3_tiene_mas_probabilidad_que_el_bloque_2():
-    bloque2 = bloque3 = 0
+    config, _ = escenarios.cargar()
+    probabilidad, posiciones = [0, 0, 0], [0, 0, 0]
     for semilla in range(300):
         tipos = _tipos(_partida(semilla=semilla))
-        bloque2 += tipos[2:4].count(escenarios.PROBABILIDAD)
-        bloque3 += tipos[4:].count(escenarios.PROBABILIDAD)
-    assert bloque3 > bloque2 > 0
+        for posicion, tipo in enumerate(tipos):
+            numero = motor_partida.bloque_de(posicion, len(tipos), config)[0]
+            posiciones[numero] += 1
+            probabilidad[numero] += tipo == escenarios.PROBABILIDAD
+    bloque2, bloque3 = (probabilidad[i] / posiciones[i] for i in (1, 2))
+    assert probabilidad[0] == 0 and bloque3 > bloque2 > 0
 
 
 @pytest.mark.django_db
@@ -174,7 +209,7 @@ def test_comenzar_aventura_crea_la_partida_y_abre_el_libro(client):
     partida = Partida.objects.get()
     assert respuesta.redirect_chain[-1][0] == f"/partida/{partida.id}/"
     assert partida.perfil_nombre == "Carrera afín, sin software"
-    assert partida.temas == TRES[:2] and partida.xp == 0 and len(partida.secuencia) == 4
+    assert partida.temas == TRES[:2] and partida.xp == 0 and len(partida.secuencia) == 20
     assert "pt-estado" in respuesta.content.decode()
     # Refrescar /personalizar/comenzar/ no crea otra partida
     client.get("/personalizar/comenzar/")
@@ -190,7 +225,7 @@ def test_se_pueden_mezclar_materias_y_elegir_mas_de_3_temas(client):
     client.get(respuesta["Location"])
     partida = Partida.objects.get()
     assert partida.temas == temas
-    assert len(partida.secuencia) == 12  # 6 subtemas x 2 eventos (tope: 20)
+    assert len(partida.secuencia) == 20  # 6 subtemas x 10 eventos, con tope de 20
     _, catalogo = escenarios.cargar()
     assert len({catalogo["eventos"][e]["tema_id"] for e in partida.secuencia}) == 4
 
@@ -218,7 +253,7 @@ def test_acertar_sube_xp_puntos_y_progreso(client):
     assert estado["fase"] == "resultado" and estado["resultado"]["acierto"] is True
     assert estado["resultado"]["retroalimentacion"] and estado["resultado"]["desenlace"]
     assert estado["xp"] == 10 and estado["puntuacion"] == 100 and estado["hp"] == 3
-    assert estado["progreso"] == round(100 / 6)
+    assert estado["progreso"] == round(100 / len(partida.secuencia))
     assert partida.registros.count() == 1
 
 
@@ -319,7 +354,7 @@ def test_partida_completa_muestra_puntuacion_logros_y_mapa(client):
     assert partida.estado == Partida.COMPLETADA and "capitulo_cerrado" in partida.logros
     html = client.get(_url(partida, "fin/")).content.decode()
     assert "Mapa de decisiones" in html and "Capítulo cerrado" in html
-    assert html.count('class="pt-paso ') == 6
+    assert html.count('class="pt-paso ') == len(partida.secuencia)
     assert client.get(_url(partida)).status_code == 302  # el libro ya cerrado manda al final
 
 

@@ -13,7 +13,10 @@
       "descripcion": "Describe una acción o servicio que el sistema debe realizar, es decir, qué hace el sistema.",
       "escenario_aplicacion": "Indicar que la app debe permitir hacer pedidos desde el celular",
       "palabra_clave": "acción",
-      "formas": ["requerimientos funcionales", "requerimiento funcional"]
+      "formas": [
+        "requerimientos funcionales",
+        "requerimiento funcional"
+      ]
     },
     {
       "id": "requerimiento-no-funcional",
@@ -22,7 +25,11 @@
       "descripcion": "Describe una cualidad del sistema, como su desempeño, seguridad o usabilidad: qué tan bien hace lo que hace.",
       "escenario_aplicacion": "Exigir que la app responda en menos de dos segundos en la hora pico",
       "palabra_clave": "cualidad",
-      "formas": ["requerimientos no funcionales", "requerimiento no funcional", "no funcional"]
+      "formas": [
+        "requerimientos no funcionales",
+        "requerimiento no funcional",
+        "no funcional"
+      ]
     },
     {
       "id": "desempeno",
@@ -31,7 +38,10 @@
       "descripcion": "Requerimiento no funcional que mide qué tan rápido responde el sistema y cuántos usuarios atiende a la vez.",
       "escenario_aplicacion": "Definir pruebas de carga para el tiempo de respuesta de una tienda en línea",
       "palabra_clave": "rápido",
-      "formas": ["desempeño", "tiempo de respuesta"]
+      "formas": [
+        "desempeño",
+        "tiempo de respuesta"
+      ]
     },
     {
       "id": "trazabilidad",
@@ -40,7 +50,9 @@
       "descripcion": "Capacidad de seguir la vida de un requerimiento: de dónde salió, en qué parte del diseño y del código se implementó y con qué prueba se verifica.",
       "escenario_aplicacion": "Saber qué pruebas repetir cuando cambia un requerimiento",
       "palabra_clave": "seguir",
-      "formas": ["trazabilidad"]
+      "formas": [
+        "trazabilidad"
+      ]
     },
     {
       "id": "analisis-impacto",
@@ -49,7 +61,10 @@
       "descripcion": "Estudio de qué partes del sistema, del plan y del costo se verán afectadas antes de aceptar un cambio.",
       "escenario_aplicacion": "Decidir si se acepta subir de 7 a 8 materias en un sistema de inscripciones ya aprobado",
       "palabra_clave": "afectadas",
-      "formas": ["evaluar el impacto", "análisis de impacto"]
+      "formas": [
+        "evaluar el impacto",
+        "análisis de impacto"
+      ]
     },
     {
       "id": "criterio-medible",
@@ -58,7 +73,10 @@
       "descripcion": "Condición expresada con números o hechos comprobables que permite verificar objetivamente si un requerimiento se cumple.",
       "escenario_aplicacion": "Reescribir «el sistema debe ser rápido» como «deberá responder en menos de 2 segundos»",
       "palabra_clave": "números",
-      "formas": ["criterios medibles", "criterio medible"]
+      "formas": [
+        "criterios medibles",
+        "criterio medible"
+      ]
     },
     {
       "id": "verificacion",
@@ -67,7 +85,10 @@
       "descripcion": "Revisión de que el producto se construyó conforme a su especificación. Responde: ¿construimos bien el producto?",
       "escenario_aplicacion": "Ejecutar los casos de prueba ligados a cada requerimiento del SRS",
       "palabra_clave": "conforme",
-      "formas": ["verificación", "verificar"]
+      "formas": [
+        "verificación",
+        "verificar"
+      ]
     },
     {
       "id": "validacion",
@@ -76,7 +97,11 @@
       "descripcion": "Confirmación con el cliente de que el producto resuelve su necesidad real. Responde: ¿construimos el producto correcto?",
       "escenario_aplicacion": "Hacer una demostración guiada y recoger las observaciones de la clienta",
       "palabra_clave": "necesidad",
-      "formas": ["validación", "validar", "validarla"]
+      "formas": [
+        "validación",
+        "validar",
+        "validarla"
+      ]
     },
     {
       "id": "especificacion",
@@ -85,7 +110,10 @@
       "descripcion": "Documento que describe de forma clara, completa y verificable lo que el sistema debe hacer y bajo qué condiciones.",
       "escenario_aplicacion": "Comparar lo que hace el programa contra lo que se acordó por escrito",
       "palabra_clave": "documento",
-      "formas": ["especificación", "especificarse"]
+      "formas": [
+        "especificación",
+        "especificarse"
+      ]
     },
     {
       "id": "elicitacion",
@@ -94,7 +122,58 @@
       "descripcion": "Actividad de obtener los requerimientos de los clientes y usuarios por medio de entrevistas, preguntas abiertas u observación.",
       "escenario_aplicacion": "Entrevistar a la dueña de una pastelería para entender qué necesita su página",
       "palabra_clave": "entrevistas",
-      "formas": ["elicitación", "aclarar requerimientos", "preguntas abiertas"]
+      "formas": [
+        "elicitación",
+        "aclarar requerimientos",
+        "preguntas abiertas"
+      ]
+    },
+    {
+      "id": "stakeholder",
+      "nombre": "Interesado (stakeholder)",
+      "subtema": "ingenieria-requerimientos:0",
+      "descripcion": "Persona o grupo al que afecta el sistema o que puede influir en él, aunque no sea quien lo paga.",
+      "escenario_aplicacion": "Entrevistar también a las cocineras y a los papás antes de diseñar la app de la cafetería",
+      "palabra_clave": "afecta",
+      "formas": [
+        "stakeholders",
+        "stakeholder",
+        "interesados"
+      ]
+    },
+    {
+      "id": "usabilidad",
+      "nombre": "Usabilidad",
+      "subtema": "ingenieria-requerimientos:0",
+      "descripcion": "Requerimiento no funcional sobre la facilidad con que las personas aprenden a usar el sistema y lo usan sin equivocarse.",
+      "escenario_aplicacion": "Separar en pantallas distintas el simulacro y la alerta real",
+      "palabra_clave": "facilidad",
+      "formas": [
+        "usabilidad"
+      ]
+    },
+    {
+      "id": "restriccion",
+      "nombre": "Restricción",
+      "subtema": "ingenieria-requerimientos:0",
+      "descripcion": "Requerimiento que limita cómo se puede construir el sistema, como la tecnología, el presupuesto o una ley.",
+      "escenario_aplicacion": "Exigir que el sistema corra en los servidores propios de la escuela",
+      "palabra_clave": "limita",
+      "formas": [
+        "restricciones",
+        "restricción"
+      ]
+    },
+    {
+      "id": "disponibilidad",
+      "nombre": "Disponibilidad",
+      "subtema": "ingenieria-requerimientos:0",
+      "descripcion": "Requerimiento no funcional que indica el porcentaje del tiempo que el sistema debe estar funcionando.",
+      "escenario_aplicacion": "Pedir que la tienda en línea funcione el 99.5 % del mes",
+      "palabra_clave": "porcentaje",
+      "formas": [
+        "disponibilidad"
+      ]
     },
     {
       "id": "solicitud-cambio",
@@ -103,7 +182,10 @@
       "descripcion": "Petición formal para modificar un requerimiento ya aprobado; se registra, se evalúa y se aprueba o rechaza.",
       "escenario_aplicacion": "Registrar que el gimnasio ahora quiere reservar clases desde la app",
       "palabra_clave": "formal",
-      "formas": ["solicitudes de cambio", "solicitud de cambio"]
+      "formas": [
+        "solicitudes de cambio",
+        "solicitud de cambio"
+      ]
     },
     {
       "id": "sprint",
@@ -112,7 +194,10 @@
       "descripcion": "Iteración corta de duración fija, normalmente de una a cuatro semanas, en la que el equipo entrega un incremento del producto.",
       "escenario_aplicacion": "Planear qué cambios se atienden en las próximas tres semanas de trabajo",
       "palabra_clave": "incremento",
-      "formas": ["sprints", "sprint"]
+      "formas": [
+        "sprints",
+        "sprint"
+      ]
     },
     {
       "id": "priorizacion",
@@ -121,7 +206,56 @@
       "descripcion": "Ordenar los requerimientos o cambios según criterios explícitos como impacto, costo y urgencia.",
       "escenario_aplicacion": "Elegir cuáles de cinco solicitudes se atienden primero cuando no hay tiempo para todas",
       "palabra_clave": "urgencia",
-      "formas": ["priorizarlas", "priorizar", "prioridades"]
+      "formas": [
+        "priorizarlas",
+        "priorizar",
+        "prioridades"
+      ]
+    },
+    {
+      "id": "crecimiento-alcance",
+      "nombre": "Crecimiento descontrolado del alcance (scope creep)",
+      "subtema": "ingenieria-requerimientos:1",
+      "descripcion": "Problema en el que se agregan funciones poco a poco sin control formal, hasta que el proyecto crece de forma descontrolada.",
+      "escenario_aplicacion": "Aceptar cada semana un «botoncito más» sin mover la fecha de entrega",
+      "palabra_clave": "descontrolada",
+      "formas": [
+        "scope creep",
+        "crecimiento del alcance"
+      ]
+    },
+    {
+      "id": "linea-base",
+      "nombre": "Línea base",
+      "subtema": "ingenieria-requerimientos:1",
+      "descripcion": "Versión aprobada de los requerimientos que sirve de referencia; cualquier cambio posterior pasa por control de cambios.",
+      "escenario_aplicacion": "Congelar la versión 1.0 de los requerimientos firmada en la junta",
+      "palabra_clave": "aprobada",
+      "formas": [
+        "línea base"
+      ]
+    },
+    {
+      "id": "backlog",
+      "nombre": "Backlog del producto",
+      "subtema": "ingenieria-requerimientos:1",
+      "descripcion": "Lista ordenada de funciones y tareas pendientes del producto, de la más valiosa a la menos valiosa.",
+      "escenario_aplicacion": "Acomodar las 300 ideas del tablero para saber qué entra al siguiente sprint",
+      "palabra_clave": "pendientes",
+      "formas": [
+        "backlog"
+      ]
+    },
+    {
+      "id": "moscow",
+      "nombre": "Método MoSCoW",
+      "subtema": "ingenieria-requerimientos:1",
+      "descripcion": "Técnica de priorización que clasifica cada requerimiento como imprescindible, importante, deseable o que no se hará por ahora.",
+      "escenario_aplicacion": "Marcar el cobro en línea como imprescindible y el modo oscuro como deseable",
+      "palabra_clave": "imprescindible",
+      "formas": [
+        "MoSCoW"
+      ]
     },
     {
       "id": "srs",
@@ -130,7 +264,10 @@
       "descripcion": "Especificación de Requerimientos de Software: documento estándar que reúne todos los requerimientos del sistema organizados en secciones.",
       "escenario_aplicacion": "Entregar los requerimientos completos antes de una auditoría de calidad",
       "palabra_clave": "secciones",
-      "formas": ["SRS", "especificación de requerimientos"]
+      "formas": [
+        "SRS",
+        "especificación de requerimientos"
+      ]
     },
     {
       "id": "caso-uso",
@@ -139,7 +276,70 @@
       "descripcion": "Descripción paso a paso de la interacción entre un actor y el sistema para lograr un objetivo, con sus flujos alternos.",
       "escenario_aplicacion": "Describir cómo un estudiante se inscribe a sus materias en el sistema escolar",
       "palabra_clave": "actor",
-      "formas": ["casos de uso", "caso de uso"]
+      "formas": [
+        "casos de uso",
+        "caso de uso"
+      ]
+    },
+    {
+      "id": "historia-usuario",
+      "nombre": "Historia de usuario",
+      "subtema": "ingenieria-requerimientos:2",
+      "descripcion": "Descripción corta de una funcionalidad desde el punto de vista de quien la usa: como (rol), quiero (algo) para (beneficio).",
+      "escenario_aplicacion": "Escribir «como cajera quiero cobrar con el lector de código para atender más rápido»",
+      "palabra_clave": "beneficio",
+      "formas": [
+        "historias de usuario",
+        "historia de usuario"
+      ]
+    },
+    {
+      "id": "criterio-aceptacion",
+      "nombre": "Criterio de aceptación",
+      "subtema": "ingenieria-requerimientos:2",
+      "descripcion": "Condición concreta que una funcionalidad debe cumplir para que se considere terminada y se acepte.",
+      "escenario_aplicacion": "Indicar que el pago rechazado debe mostrar un aviso y no cobrar nada",
+      "palabra_clave": "cumplir",
+      "formas": [
+        "criterios de aceptación",
+        "criterio de aceptación"
+      ]
+    },
+    {
+      "id": "glosario",
+      "nombre": "Glosario del proyecto",
+      "subtema": "ingenieria-requerimientos:2",
+      "descripcion": "Sección de la especificación que define los términos del negocio para que todos los entiendan igual.",
+      "escenario_aplicacion": "Acordar qué significa «pedido» para ventas y para el almacén",
+      "palabra_clave": "términos",
+      "formas": [
+        "glosario"
+      ]
+    },
+    {
+      "id": "ambiguedad",
+      "nombre": "Ambigüedad",
+      "subtema": "ingenieria-requerimientos:2",
+      "descripcion": "Defecto de un requerimiento que admite varias interpretaciones, por ejemplo por palabras como «adecuado» o «si es posible».",
+      "escenario_aplicacion": "Detectar la frase «procesar los pedidos adecuadamente» en el documento",
+      "palabra_clave": "interpretaciones",
+      "formas": [
+        "ambigüedad",
+        "ambiguas",
+        "ambigua"
+      ]
+    },
+    {
+      "id": "flujo-alterno",
+      "nombre": "Flujo alterno",
+      "subtema": "ingenieria-requerimientos:2",
+      "descripcion": "Camino de un caso de uso que se desvía del flujo normal, por ejemplo cuando ocurre un error o el usuario cancela.",
+      "escenario_aplicacion": "Describir qué pasa cuando la tarjeta es rechazada",
+      "palabra_clave": "desvía",
+      "formas": [
+        "flujos alternos",
+        "flujo alterno"
+      ]
     },
     {
       "id": "caso-prueba",
@@ -148,7 +348,10 @@
       "descripcion": "Conjunto de entradas, condiciones y resultado esperado que sirve para comprobar si una función se comporta correctamente.",
       "escenario_aplicacion": "Comprobar que el carrito suma bien el total con tres productos distintos",
       "palabra_clave": "esperado",
-      "formas": ["casos de prueba", "caso de prueba"]
+      "formas": [
+        "casos de prueba",
+        "caso de prueba"
+      ]
     },
     {
       "id": "matriz-trazabilidad",
@@ -157,7 +360,69 @@
       "descripcion": "Tabla que relaciona cada requerimiento con el diseño, el código y las pruebas que lo cubren, para detectar huecos.",
       "escenario_aplicacion": "Demostrar ante la clienta que cada requerimiento tiene al menos una prueba",
       "palabra_clave": "tabla",
-      "formas": ["matriz de trazabilidad"]
+      "formas": [
+        "matriz de trazabilidad"
+      ]
+    },
+    {
+      "id": "prototipo",
+      "nombre": "Prototipo",
+      "subtema": "ingenieria-requerimientos:3",
+      "descripcion": "Versión preliminar y sencilla del sistema, como un boceto en papel o unas pantallas sin programar, para probar ideas con los usuarios.",
+      "escenario_aplicacion": "Mostrar pantallas dibujadas a mano a los adultos mayores antes de programar la app",
+      "palabra_clave": "boceto",
+      "formas": [
+        "prototipos",
+        "prototipo"
+      ]
+    },
+    {
+      "id": "revision-pares",
+      "nombre": "Revisión entre pares (inspección)",
+      "subtema": "ingenieria-requerimientos:3",
+      "descripcion": "Técnica de verificación en la que colegas revisan un documento o código con una lista de puntos para encontrar defectos.",
+      "escenario_aplicacion": "Revisar el SRS con otro equipo antes de empezar a programar",
+      "palabra_clave": "colegas",
+      "formas": [
+        "revisión entre pares",
+        "inspección"
+      ]
+    },
+    {
+      "id": "caso-limite",
+      "nombre": "Caso límite",
+      "subtema": "ingenieria-requerimientos:3",
+      "descripcion": "Caso de prueba que usa valores en los extremos permitidos, justo antes, en y después del límite.",
+      "escenario_aplicacion": "Probar la inscripción con 39, 40 y 41 alumnos en un grupo de cupo 40",
+      "palabra_clave": "extremos",
+      "formas": [
+        "casos límite",
+        "caso límite"
+      ]
+    },
+    {
+      "id": "prueba-regresion",
+      "nombre": "Prueba de regresión",
+      "subtema": "ingenieria-requerimientos:3",
+      "descripcion": "Prueba que se repite después de un cambio para confirmar que lo que ya funcionaba no se rompió.",
+      "escenario_aplicacion": "Volver a correr las pruebas de facturación después de cambiar los descuentos",
+      "palabra_clave": "rompió",
+      "formas": [
+        "pruebas de regresión",
+        "prueba de regresión"
+      ]
+    },
+    {
+      "id": "prueba-aceptacion",
+      "nombre": "Prueba de aceptación",
+      "subtema": "ingenieria-requerimientos:3",
+      "descripcion": "Prueba final en la que el cliente revisa el sistema contra lo acordado y decide si lo acepta.",
+      "escenario_aplicacion": "Recorrer con la clienta un guion de pruebas antes de que firme la entrega",
+      "palabra_clave": "acepta",
+      "formas": [
+        "pruebas de aceptación",
+        "prueba de aceptación"
+      ]
     },
     {
       "id": "variable",
@@ -166,7 +431,10 @@
       "descripcion": "Espacio con nombre en la memoria donde el programa guarda un valor que puede cambiar durante la ejecución.",
       "escenario_aplicacion": "Guardar el total del carrito mientras el cliente agrega productos",
       "palabra_clave": "memoria",
-      "formas": ["variables", "variable"]
+      "formas": [
+        "variables",
+        "variable"
+      ]
     },
     {
       "id": "entero",
@@ -175,7 +443,10 @@
       "descripcion": "Tipo de dato numérico sin parte decimal que permite comparar y hacer operaciones aritméticas exactas.",
       "escenario_aplicacion": "Guardar la edad en años cumplidos para compararla con 18",
       "palabra_clave": "decimal",
-      "formas": ["entero", "int"]
+      "formas": [
+        "entero",
+        "int"
+      ]
     },
     {
       "id": "cadena-texto",
@@ -184,7 +455,10 @@
       "descripcion": "Tipo de dato formado por una secuencia de caracteres; se compara en orden alfabético, no numérico.",
       "escenario_aplicacion": "Guardar el nombre de usuario que escribe una persona en un formulario",
       "palabra_clave": "caracteres",
-      "formas": ["cadena de texto", "cadena"]
+      "formas": [
+        "cadena de texto",
+        "cadena"
+      ]
     },
     {
       "id": "punto-flotante",
@@ -193,7 +467,10 @@
       "descripcion": "Tipo de dato numérico con parte decimal; puede tener pequeños errores de precisión al operar.",
       "escenario_aplicacion": "Guardar la temperatura medida por un sensor, por ejemplo 36.6 grados",
       "palabra_clave": "precisión",
-      "formas": ["decimal (float)", "float"]
+      "formas": [
+        "decimal (float)",
+        "float"
+      ]
     },
     {
       "id": "ciclo",
@@ -202,7 +479,11 @@
       "descripcion": "Estructura de control que repite un bloque de instrucciones mientras se cumpla una condición o para cada elemento de una colección.",
       "escenario_aplicacion": "Enviar el mismo recordatorio a cada uno de los 50 alumnos de una lista",
       "palabra_clave": "repite",
-      "formas": ["ciclo for", "ciclo", "ciclos"]
+      "formas": [
+        "ciclo for",
+        "ciclo",
+        "ciclos"
+      ]
     },
     {
       "id": "ciclo-infinito",
@@ -211,7 +492,10 @@
       "descripcion": "Ciclo cuya condición nunca llega a ser falsa, por lo que no termina y bloquea el programa.",
       "escenario_aplicacion": "Detectar por qué una app se congela al usar while True sin un break",
       "palabra_clave": "falsa",
-      "formas": ["while True sin condición de salida", "ciclo infinito"]
+      "formas": [
+        "while True sin condición de salida",
+        "ciclo infinito"
+      ]
     },
     {
       "id": "depuracion",
@@ -220,7 +504,10 @@
       "descripcion": "Proceso de localizar y corregir errores en un programa, revisando paso a paso su comportamiento y sus variables.",
       "escenario_aplicacion": "Revisar línea por línea por qué el total del carrito contiene texto",
       "palabra_clave": "localizar",
-      "formas": ["depurar", "depuración"]
+      "formas": [
+        "depurar",
+        "depuración"
+      ]
     },
     {
       "id": "conversion-tipos",
@@ -229,7 +516,101 @@
       "descripcion": "Transformar explícitamente un valor de un tipo de dato a otro, por ejemplo de texto a número, antes de operar con él.",
       "escenario_aplicacion": "Transformar el precio que llega del formulario como texto antes de sumarlo",
       "palabra_clave": "explícitamente",
-      "formas": ["convertir explícitamente", "conversión explícita", "casting"]
+      "formas": [
+        "convertir explícitamente",
+        "conversión explícita",
+        "casting"
+      ]
+    },
+    {
+      "id": "tipo-dato",
+      "nombre": "Tipo de dato",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Clasificación que indica qué valores puede guardar una variable y qué operaciones se pueden hacer con ella.",
+      "escenario_aplicacion": "Decidir si el número de teléfono se guarda como texto o como número",
+      "palabra_clave": "operaciones",
+      "formas": [
+        "tipos de dato",
+        "tipo de dato"
+      ]
+    },
+    {
+      "id": "desbordamiento",
+      "nombre": "Desbordamiento de entero (overflow)",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Error que ocurre cuando un cálculo produce un número más grande que el límite que cabe en el tipo de dato.",
+      "escenario_aplicacion": "Un contador de reproducciones que pasa de 2,147,483,647 y se vuelve negativo",
+      "palabra_clave": "límite",
+      "formas": [
+        "desbordamiento",
+        "se desborda",
+        "overflow"
+      ]
+    },
+    {
+      "id": "booleano",
+      "nombre": "Booleano (bool)",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Tipo de dato que solo puede tomar dos valores: verdadero (True) o falso (False).",
+      "escenario_aplicacion": "Guardar si una suscripción está activa o no",
+      "palabra_clave": "verdadero",
+      "formas": [
+        "booleanos",
+        "booleano",
+        "bool"
+      ]
+    },
+    {
+      "id": "conversion-implicita",
+      "nombre": "Conversión implícita",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Cambio de tipo que un programa hace automáticamente, sin que nadie lo pida, y que puede alterar el dato original.",
+      "escenario_aplicacion": "Una hoja de cálculo que transforma la clave «MAR1» en la fecha 1 de marzo",
+      "palabra_clave": "automáticamente",
+      "formas": [
+        "conversión implícita",
+        "conversión automática"
+      ]
+    },
+    {
+      "id": "identificador",
+      "nombre": "Identificador",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Nombre que se le da a una variable, función o clase; un buen identificador dice qué guarda y en qué unidad.",
+      "escenario_aplicacion": "Llamar distancia_km a la variable en lugar de d",
+      "palabra_clave": "nombre",
+      "formas": [
+        "identificadores",
+        "identificador",
+        "nombre de la variable"
+      ]
+    },
+    {
+      "id": "valor-nulo",
+      "nombre": "Valor nulo (None / null)",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Valor especial que representa la ausencia de un dato; no es lo mismo que el texto «null» ni que un cero.",
+      "escenario_aplicacion": "Dejar vacío el segundo apellido de quien no tiene uno",
+      "palabra_clave": "ausencia",
+      "formas": [
+        "valor nulo",
+        "None",
+        "null"
+      ]
+    },
+    {
+      "id": "alcance",
+      "nombre": "Alcance de una variable (scope)",
+      "subtema": "intro-programacion:0",
+      "descripcion": "Parte del programa donde una variable es visible y se puede usar: local dentro de una función o global en todo el programa.",
+      "escenario_aplicacion": "Guardar el carrito dentro de la sesión de cada comprador y no en una variable de todo el servidor",
+      "palabra_clave": "visible",
+      "formas": [
+        "variables globales",
+        "variable global",
+        "variable local",
+        "alcance"
+      ]
     },
     {
       "id": "if-anidado",
@@ -238,7 +619,10 @@
       "descripcion": "Condicional colocado dentro de otro condicional; si se abusa de ellos, el código se vuelve difícil de leer y propenso a errores.",
       "escenario_aplicacion": "Reconocer por qué una maraña de condiciones cobra la madrugada como hora pico",
       "palabra_clave": "dentro",
-      "formas": ["if anidados", "if anidado"]
+      "formas": [
+        "if anidados",
+        "if anidado"
+      ]
     },
     {
       "id": "condicional",
@@ -247,7 +631,69 @@
       "descripcion": "Estructura de control que elige qué instrucciones ejecutar según si una condición es verdadera o falsa (if / elif / else).",
       "escenario_aplicacion": "Cobrar tarifa normal, de hora pico o de madrugada según la hora del viaje",
       "palabra_clave": "elige",
-      "formas": ["if / elif / else", "condiciones"]
+      "formas": [
+        "if / elif / else",
+        "condiciones"
+      ]
+    },
+    {
+      "id": "ciclo-while",
+      "nombre": "Ciclo while",
+      "subtema": "intro-programacion:1",
+      "descripcion": "Estructura que repite un bloque mientras su condición sea verdadera; no se sabe de antemano cuántas vueltas dará.",
+      "escenario_aplicacion": "Restar los días de cada año hasta encontrar el año actual",
+      "palabra_clave": "mientras",
+      "formas": [
+        "ciclo while"
+      ]
+    },
+    {
+      "id": "error-por-uno",
+      "nombre": "Error por uno (off-by-one)",
+      "subtema": "intro-programacion:1",
+      "descripcion": "Error en el que un ciclo da una vuelta de más o de menos porque sus límites están mal puestos.",
+      "escenario_aplicacion": "Recorrer una lista de 50 alumnos y dejar fuera al último",
+      "palabra_clave": "vuelta",
+      "formas": [
+        "error por uno",
+        "off-by-one"
+      ]
+    },
+    {
+      "id": "operador-logico",
+      "nombre": "Operador lógico (and, or, not)",
+      "subtema": "intro-programacion:1",
+      "descripcion": "Símbolo o palabra que combinan dos condiciones en una sola: and exige ambas, or basta con una y not invierte el resultado.",
+      "escenario_aplicacion": "Dar el descuento solo si es martes y además la compra supera 300 pesos",
+      "palabra_clave": "combinan",
+      "formas": [
+        "operadores lógicos",
+        "operador lógico"
+      ]
+    },
+    {
+      "id": "ciclo-anidado",
+      "nombre": "Ciclo anidado",
+      "subtema": "intro-programacion:1",
+      "descripcion": "Ciclo que se ejecuta dentro de otro ciclo; el número de vueltas se multiplica y puede volver lento el programa.",
+      "escenario_aplicacion": "Comparar cada alumno contra cada pago para ver quién ya pagó",
+      "palabra_clave": "multiplica",
+      "formas": [
+        "ciclos anidados",
+        "ciclo anidado"
+      ]
+    },
+    {
+      "id": "bloque-codigo",
+      "nombre": "Bloque de código (sangría)",
+      "subtema": "intro-programacion:1",
+      "descripcion": "Grupo de instrucciones que pertenecen a una misma estructura; en Python la sangría agrupa las líneas que están dentro de un if o un ciclo.",
+      "escenario_aplicacion": "Mover una línea dos espacios a la izquierda y que deje de pertenecer al if",
+      "palabra_clave": "agrupa",
+      "formas": [
+        "bloque de código",
+        "sangría"
+      ]
     },
     {
       "id": "algoritmo",
@@ -256,7 +702,10 @@
       "descripcion": "Secuencia finita y ordenada de pasos que resuelve un problema o realiza una tarea.",
       "escenario_aplicacion": "Describir los pasos para asignar turnos al personal de una cafetería",
       "palabra_clave": "finita",
-      "formas": ["algoritmo", "algoritmos"]
+      "formas": [
+        "algoritmo",
+        "algoritmos"
+      ]
     },
     {
       "id": "diagrama-flujo",
@@ -265,7 +714,9 @@
       "descripcion": "Representación gráfica de un algoritmo con símbolos para los pasos, las decisiones y las flechas que los conectan.",
       "escenario_aplicacion": "Explicar a marketing y ventas cuándo un pedido tiene envío gratis",
       "palabra_clave": "gráfica",
-      "formas": ["diagrama de flujo"]
+      "formas": [
+        "diagrama de flujo"
+      ]
     },
     {
       "id": "codigo-fuente",
@@ -274,7 +725,9 @@
       "descripcion": "Texto escrito en un lenguaje de programación que implementa un algoritmo y que la computadora puede ejecutar.",
       "escenario_aplicacion": "Revisar en el repositorio cómo está programada la función de envío gratis",
       "palabra_clave": "lenguaje",
-      "formas": ["código fuente"]
+      "formas": [
+        "código fuente"
+      ]
     },
     {
       "id": "busqueda-lineal",
@@ -283,7 +736,10 @@
       "descripcion": "Recorre los elementos uno por uno desde el inicio hasta encontrar el buscado; funciona aunque los datos estén desordenados.",
       "escenario_aplicacion": "Buscar un nombre en una lista desordenada de invitados",
       "palabra_clave": "desordenados",
-      "formas": ["búsqueda lineal", "uno por uno"]
+      "formas": [
+        "búsqueda lineal",
+        "uno por uno"
+      ]
     },
     {
       "id": "busqueda-binaria",
@@ -292,7 +748,10 @@
       "descripcion": "Encuentra un valor comparándolo con el elemento del centro y descartando la mitad de los datos ordenados en cada paso.",
       "escenario_aplicacion": "Buscar una palabra en un diccionario ordenado alfabéticamente",
       "palabra_clave": "mitad",
-      "formas": ["búsqueda binaria", "empezar por la mitad"]
+      "formas": [
+        "búsqueda binaria",
+        "empezar por la mitad"
+      ]
     },
     {
       "id": "base-datos",
@@ -301,7 +760,9 @@
       "descripcion": "Colección organizada de información guardada de forma persistente para consultarla y actualizarla con facilidad.",
       "escenario_aplicacion": "Guardar los usuarios, canciones y listas de reproducción de una app de música",
       "palabra_clave": "persistente",
-      "formas": ["base de datos"]
+      "formas": [
+        "base de datos"
+      ]
     },
     {
       "id": "prueba-escritorio",
@@ -310,7 +771,46 @@
       "descripcion": "Ejecutar a mano un algoritmo con datos de ejemplo, anotando el valor de cada variable, para comprobar que funciona.",
       "escenario_aplicacion": "Seguir con papel y lápiz un algoritmo sin documentar para deducir los pasos que faltan",
       "palabra_clave": "mano",
-      "formas": ["prueba de escritorio", "casos de ejemplo"]
+      "formas": [
+        "prueba de escritorio",
+        "casos de ejemplo"
+      ]
+    },
+    {
+      "id": "pseudocodigo",
+      "nombre": "Pseudocódigo",
+      "subtema": "logica-algoritmos:0",
+      "descripcion": "Forma de escribir un algoritmo con pasos en lenguaje natural y estructurado, sin depender de un lenguaje de programación.",
+      "escenario_aplicacion": "Explicar la regla de turnos a quien programa en Java y a quien programa en Python",
+      "palabra_clave": "natural",
+      "formas": [
+        "pseudocódigo"
+      ]
+    },
+    {
+      "id": "descomposicion",
+      "nombre": "Descomposición del problema",
+      "subtema": "logica-algoritmos:0",
+      "descripcion": "Técnica que divide un problema grande en partes pequeñas que se pueden resolver y probar por separado.",
+      "escenario_aplicacion": "Separar la inscripción en revisar pago, revisar cupo y asignar grupo",
+      "palabra_clave": "partes",
+      "formas": [
+        "descomposición",
+        "descomponer"
+      ]
+    },
+    {
+      "id": "entrada-salida",
+      "nombre": "Datos de entrada y de salida",
+      "subtema": "logica-algoritmos:0",
+      "descripcion": "Lo que un algoritmo recibe para trabajar (entrada) y lo que entrega al terminar (salida).",
+      "escenario_aplicacion": "Definir que la calculadora de propinas recibe el total y el porcentaje y devuelve cuánto paga cada quien",
+      "palabra_clave": "recibe",
+      "formas": [
+        "datos de entrada",
+        "datos de salida",
+        "entradas y salidas"
+      ]
     },
     {
       "id": "algoritmo-ordenamiento",
@@ -319,7 +819,9 @@
       "descripcion": "Algoritmo que acomoda los elementos de una colección según un criterio, por ejemplo de menor a mayor o por fecha.",
       "escenario_aplicacion": "Acomodar mil pedidos por fecha antes de enviarlos a paquetería",
       "palabra_clave": "criterio",
-      "formas": ["algoritmo de ordenamiento"]
+      "formas": [
+        "algoritmo de ordenamiento"
+      ]
     },
     {
       "id": "ordenamiento-mezcla",
@@ -328,7 +830,70 @@
       "descripcion": "Divide la lista en mitades, ordena cada una y luego las combina; es eficiente aun con miles de elementos.",
       "escenario_aplicacion": "Ordenar rápidamente una lista muy grande de registros desordenados",
       "palabra_clave": "combina",
-      "formas": ["ordenar por mezcla", "ordenamiento por mezcla"]
+      "formas": [
+        "ordenar por mezcla",
+        "ordenamiento por mezcla"
+      ]
+    },
+    {
+      "id": "indice",
+      "nombre": "Índice de base de datos",
+      "subtema": "logica-algoritmos:1",
+      "descripcion": "Estructura extra que la base de datos mantiene ordenada para acelerar las búsquedas por una columna.",
+      "escenario_aplicacion": "Buscar a una persona por su correo entre dos millones de registros en milisegundos",
+      "palabra_clave": "acelerar",
+      "formas": [
+        "índices",
+        "índice"
+      ]
+    },
+    {
+      "id": "ordenamiento-estable",
+      "nombre": "Ordenamiento estable",
+      "subtema": "logica-algoritmos:1",
+      "descripcion": "Ordenamiento que, en caso de empate, conserva el orden original que tenían los elementos.",
+      "escenario_aplicacion": "Ordenar la tabla del torneo por puntos sin cambiar el orden de inscripción de los empatados",
+      "palabra_clave": "empate",
+      "formas": [
+        "ordenamiento estable"
+      ]
+    },
+    {
+      "id": "ordenamiento-burbuja",
+      "nombre": "Ordenamiento burbuja",
+      "subtema": "logica-algoritmos:1",
+      "descripcion": "Algoritmo que compara elementos adyacentes y los intercambia si están en desorden; es sencillo pero muy lento con muchos datos.",
+      "escenario_aplicacion": "Ordenar a mano una lista de 10 calificaciones",
+      "palabra_clave": "adyacentes",
+      "formas": [
+        "ordenamiento burbuja",
+        "burbuja"
+      ]
+    },
+    {
+      "id": "complejidad",
+      "nombre": "Complejidad algorítmica",
+      "subtema": "logica-algoritmos:1",
+      "descripcion": "Medida de cómo crece el tiempo de un algoritmo cuando crecen los datos; se escribe con notación O, como O(n²) u O(n log n).",
+      "escenario_aplicacion": "Estimar si un reporte que tarda 1 segundo con mil registros terminará a tiempo con un millón",
+      "palabra_clave": "crece",
+      "formas": [
+        "complejidad",
+        "O(n²)",
+        "O(n log n)"
+      ]
+    },
+    {
+      "id": "orden-lexicografico",
+      "nombre": "Orden lexicográfico",
+      "subtema": "logica-algoritmos:1",
+      "descripcion": "Orden de diccionario: compara los textos letra por letra, por eso «10» queda antes que «2».",
+      "escenario_aplicacion": "Ver que los archivos factura10 y factura2 aparecen en un orden raro",
+      "palabra_clave": "letra",
+      "formas": [
+        "orden lexicográfico",
+        "orden alfabético"
+      ]
     },
     {
       "id": "clase",
@@ -337,7 +902,10 @@
       "descripcion": "Plantilla que define los atributos y métodos que tendrán todos los objetos de un mismo tipo.",
       "escenario_aplicacion": "Modelar a todos los repartidores de una app con los mismos datos y acciones",
       "palabra_clave": "plantilla",
-      "formas": ["clase", "clases"]
+      "formas": [
+        "clase",
+        "clases"
+      ]
     },
     {
       "id": "objeto",
@@ -346,7 +914,10 @@
       "descripcion": "Instancia concreta de una clase, con su propio estado (valores de sus atributos) y su comportamiento.",
       "escenario_aplicacion": "Representar a un repartidor en particular con su nombre y el nivel de batería de su moto",
       "palabra_clave": "instancia",
-      "formas": ["objeto", "objetos"]
+      "formas": [
+        "objeto",
+        "objetos"
+      ]
     },
     {
       "id": "metodo",
@@ -355,7 +926,10 @@
       "descripcion": "Función definida dentro de una clase que describe una acción que pueden realizar sus objetos.",
       "escenario_aplicacion": "Programar la acción aceptarPedido() que puede hacer cualquier repartidor",
       "palabra_clave": "función",
-      "formas": ["métodos", "método"]
+      "formas": [
+        "métodos",
+        "método"
+      ]
     },
     {
       "id": "excepcion",
@@ -364,7 +938,10 @@
       "descripcion": "Evento anormal que interrumpe el flujo normal de un programa, como un archivo que no existe o una división entre cero.",
       "escenario_aplicacion": "Evitar que el sistema se caiga cuando el archivo de ventas todavía no se ha subido",
       "palabra_clave": "anormal",
-      "formas": ["excepciones", "excepción"]
+      "formas": [
+        "excepciones",
+        "excepción"
+      ]
     },
     {
       "id": "try-except",
@@ -373,7 +950,10 @@
       "descripcion": "Estructura que intenta ejecutar un código y, si ocurre una excepción, la captura para manejarla sin que el programa se detenga.",
       "escenario_aplicacion": "Avisar al usuario que falta el archivo en lugar de mostrar un error en rojo",
       "palabra_clave": "captura",
-      "formas": ["try/except", "except"]
+      "formas": [
+        "try/except",
+        "except"
+      ]
     },
     {
       "id": "herencia",
@@ -382,7 +962,11 @@
       "descripcion": "Mecanismo por el que una clase hija reutiliza los atributos y métodos de una clase base y especializa solo lo que cambia.",
       "escenario_aplicacion": "Crear Guerrero y Mago a partir de Personaje sin duplicar código",
       "palabra_clave": "reutiliza",
-      "formas": ["herencia", "hereden", "heredar"]
+      "formas": [
+        "herencia",
+        "hereden",
+        "heredar"
+      ]
     },
     {
       "id": "clase-base",
@@ -391,7 +975,78 @@
       "descripcion": "Clase general de la que heredan otras; concentra lo que comparten todas sus clases hijas.",
       "escenario_aplicacion": "Definir en Personaje la vida y el movimiento que comparten todos los personajes",
       "palabra_clave": "general",
-      "formas": ["clase base"]
+      "formas": [
+        "clase base"
+      ]
+    },
+    {
+      "id": "encapsulamiento",
+      "nombre": "Encapsulamiento",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Principio que oculta los datos internos de un objeto y solo permite cambiarlos mediante sus métodos.",
+      "escenario_aplicacion": "Impedir que otra parte del programa ponga un saldo negativo directamente",
+      "palabra_clave": "oculta",
+      "formas": [
+        "encapsulamiento",
+        "encapsular"
+      ]
+    },
+    {
+      "id": "constructor",
+      "nombre": "Constructor",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Método especial que se ejecuta al crear un objeto y le asigna sus valores iniciales.",
+      "escenario_aplicacion": "Exigir la dirección de entrega en el momento de crear cada pedido",
+      "palabra_clave": "iniciales",
+      "formas": [
+        "constructor",
+        "__init__"
+      ]
+    },
+    {
+      "id": "polimorfismo",
+      "nombre": "Polimorfismo",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Capacidad de que objetos de distintas clases respondan al mismo método, cada uno a su manera.",
+      "escenario_aplicacion": "Llamar pagar() igual para tarjeta, transferencia o efectivo",
+      "palabra_clave": "manera",
+      "formas": [
+        "polimorfismo"
+      ]
+    },
+    {
+      "id": "composicion",
+      "nombre": "Composición",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Relación en la que un objeto contiene a otros objetos como partes suyas, en lugar de heredar de ellos.",
+      "escenario_aplicacion": "Hacer que un Empleado tenga una Computadora en lugar de heredar de ella",
+      "palabra_clave": "contiene",
+      "formas": [
+        "composición"
+      ]
+    },
+    {
+      "id": "responsabilidad-unica",
+      "nombre": "Principio de responsabilidad única",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Principio de diseño que dice que cada clase debe tener un solo motivo para cambiar.",
+      "escenario_aplicacion": "Separar en clases distintas el cobro, la factura y el envío de correos",
+      "palabra_clave": "motivo",
+      "formas": [
+        "responsabilidad única"
+      ]
+    },
+    {
+      "id": "referencia",
+      "nombre": "Referencia a un objeto",
+      "subtema": "programacion-oo:0",
+      "descripcion": "Variable que apunta a un objeto que ya existe en memoria; dos referencias al mismo objeto ven los mismos cambios.",
+      "escenario_aplicacion": "Modificar el carrito de un comprador y que también cambie la plantilla del paquete escolar",
+      "palabra_clave": "apunta",
+      "formas": [
+        "referencias",
+        "referencia"
+      ]
     },
     {
       "id": "division-cero",
@@ -400,7 +1055,57 @@
       "descripcion": "Operación matemática indefinida que, en la mayoría de los lenguajes, lanza una excepción y detiene el programa si no se maneja.",
       "escenario_aplicacion": "Calcular el promedio de un alumno que todavía no tiene tareas registradas",
       "palabra_clave": "indefinida",
-      "formas": ["divide entre cero", "división entre cero"]
+      "formas": [
+        "divide entre cero",
+        "división entre cero"
+      ]
+    },
+    {
+      "id": "finally",
+      "nombre": "Bloque finally",
+      "subtema": "programacion-oo:1",
+      "descripcion": "Parte de un try que se ejecuta siempre, haya error o no; se usa para liberar recursos como archivos o conexiones.",
+      "escenario_aplicacion": "Cerrar la conexión a la base de datos aunque el reporte haya fallado",
+      "palabra_clave": "siempre",
+      "formas": [
+        "finally"
+      ]
+    },
+    {
+      "id": "lanzar-excepcion",
+      "nombre": "Lanzar una excepción (raise)",
+      "subtema": "programacion-oo:1",
+      "descripcion": "Instrucción con la que el programa provoca una excepción a propósito para avisar que recibió algo inválido.",
+      "escenario_aplicacion": "Avisar con un error claro cuando una función recibe una edad negativa",
+      "palabra_clave": "provoca",
+      "formas": [
+        "lanzar una excepción",
+        "raise"
+      ]
+    },
+    {
+      "id": "traza-error",
+      "nombre": "Traza de error (traceback)",
+      "subtema": "programacion-oo:1",
+      "descripcion": "Reporte técnico que muestra la cadena de llamadas que llevó al error; sirve al programador, no al usuario final.",
+      "escenario_aplicacion": "Encontrar en qué línea de qué archivo se originó el error del pago",
+      "palabra_clave": "llamadas",
+      "formas": [
+        "traza de error",
+        "traceback"
+      ]
+    },
+    {
+      "id": "log",
+      "nombre": "Registro de eventos (log)",
+      "subtema": "programacion-oo:1",
+      "descripcion": "Archivo donde el sistema anota con fecha y hora lo que ocurre, incluidos los errores, para revisarlo después.",
+      "escenario_aplicacion": "Revisar a qué hora empezaron a fallar los cobros la madrugada del sábado",
+      "palabra_clave": "anota",
+      "formas": [
+        "logs",
+        "log"
+      ]
     }
   ]
 }
