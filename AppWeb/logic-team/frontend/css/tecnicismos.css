@@ -47,7 +47,7 @@ button.tc-termino:focus-visible,
 }
 
 .tc-tira-titulo {
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--ink-soft);
@@ -82,7 +82,7 @@ button.tc-termino:focus-visible,
 
 .tc-nuevo {
   padding: 0 6px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 0.66rem;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -114,7 +114,7 @@ button.tc-termino:focus-visible,
 
 .tc-etiqueta {
   display: block;
-  font-family: 'MedievalSharp', cursive;
+  font-family: var(--f-texto);
   font-size: 0.72rem;
   letter-spacing: 2px;
   color: #1d4f91;
@@ -123,7 +123,7 @@ button.tc-termino:focus-visible,
 .tc-nombre {
   display: block;
   margin: 2px 0 4px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1.05rem;
 }
 
@@ -177,3 +177,75 @@ html[data-contraste="alto"] .tc-globo {
 html[data-movimiento="reducido"] .tc-chip.nuevo {
   animation: none;
 }
+
+/* ===== Movimiento: descubrir un tecnicismo (propuesta 6) ===== */
+/* La primera vez que aparece, el subrayado se dibuja como un trazo de tinta y luego queda el punteado */
+.tc-termino.tc-recien { position: relative; }
+.tc-termino.tc-recien::after {
+  content: "";
+  position: absolute;
+  left: 0.1em;
+  right: 0.1em;
+  bottom: -3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--tc-tinta);
+  transform-origin: left center;
+  pointer-events: none;
+  animation: tc-tinta 1.8s cubic-bezier(.6, 0, .3, 1) 0.35s both;
+}
+@keyframes tc-tinta {
+  0%   { transform: scaleX(0); opacity: 1; }
+  33%  { transform: scaleX(1); opacity: 1; }
+  80%  { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+/* La etiqueta «¡nuevo!» aparece con un pequeño rebote justo después del trazo */
+.tc-chip.nuevo .tc-nuevo { display: inline-block; animation: tc-pop 0.38s cubic-bezier(.3, 1.6, .5, 1) 0.8s both; }
+@keyframes tc-pop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: none; } }
+
+/* Contador de la bitácora: enlaza a la página de repaso y sube cuando hay nuevos */
+.tc-bitacora {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--ink-soft, #5d4630);
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 70, 30, 0.35);
+}
+.tc-bitacora:hover { color: var(--crimson, #8e2a2a); border-color: var(--crimson, #8e2a2a); }
+.tc-bitacora:focus-visible { outline: 3px solid var(--gold-bright, #ffd96a); outline-offset: 2px; }
+.tc-bitacora b { display: inline-block; font-style: normal; font-family: var(--f-titulo); color: var(--crimson, #8e2a2a); }
+.tc-bitacora.sube b { animation: tc-sube 0.42s cubic-bezier(.3, 1.6, .5, 1) 1.1s both; }
+@keyframes tc-sube { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-termino.tc-recien::after { display: none; }
+  .tc-chip.nuevo .tc-nuevo, .tc-bitacora.sube b { animation: none; }
+}
+html[data-movimiento="reducido"] .tc-termino.tc-recien::after { display: none; }
+
+/* ===== Sistema visual (mockup «Partida»): el término va en carmesí con subrayado punteado
+   (no depende solo del color) y la tira usa los mismos sellos claros del resto del juego. */
+.tc-termino {
+  --tc-tinta: var(--t-carmesi, #8e2a2a);
+  padding: 0; font-weight: 600; background: none; border-radius: 0;
+  border-bottom: 0; text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+button.tc-termino:hover, button.tc-termino[aria-expanded="true"] { background: rgba(142, 42, 42, 0.08); }
+.tc-tira { gap: 8px; margin: 4px 0 0; padding-top: 14px; border-top: 1px solid rgba(93, 70, 48, 0.25); }
+.tc-tira-titulo { font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-tinta-suave, #5d4630); }
+.tc-chip { min-height: 32px; padding: 0 12px; font-weight: 500; font-size: 0.9375rem; color: var(--t-tinta, #2f1d10); background: #ecdcb5; border: 0; }
+.tc-chip:hover, .tc-chip[aria-expanded="true"] { background: #e3cf9f; }
+.tc-chip.nuevo { box-shadow: 0 0 0 1px var(--t-oro, #c9a13a); }
+.tc-nuevo { padding: 0; font-weight: 700; font-size: 0.625rem; letter-spacing: 0.14em; color: #7a5a16; background: none; }
+@keyframes tc-brillo { 50% { box-shadow: 0 0 0 1px var(--t-oro, #c9a13a), 0 0 12px rgba(255, 200, 90, 0.65); } }
+.tc-globo { border-color: var(--t-carmesi, #8e2a2a); }
+.tc-etiqueta { color: var(--t-carmesi, #8e2a2a); }

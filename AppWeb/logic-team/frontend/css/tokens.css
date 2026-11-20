@@ -1,0 +1,23 @@
+/* Sistema visual de TechTale (rediseño nov 2026, ver lienzo «TechTale · Mockups de mejoras»).
+   Una sola fuente de verdad para tipografías y colores. Se carga antes que el resto de hojas.
+   Tres tipografías: Cinzel (títulos y etiquetas), EB Garamond (lectura) y JetBrains Mono (código).
+   Las fuentes de accesibilidad del CU03 (OpenDyslexic, Atkinson) siguen funcionando igual. */
+:root {
+  --f-titulo: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --f-texto: 'EB Garamond', Garamond, Georgia, serif;
+  --f-codigo: 'JetBrains Mono', ui-monospace, Consolas, 'Courier New', monospace;
+
+  /* Paleta (contrastes AA verificados sobre su fondo) */
+  --t-noche: #140a0b;
+  --t-noche-2: #1c0e0f;
+  --t-cuero: #2a1513;
+  --t-cuero-libro: #4a1a1c;
+  --t-carmesi: #8e2a2a;
+  --t-oro: #c9a13a;
+  --t-oro-vivo: #ffd96a;
+  --t-pergamino: #f4e7c9;
+  --t-tinta: #2f1d10;
+  --t-tinta-suave: #5d4630;
+  --t-ceniza: #a8957a;
+  --t-linea: rgba(201, 161, 58, 0.28);
+}

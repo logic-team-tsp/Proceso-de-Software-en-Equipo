@@ -113,15 +113,28 @@
     }
     const tarjeta = tarjetaAviso(logro);
     con(toasts, tarjeta);
+    if (window.LTSonidos) window.LTSonidos.tocar("logro");
     if (cola.length) con(toasts, oculto(el("div", "lg-toast atras")));
-    setTimeout(() => {
+
+    // Se va sola, pero si el jugador pasa el cursor encima se queda hasta que lo quite
+    let restante = DURACION;
+    let desde = Date.now();
+    let reloj = null;
+    const salir = () => {
       tarjeta.classList.add("sale");
       setTimeout(() => {
         vaciar(toasts);
         mostrando = false;
         siguiente();
       }, 300);
-    }, DURACION);
+    };
+    const programar = () => { desde = Date.now(); reloj = setTimeout(salir, restante); };
+    tarjeta.addEventListener("mouseenter", () => {
+      clearTimeout(reloj);
+      restante = Math.max(600, restante - (Date.now() - desde));
+    });
+    tarjeta.addEventListener("mouseleave", programar);
+    programar();
   }
 
   function notificar(lista) {
@@ -178,7 +191,8 @@
   // ------------------------------------------------------------ nivel del jugador
   function pintarNivel(n) {
     if (!n) return;
-    nivelBadge.textContent = String(n.nivel);
+    // «Nv. 3» en vez de solo «3»: un número suelto en la esquina parecía una notificación sin leer
+    nivelBadge.textContent = `Nv. ${n.nivel}`;
     nivelBadge.hidden = false;
     const texto = `Logros y ranking personal · Nivel ${n.nivel}, ${n.titulo}`;
     boton.setAttribute("aria-label", texto);

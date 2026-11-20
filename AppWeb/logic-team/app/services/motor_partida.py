@@ -439,9 +439,20 @@ def final_de(partida, config):
 
 def resumen_final(partida):
     """Datos de la pantalla Post Game (RF-16, RF-17, RF-18)."""
-    config, _ = escenarios.cargar()
+    config, catalogo = escenarios.cargar()
     completada = partida.estado == Partida.COMPLETADA
     final, etiqueta = final_de(partida, config)
+    mapa = list(partida.registros.all())
+    # Idea UX «Repasar lo que fallaste»: cada decisión errónea trae su explicación técnica
+    for registro in mapa:
+        registro.repaso = ""
+        if registro.correcta:
+            continue
+        evento = catalogo["eventos"].get(registro.evento_id) or {}
+        opciones = evento.get("opciones", [])
+        opcion = next((o for o in opciones if o["id"] == registro.opcion_id), None)
+        if opcion:
+            registro.repaso = opcion.get("retroalimentacion", "")
     logros = {logro["id"]: logro for logro in config["logros"]}
     decisiones = partida.decisiones
     resumen = {
@@ -457,6 +468,6 @@ def resumen_final(partida):
         "hp_max": partida.hp_max,
         "perfil": partida.perfil_nombre,
         "logros": [logros[i] for i in partida.logros if i in logros],
-        "mapa": list(partida.registros.all()),
+        "mapa": mapa,
     }
     return tematicas.tematizar_final(resumen, partida.tematica)  # CU-07

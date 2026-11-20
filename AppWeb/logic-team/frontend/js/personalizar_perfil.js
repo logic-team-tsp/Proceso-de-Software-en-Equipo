@@ -47,7 +47,12 @@
       return;
     }
     const d = elegido.dataset;
-    document.getElementById("prev-vidas").textContent = "❤️ " + d.vidas;
+    // Sistema visual: la hoja muestra el nombre del perfil y una fila de corazones
+    const nombre = document.getElementById("prev-nombre");
+    if (nombre && d.titulo) nombre.textContent = d.titulo;
+    const vidas = document.getElementById("prev-vidas");
+    vidas.textContent = "❤".repeat(Math.max(0, Math.min(Number(d.vidas) || 0, 10)));
+    vidas.setAttribute("aria-label", d.vidas + " vidas");
     document.getElementById("prev-xp").textContent = "⭐ " + d.xp + " XP";
     let valores = {};
     try { valores = JSON.parse(d.atributos || "{}"); } catch (err) { /* datos inválidos */ }

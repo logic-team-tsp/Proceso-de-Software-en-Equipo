@@ -1,0 +1,76 @@
+/* Idea UX «Bitácora de tecnicismos» (bitacora.html). Pantalla plana como CU02: se apoya en
+   personalizar.css (.pc-*, .perfil-card) y en las variables de libro.css. */
+
+.bt-cuenta { color: var(--gold-bright); font-style: normal; }
+
+.bt-acciones { margin: -6px 0 26px; }
+.bt-nota { margin: 0; font-style: italic; color: #c9b48a; }
+
+.bt-materia { margin-bottom: 30px; }
+.bt-materia-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(201, 161, 58, 0.35);
+}
+.bt-materia-cab h2 {
+  margin: 0;
+  font-family: var(--f-titulo);
+  font-size: 1.15rem;
+  color: var(--gold-bright);
+}
+.bt-materia-cab span { font-style: italic; color: #c9b48a; }
+
+.bt-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.bt-tarjeta { display: flex; flex-direction: column; gap: 6px; }
+.bt-tarjeta-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.bt-tarjeta h3 {
+  margin: 0;
+  font-family: var(--f-titulo);
+  font-size: 1.05rem;
+  color: #1d4f91;
+}
+.bt-tema { margin: 0; font-size: 0.9rem; font-style: italic; color: var(--ink-soft); }
+.bt-def { margin: 0; line-height: 1.5; }
+.bt-ejemplo {
+  margin: 4px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(110, 70, 30, 0.35);
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.bt-ejemplo b { color: var(--ink); }
+
+.bt-faltan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 96px;
+  padding: 16px;
+  border: 2px dashed rgba(201, 161, 58, 0.45);
+  border-radius: 4px 16px 4px 16px;
+  color: #c9b48a;
+  font-style: italic;
+  text-align: center;
+}
+.bt-faltan.ancha { grid-column: 1 / -1; min-height: 64px; }
+.bt-faltan b { font-family: var(--f-titulo); font-style: normal; font-size: 1.3rem; color: var(--gold-bright); }
+
+.bt-vacia { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; max-width: 620px; }
+.bt-vacia h2 { margin: 0; font-family: var(--f-titulo); font-size: 1.2rem; }
+.bt-vacia p { margin: 0 0 6px; line-height: 1.5; }
+
+@media (max-width: 640px) {
+  .bt-tarjetas { grid-template-columns: minmax(0, 1fr); }
+}
+
+html[data-contraste="alto"] .bt-tarjeta h3 { color: #0a2a5c; }

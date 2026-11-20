@@ -159,7 +159,7 @@ html[data-movimiento="reducido"] .book {
 }
 
 .ajustes-root {
-  font-family: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: var(--f-texto);
   /* el panel no cambia con la fuente elegida */
   font-size: 1rem;
   line-height: 1.4;
@@ -331,7 +331,7 @@ html[data-movimiento="reducido"] .book {
 }
 
 .f-libro {
-  font-family: 'IM Fell English', Georgia, serif;
+  font-family: var(--f-texto);
 }
 
 .f-dislexia {

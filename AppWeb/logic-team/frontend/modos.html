@@ -10,117 +10,141 @@
   <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
   <link rel="stylesheet" href="{% static 'css/ordenar.css' %}">
   <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modos.css' %}">
 {% endblock %}
 
 {% block loader %}{% endblock %}
 
-{# CU05 pasos 1 a 3 (RF-51): menú de modos de juego, pantalla plana con el estilo de CU02 #}
+{# CU05 pasos 1 a 3 (RF-51): menú de modos de juego (mockup «Modos de juego») #}
 {% block page %}
-  <header class="pc-topbar"><span class="file">modo_de_juego</span><span class="ext">.jsx</span></header>
+  {% url 'home' as url_portada %}
+  {% include "_topbar.html" with volver_url=url_portada volver_texto="Portada" seccion="Modos de juego" tienda=tienda %}
 
-  <main class="pc-main">
-    <h1 class="pc-title">¿Cómo quieres jugar hoy?</h1>
-    <p class="pc-sub">Elige un modo de juego. Tus tecnicismos descubiertos se guardan entre partidas.</p>
+  <main class="pc-main mo-main">
+    <section class="mo-lado">
+      <p class="tt-eyebrow">Elige tu camino</p>
+      <h1 class="pc-title">¿Cómo quieres jugar hoy?</h1>
+      <p class="pc-sub">Cada historia te deja tecnicismos; cada minijuego, estrellas para la tienda.</p>
 
-    {# FE1: aquí aparece el aviso si hay resultados del cuestionario pendientes de sincronizar #}
-    <div class="tl-aviso info c5-pendientes" id="c5-pendientes" role="status" hidden></div>
-
-    {# CU07 paso 1: la tienda se abre en 1 clic, con el saldo a la vista #}
-    <a class="perfil-card c7-acceso" id="btn-tienda" href="{% url 'tienda' %}">
-      <span class="emblem" aria-hidden="true">🏪</span>
-      <span class="c7-acceso-txt">
-        <span class="c7-acceso-titulo">Tienda de temáticas</span>
-        <span class="c7-acceso-desc">Cambia la ambientación de tu historia con las estrellas de los minijuegos: Medieval, Samurái, Academia de magia…</span>
-      </span>
-      <span class="der">
-        {% if tienda %}<span class="c7-saldo-chip" aria-label="Tu saldo: {{ tienda.saldo }} estrellas">★ {{ tienda.saldo }}</span>{% endif %}
-        <span class="book-btn go">Abrir tienda ➔</span>
-      </span>
-    </a>
-
-    <div class="c5-modos">
-      {# FA2: Historia narrativa ejecuta el CU01 (pasando por CU02 para armar la partida) #}
-      <div class="perfil-card c5-modo desbloqueado">
-        <div class="perfil-head"><span class="perfil-class">modo <b>HistoriaNarrativa</b></span></div>
-        <div class="emblem" aria-hidden="true">📖</div>
-        <h3>Historia narrativa</h3>
-        <p>Vive tu primer proyecto como ingeniero: toma decisiones, enfrenta pruebas y descubre nuevos tecnicismos.</p>
-        <div class="tags"><span class="stamp">🎭 Elige tu perfil</span><span class="stamp">📚 Elige tus temas</span>{% if tienda and tienda.adquiridas > 1 %}<span class="stamp">🏰 {{ tienda.adquiridas }} temáticas</span>{% endif %}</div>
-        <a class="book-btn go" id="btn-historia" href="{% url 'personalizar_perfil' %}">Jugar historia ➔</a>
-      </div>
-
-      {# CU04: Minijuego de código, se juega en la mesa de trabajo (views_codigo.py) #}
-      <div class="perfil-card c5-modo desbloqueado">
-        <div class="perfil-head"><span class="perfil-class">modo <b>MinijuegoCodigo</b></span></div>
-        <div class="emblem" aria-hidden="true">🧩</div>
-        <h3>Minijuego de código</h3>
-        <p>Acomoda las líneas revueltas de un programa hasta que funcione. Hay varias formas correctas: arma la tuya.</p>
-        <div class="tags">
-          <span class="stamp">🐍 Python</span>
-          <span class="stamp">📝 Pseudocódigo</span>
-          {% if codigo.resueltos %}
-            <span class="stamp pt-stamp-oro">⭐ {{ codigo.estrellas }} de {{ codigo.estrellas_max }} estrellas</span>
-          {% else %}
-            <span class="stamp">⭐ Hasta 3 estrellas</span>
-          {% endif %}
-        </div>
-        <a class="book-btn go" id="btn-codigo" href="{% url 'codigo_inicio' %}">Jugar minijuego ➔</a>
-      </div>
-
-      {# CU09: Ordenar algoritmos, se juega en el libro (views_ordenar.py) #}
-      <div class="perfil-card c5-modo desbloqueado">
-        {% if not ordenar.estrellas and ordenar.siguiente == 1 %}<span class="c5-nuevo">¡NUEVO!</span>{% endif %}
-        <div class="perfil-head"><span class="perfil-class">modo <b>OrdenarAlgoritmos</b></span></div>
-        <div class="emblem" aria-hidden="true">🔢</div>
-        <h3>Ordenar algoritmos</h3>
-        <p>Ordena las tarjetas paso a paso como lo haría cada algoritmo.</p>
-        <ol class="c9-niv-menu" aria-label="Niveles de Ordenar algoritmos">
-          {% for n in ordenar.niveles %}
-            <li class="{% if n.estado == 'actual' %}actual{% elif n.estado == 'pendiente' %}bloq{% endif %}">
-              <span>{{ n.numero }} · {{ n.nombre }}</span>
-              {% if n.estado == "hecho" %}
-                <span class="c9-est" aria-label="{{ n.estrellas }} de 3 estrellas">{% for i in "123" %}{% if forloop.counter <= n.estrellas %}★{% else %}<span class="off">☆</span>{% endif %}{% endfor %}</span>
-              {% elif n.estado == "actual" %}
-                <span aria-label="el que sigue">➔</span>
-              {% else %}
-                <span aria-label="todavía no">🔒</span>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ol>
-        <a class="book-btn go" id="btn-ordenar" href="{% url 'ordenar_inicio' %}">
-          {% if ordenar.completo %}🔁 Volver a jugar{% elif ordenar.siguiente == 1 and not ordenar.estrellas %}Jugar ➔{% else %}Continuar · Nivel {{ ordenar.siguiente }} ➔{% endif %}
-        </a>
-      </div>
-
-      {% if resumen.desbloqueado %}
-      <div class="perfil-card c5-modo desbloqueado">
-        <span class="c5-nuevo">¡DESBLOQUEADO!</span>
-        <div class="perfil-head"><span class="perfil-class">modo <b>CuestionarioSubito</b></span></div>
-        <div class="emblem" aria-hidden="true">⚡</div>
-        <h3>Cuestionario súbito</h3>
-        <p>Pon a prueba los tecnicismos que descubriste en tus partidas con {{ resumen.preguntas }} preguntas de opción múltiple.</p>
-        <div class="tags">
-          <span class="stamp">🔎 {{ resumen.registrados }} tecnicismo{{ resumen.registrados|pluralize }} descubierto{{ resumen.registrados|pluralize }}</span>
-          <span class="stamp">❓ {{ resumen.preguntas }} preguntas</span>
-          {% if resumen.ultimo %}<span class="stamp pt-stamp-oro">🏅 Último puntaje: {{ resumen.ultimo.puntaje }}</span>{% endif %}
-        </div>
-        <a class="book-btn go" id="btn-cuestionario" href="{% url 'cuestionario' %}">Jugar cuestionario ➔</a>
-      </div>
-      {% else %}
-      <div class="perfil-card c5-modo bloqueado">
-        <span class="c5-candado" aria-hidden="true">🔒</span>
-        <div class="perfil-head"><span class="perfil-class">modo <b>CuestionarioSubito</b></span></div>
-        <div class="emblem" aria-hidden="true">⚡</div>
-        <h3>Cuestionario súbito</h3>
-        <p>Pon a prueba los tecnicismos que descubriste en tus partidas con preguntas de opción múltiple.</p>
-        <div class="tags"><span class="stamp">🔎 {{ resumen.registrados }} de {{ resumen.minimo }} tecnicismos</span></div>
-        <button class="book-btn" id="btn-cuestionario" type="button" aria-haspopup="dialog" aria-controls="c5-bloqueado">🔒 Bloqueado</button>
+      {% if partida_guardada %}
+      {# Idea UX «Salir sin miedo»: al salir del libro no se pide confirmación; el progreso ya está guardado #}
+      <div class="tl-aviso ok c1-guardada" role="status">
+        <span class="ico" aria-hidden="true">✓</span>
+        <div><b>Partida guardada</b>Puedes retomarla cuando quieras desde «Continuar» en Historia narrativa.</div>
       </div>
       {% endif %}
-    </div>
 
-    <div class="pc-volver"><a class="book-btn" href="{% url 'home' %}">⬅ Portada</a></div>
+      {# FE1: aquí aparece el aviso si hay resultados del cuestionario pendientes de sincronizar #}
+      <div class="tl-aviso info c5-pendientes" id="c5-pendientes" role="status" hidden></div>
+
+      <section class="mo-bitacora" aria-labelledby="mo-bitacora-titulo">
+        <h2 id="mo-bitacora-titulo">Tu bitácora</h2>
+        {% if nivel %}
+        <div class="mo-fila">
+          <div class="mo-dato"><span>Nivel {{ nivel.nivel }} · {{ nivel.titulo }}</span><span class="mo-tenue">{% if nivel.es_maximo %}nivel máximo{% else %}{{ nivel.xp_en_nivel }} / {{ nivel.xp_necesaria }} XP{% endif %}</span></div>
+          <span class="mo-barra" aria-hidden="true"><i style="width: {{ nivel.porcentaje }}%"></i></span>
+        </div>
+        {% endif %}
+        <div class="mo-fila">
+          <div class="mo-dato">
+            <span>Tecnicismos</span>
+            {% if resumen.desbloqueado %}
+              <span class="mo-tenue"><b>{{ resumen.registrados }}</b> de {{ resumen.total_catalogo }} descubiertos</span>
+            {% else %}
+              <span class="mo-tenue"><b>{{ resumen.registrados }}</b> de {{ resumen.minimo }} para el cuestionario</span>
+            {% endif %}
+          </div>
+          {% if not resumen.desbloqueado %}
+          <span class="mo-segmentos" aria-hidden="true">{% for lleno in resumen.medidor %}<i{% if lleno %} class="on"{% endif %}></i>{% endfor %}</span>
+          {% endif %}
+        </div>
+        {% if tienda %}
+        <div class="mo-fila"><div class="mo-dato"><span>Estrellas</span><span class="mo-tenue"><b>{{ tienda.saldo }}</b> para gastar</span></div></div>
+        {% endif %}
+        <a class="mo-repasar c1-bitacora" href="{% url 'bitacora' %}">Repasar tecnicismos ({{ resumen.registrados }}) <span class="ic ic-flecha" aria-hidden="true"></span></a>
+      </section>
+    </section>
+
+    <section class="mo-modos" aria-label="Modos de juego">
+      {# FA2: Historia narrativa ejecuta el CU01 (pasando por CU02 para armar la partida) #}
+      <article class="mo-principal">
+        <div class="mo-principal-txt">
+          <p class="mo-etiqueta">Modo principal</p>
+          <h2>Historia narrativa</h2>
+          <p>Vive tu primer proyecto como ingeniero: toma decisiones, enfrenta sus consecuencias y descubre tecnicismos en el camino.</p>
+          <p class="mo-pasos">🎭 Elige tu perfil <span aria-hidden="true">·</span> 📚 Elige tus temas{% if tienda and tienda.adquiridas > 1 %} <span aria-hidden="true">·</span> 🏰 {{ tienda.adquiridas }} temáticas{% endif %}</p>
+          <div class="mo-acciones">
+            {% if continuar %}
+            {# Idea UX: retomar la partida a medias; empezar otra queda como acción secundaria #}
+            <a class="book-btn go" id="btn-continuar" href="{{ continuar.url }}">Continuar historia <span class="ic ic-flecha" aria-hidden="true"></span></a>
+            <p class="c1-nueva">Vas en el evento {{ continuar.evento }} de {{ continuar.total }} · <a href="{% url 'personalizar_perfil' %}">empezar otra</a></p>
+            {% else %}
+            <a class="book-btn go" id="btn-historia" href="{% url 'personalizar_perfil' %}">Comenzar historia <span class="ic ic-flecha" aria-hidden="true"></span></a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="mo-sello" aria-hidden="true"><span class="ic ic-libro"></span></div>
+      </article>
+
+      <p class="tt-eyebrow mo-sub">Minijuegos · ganan estrellas</p>
+      <div class="mo-grid">
+        {# CU04: Minijuego de código, se juega en la mesa de trabajo (views_codigo.py) #}
+        <article class="mo-mini">
+          <span class="mo-ico" aria-hidden="true"><span class="ic ic-codigo"></span></span>
+          <h3>Minijuego de código</h3>
+          <p>Acomoda las líneas revueltas de un programa hasta que funcione. Hay varias formas correctas: arma la tuya.</p>
+          <p class="mo-meta">Python o Pseudocódigo · {% if codigo.resueltos %}⭐ {{ codigo.estrellas }} de {{ codigo.estrellas_max }} estrellas{% else %}⭐ Hasta 3 estrellas por nivel{% endif %}</p>
+          <a class="book-btn" id="btn-codigo" href="{% url 'codigo_inicio' %}">Jugar</a>
+        </article>
+
+        {# CU09: Ordenar algoritmos, se juega en el libro (views_ordenar.py) #}
+        <article class="mo-mini">
+          {% if not ordenar.estrellas and ordenar.siguiente == 1 %}<span class="mo-nuevo">Nuevo</span>{% endif %}
+          <span class="mo-ico" aria-hidden="true"><span class="ic ic-barras"></span></span>
+          <h3>Ordenar algoritmos</h3>
+          <p>Ordena las tarjetas paso a paso como lo haría cada algoritmo.</p>
+          <ol class="mo-niveles" aria-label="Niveles de Ordenar algoritmos">
+            {% for n in ordenar.niveles %}
+              <li class="{% if n.estado == 'actual' %}actual{% elif n.estado == 'pendiente' %}bloq{% endif %}">
+                <span>{{ n.numero }} · {{ n.nombre }}</span>
+                {% if n.estado == "hecho" %}
+                  <span class="mo-est" aria-label="{{ n.estrellas }} de 3 estrellas">{% for i in "123" %}{% if forloop.counter <= n.estrellas %}★{% else %}<span class="off">☆</span>{% endif %}{% endfor %}</span>
+                {% elif n.estado == "actual" %}
+                  <span>sigue</span>
+                {% else %}
+                  <span aria-label="todavía no">🔒</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ol>
+          <a class="book-btn" id="btn-ordenar" href="{% url 'ordenar_inicio' %}">
+            {% if ordenar.completo %}🔁 Volver a jugar{% elif ordenar.siguiente == 1 and not ordenar.estrellas %}Jugar nivel 1{% else %}Continuar · Nivel {{ ordenar.siguiente }}{% endif %}
+          </a>
+        </article>
+
+        {% if resumen.desbloqueado %}
+        <article class="mo-mini">
+          <span class="mo-nuevo">¡DESBLOQUEADO!</span>
+          <span class="mo-ico" aria-hidden="true"><span class="ic ic-rayo"></span></span>
+          <h3>Cuestionario súbito</h3>
+          <p>Pon a prueba los tecnicismos que descubriste con {{ resumen.preguntas }} preguntas de opción múltiple.</p>
+          <p class="mo-meta">🔎 {{ resumen.registrados }} tecnicismo{{ resumen.registrados|pluralize }} · ❓ {{ resumen.preguntas }} preguntas{% if resumen.ultimo %} · 🏅 Último puntaje: {{ resumen.ultimo.puntaje }}{% endif %}</p>
+          <a class="book-btn" id="btn-cuestionario" href="{% url 'cuestionario' %}">Jugar cuestionario</a>
+        </article>
+        {% else %}
+        <article class="mo-mini mo-bloq">
+          <div class="mo-bloq-cab">
+            <span class="mo-ico" aria-hidden="true"><span class="ic ic-rayo"></span></span>
+            <span class="mo-bloq-tag"><span class="ic ic-candado" aria-hidden="true"></span>Bloqueado</span>
+          </div>
+          <h3>Cuestionario súbito</h3>
+          <p>Se abre al descubrir {{ resumen.minimo }} tecnicismos en tus historias. Te faltan {{ resumen.faltan }}.</p>
+          <span class="mo-segmentos" aria-hidden="true">{% for lleno in resumen.medidor %}<i{% if lleno %} class="on"{% endif %}></i>{% endfor %}</span>
+          <button class="book-btn" id="btn-cuestionario" type="button" aria-haspopup="dialog" aria-controls="c5-bloqueado">🔒 Bloqueado</button>
+        </article>
+        {% endif %}
+      </div>
+    </section>
   </main>
 
   {% if not resumen.desbloqueado %}
@@ -134,7 +158,7 @@
       <p class="c5-ayuda">Los tecnicismos aparecen resaltados en los eventos de la historia.</p>
       <div class="btn-row">
         <button class="book-btn" type="button" id="c5-cerrar">Cerrar</button>
-        <a class="book-btn go" href="{% url 'personalizar_perfil' %}">Ir a Historia narrativa ➔</a>
+        <a class="book-btn go" href="{% url 'personalizar_perfil' %}">Ir a Historia narrativa <span class="ic ic-flecha" aria-hidden="true"></span></a>
       </div>
     </div>
   </div>

@@ -33,20 +33,21 @@
   function actualizar() {
     const sel = marcados();
     resumen.textContent = sel.length
-      ? sel.map((t) => t.dataset.titulo).join(" · ")
+      ? sel.map((t) => t.dataset.titulo).join("\n")
       : "Aún no has elegido ninguno";
     cuenta.textContent = String(sel.length);
     // Botón "Seleccionar todos": si ya están todos marcados, sirve para quitarlos
     if (todos) {
       const completos = sel.length === temas.length;
-      todos.textContent = completos ? "☐ Quitar todos" : "☑ Seleccionar todos";
+      todos.textContent = completos ? "Quitar todos" : "Marcar todos";
       todos.setAttribute("aria-pressed", String(completos));
     }
     // contador por módulo y borde de las tarjetas que tienen algo marcado
     form.querySelectorAll(".modulo-card").forEach((card) => {
       const n = card.querySelectorAll('input[name="tema"]:checked').length;
       card.classList.toggle("con-seleccion", n > 0);
-      card.querySelector(".contador-modulo").textContent = n ? n + " marcado" + (n > 1 ? "s" : "") : "";
+      const total = card.querySelectorAll('input[name="tema"]').length;
+      card.querySelector(".contador-modulo").textContent = n ? n + " de " + total : "";
     });
   }
 
@@ -72,11 +73,8 @@
       mostrarError(MENSAJE_MIN);
       return;
     }
-    // Con temas elegidos: el libro se acerca, se abre y su luz da paso a la partida (CU01)
-    if (window.TransicionLibro) {
-      e.preventDefault();
-      window.TransicionLibro.abrir(() => form.submit());
-    }
+    // Con temas elegidos el formulario se envía normal: el libro ya se abrió en la portada y la
+    // partida empieza con su pantalla de carga (frase de ingeniería de software, 2 s).
   });
 
   // CU07 paso B1: la hoja de personaje muestra la temática elegida
@@ -85,8 +83,7 @@
     r.addEventListener("change", () => {
       if (!prevTematica || !r.checked) return;
       const card = r.closest(".c7-op-tematica");
-      prevTematica.textContent =
-        card.querySelector(".emblem").textContent + " " + card.querySelector(".c7-op-nombre").textContent;
+      prevTematica.textContent = card.querySelector(".c7-op-nombre").textContent;
     })
   );
 

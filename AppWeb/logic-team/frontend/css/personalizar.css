@@ -8,7 +8,7 @@ body.pagina-plana {
   min-height: 100vh;
   overflow-x: hidden;
   color: #e9d9b4;
-  font-family: 'IM Fell English', serif;
+  font-family: var(--f-texto);
   /* Fondo: el camino hacia el libro, oscurecido con un velo para que se lea el contenido */
   background:
     linear-gradient(rgba(14, 6, 6, 0.50), rgba(14, 6, 6, 0.64)),
@@ -31,7 +31,7 @@ body.pagina-plana::before {
   background: linear-gradient(180deg, #4a1818, #2e0f0f);
   border-bottom: 2px solid var(--gold);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-  font-family: 'MedievalSharp', cursive;
+  font-family: var(--f-texto);
   font-size: 1rem;
   letter-spacing: 1px;
 }
@@ -42,7 +42,7 @@ body.pagina-plana::before {
 
 .pc-title {
   margin: 0 0 8px;
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.7rem;
+  font-family: var(--f-titulo); font-weight: 700; font-size: 1.7rem;
   color: var(--gold-bright);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
@@ -101,7 +101,7 @@ body.pagina-plana::before {
 @keyframes sello { from { transform: scale(2.2) rotate(-25deg); opacity: 0; } to { transform: none; opacity: 1; } }
 
 .perfil-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.perfil-class { font-family: 'MedievalSharp', cursive; font-size: 0.82rem; color: var(--ink-soft); }
+.perfil-class { font-family: var(--f-texto); font-size: 0.82rem; color: var(--ink-soft); }
 .perfil-class b { color: var(--crimson); font-weight: 400; }
 
 /* Botón "i": vida y experiencia iniciales dentro de la tarjeta */
@@ -110,11 +110,11 @@ body.pagina-plana::before {
   width: 24px; height: 24px; padding: 0; margin-right: 14px;
   border: 1.5px solid var(--ink-soft); border-radius: 50%;
   background: transparent; color: var(--ink-soft); cursor: pointer;
-  font-family: 'MedievalSharp', cursive; font-size: 0.85rem; line-height: 1;
+  font-family: var(--f-texto); font-size: 0.85rem; line-height: 1;
 }
 .info-btn:hover, .info-btn[aria-expanded="true"] { color: var(--crimson); border-color: var(--crimson); }
 
-.perfil-card h3 { margin: 0 0 6px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.12rem; color: var(--ink); }
+.perfil-card h3 { margin: 0 0 6px; font-family: var(--f-titulo); font-weight: 700; font-size: 1.12rem; color: var(--ink); }
 .perfil-card p  { margin: 0 0 14px; font-size: 1.02rem; line-height: 1.45; color: var(--ink-soft); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -136,12 +136,12 @@ body.pagina-plana::before {
   border-radius: 4px 16px 4px 16px;
   box-shadow: 3px 5px 0 rgba(0, 0, 0, 0.4);
 }
-.preview h2 { margin: 0 0 12px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.95rem; color: var(--crimson); }
+.preview h2 { margin: 0 0 12px; font-family: var(--f-titulo); font-weight: 700; font-size: 0.95rem; color: var(--crimson); }
 .preview-vacio { margin: 0; font-style: italic; color: var(--ink-soft); }
 .preview-datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
 .preview-datos[hidden], .preview-vacio[hidden] { display: none; }
 
-.dato-label { margin-bottom: 4px; font-family: 'MedievalSharp', cursive; font-size: 0.82rem; color: var(--crimson); }
+.dato-label { margin-bottom: 4px; font-family: var(--f-texto); font-size: 0.82rem; color: var(--crimson); }
 .dato-valor { font-size: 1.25rem; font-style: italic; }
 .dato-nivel { font-size: 1.05rem; font-style: italic; }
 
@@ -221,3 +221,214 @@ body.pagina-plana::before {
 
 /* Materia no elegida: se atenúa mientras haya temas marcados en otra */
 .modulo-card.apagada .perfil-card { opacity: 0.75; filter: saturate(0.55); }
+
+
+/* ===== Ideas UX: partida guardada y «Continuar» (menú de modos) ===== */
+.c1-guardada {
+  margin: 0 0 18px;
+  animation: c1-aviso 0.35s cubic-bezier(.2, .8, .2, 1) both;
+}
+@keyframes c1-aviso { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.c1-nueva {
+  margin: 10px 0 0;
+  text-align: center;
+  font-style: italic; color: var(--ink-soft, #5d4630);
+}
+.c1-nueva a {
+  display: inline-block; padding: 10px 2px;
+  color: var(--crimson, #8e2a2a); text-underline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) { .c1-guardada { animation: none; } }
+
+.c1-bitacora { color: var(--gold-bright, #ffd96a); text-underline-offset: 4px; }
+.c1-bitacora:hover { color: #fff1c2; }
+
+/* ===================================================================== sistema visual
+   Mockups «Perfil» y «Temas»: tarjetas a la izquierda y un panel oscuro a la derecha
+   (Hoja de personaje / Tu partida) con el botón principal siempre a la vista. */
+.pf-main { max-width: 1200px; padding-top: 40px; }
+.pf-form { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+.pf-col { flex: 2 1 560px; min-width: 0; display: flex; flex-direction: column; }
+.pf-col .pc-sub { margin-bottom: 24px; }
+
+.perfiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+/* La tarjeta que queda sola al final ocupa toda la fila (el <legend> no cuenta) */
+#perfiles > label.perfil:last-of-type:nth-of-type(odd) { grid-column: 1 / -1; }
+.perfil .perfil-card {
+  display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 18px;
+  background: #ead9b2; box-shadow: inset 0 0 0 1px #c4a970, 0 10px 24px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.perfil .perfil-card h3 { margin: 0; font-size: 1.1875rem; }
+.perfil .perfil-card p { margin: 0; }
+.perfil:hover .perfil-card { transform: translateY(-2px); border-color: transparent; box-shadow: inset 0 0 0 1px #b8995a, 0 14px 28px rgba(0, 0, 0, 0.4); }
+.perfil input:checked + .perfil-card {
+  background: #f8eed6; border-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--t-carmesi), 0 16px 32px rgba(0, 0, 0, 0.45);
+}
+.perfil input:checked + .perfil-card::after { content: none; }
+.perfil input:focus-visible + .perfil-card { outline: 3px solid var(--t-oro-vivo); outline-offset: 3px; }
+.pf-marca {
+  position: absolute; top: -12px; right: -12px; width: 36px; height: 36px; border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  color: var(--t-pergamino); background: var(--t-carmesi);
+  box-shadow: 0 0 0 3px var(--t-noche), inset 0 0 0 2px rgba(255, 217, 106, 0.35);
+}
+.perfil input:checked + .perfil-card .pf-marca { display: flex; animation: sello 0.3s ease-out; }
+.pf-atributos { gap: 6px 16px; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(93, 70, 48, 0.18); }
+.pf-attr { display: inline-flex; align-items: center; gap: 6px; font-size: 0.9375rem; color: var(--t-tinta-suave); }
+.pf-attr .ic { color: var(--t-carmesi); }
+
+/* Panel oscuro de la derecha */
+.pf-hoja {
+  position: sticky; top: 24px;
+  flex: 1 1 320px; max-width: 380px; padding: 28px; border-radius: 8px;
+  display: flex; flex-direction: column; gap: 18px;
+  color: var(--t-pergamino); background: var(--t-cuero); border: 1px solid rgba(201, 161, 58, 0.3);
+}
+.pf-hoja h2 { margin: 0; font-family: var(--f-titulo); font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--t-oro); }
+.pf-hoja .preview-vacio { color: var(--t-ceniza); font-size: 1.0625rem; }
+.pf-datos { display: flex; flex-direction: column; gap: 18px; }
+.pf-cab p { margin: 0; }
+.pf-nombre { font-family: var(--f-titulo); font-weight: 600; font-size: 1.5rem; line-height: 1.15; }
+.pf-inicio { margin-top: 6px !important; font-style: italic; font-size: 1.0625rem; color: var(--t-ceniza); }
+.pf-inicio .ic { display: none; }
+.pf-vidas { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid rgba(201, 161, 58, 0.15); border-bottom: 1px solid rgba(201, 161, 58, 0.15); font-size: 1.0625rem; color: var(--t-ceniza); }
+.pf-corazones { display: inline-flex; gap: 6px; color: #d0544a; font-size: 1.15rem; }
+.pf-atributo { display: flex; flex-direction: column; gap: 8px; }
+.pf-atributo-cab { display: flex; justify-content: space-between; gap: 10px; font-size: 1.0625rem; }
+.pf-atributo-cab .ic { color: var(--t-oro); margin-right: 4px; }
+.pf-atributo-cab .dato-nivel { font-style: normal; font-size: 1.0625rem; color: var(--t-ceniza); }
+.pf-pips { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; margin: 0; }
+.pf-pips span { height: 6px; border-radius: 1px; background: rgba(201, 161, 58, 0.16); }
+.pf-pips span.on { background: var(--t-oro); }
+.pf-acciones { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.pf-acciones .book-btn { width: 100%; }
+.pf-hoja .pc-error { margin: 0; }
+
+/* Temas */
+.tm-cab { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.tm-todos {
+  margin-left: auto;
+  min-height: 44px; margin-bottom: 24px; padding: 0 4px; border: 0; background: none; cursor: pointer;
+  font-family: var(--f-titulo); font-weight: 600; font-size: 0.875rem; letter-spacing: 0.06em;
+  color: var(--t-oro); text-decoration: underline; text-underline-offset: 6px;
+}
+.tm-todos:hover { color: var(--t-oro-vivo); }
+.tm-todos:focus-visible { outline: 3px solid var(--t-oro-vivo); outline-offset: 2px; }
+.modulo-card .perfil-card { gap: 8px; }
+.modulo-card:hover .perfil-card { transform: none; box-shadow: inset 0 0 0 1px #c4a970, 0 10px 24px rgba(0, 0, 0, 0.35); }
+.modulo-card.con-seleccion .perfil-card,
+.modulo-card.con-seleccion:hover .perfil-card { background: #f8eed6; box-shadow: inset 0 0 0 2px var(--t-carmesi), 0 16px 32px rgba(0, 0, 0, 0.45); }
+.modulo-card.apagada .perfil-card { opacity: 1; filter: none; }
+.tm-modulo-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.contador-modulo { font-style: normal; font-size: 0.9375rem; color: var(--t-carmesi); white-space: nowrap; }
+.tm-temas { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.tema { display: block; }
+.tema-chip {
+  display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 6px 12px;
+  font-size: 1.0625rem; color: var(--t-tinta);
+  background: rgba(255, 250, 240, 0.5); border: 0; border-radius: 6px;
+}
+.tema:hover .tema-chip { transform: none; background: rgba(255, 250, 240, 0.85); }
+.tema input:checked + .tema-chip { color: var(--t-tinta); background: rgba(142, 42, 42, 0.08); border: 0; }
+.tema input:checked + .tema-chip::before { content: none; }
+.tema input:focus-visible + .tema-chip { outline: 3px solid var(--t-carmesi); outline-offset: 1px; }
+.tm-caja {
+  flex: 0 0 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid #8a7558; border-radius: 3px; color: transparent; font-size: 0.8rem;
+}
+.tema input:checked + .tema-chip .tm-caja { color: var(--t-pergamino); background: var(--t-carmesi); border-color: var(--t-carmesi); }
+
+.tm-datos { margin: 0; display: flex; flex-direction: column; }
+.tm-datos > div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(201, 161, 58, 0.15); font-size: 1.0625rem; }
+.tm-datos dt { color: var(--t-ceniza); }
+.tm-datos dd { margin: 0; text-align: right; }
+.tm-datos dd a { font-size: 0.9375rem; color: var(--t-oro); }
+.tm-datos dd a:hover { color: var(--t-oro-vivo); }
+.tm-datos > .tm-elegidos { flex-direction: column; gap: 6px; border-bottom: 0; }
+.tm-elegidos dd { text-align: left; white-space: pre-line; line-height: 1.5; }
+#prev-cuenta { color: inherit; }
+.tm-nota { margin: 0; font-style: italic; font-size: 0.9375rem; color: var(--t-ceniza); }
+.pf-col .c7-selector { margin-top: 28px; padding-top: 0; }
+.pf-col .c7-sec { float: none; margin: 0 0 8px; font-family: var(--f-titulo); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--t-oro); text-shadow: none; }
+.pf-col .c7-sec-sub { margin: 0 0 16px; font-size: 1rem; }
+.c7-op-tematica { background: #ead9b2; box-shadow: inset 0 0 0 1px #c4a970, 0 10px 24px rgba(0, 0, 0, 0.35); }
+
+@media (max-width: 900px) {
+  .pf-hoja { position: static; max-width: none; flex-basis: 100%; }
+}
+@media (max-width: 720px) {
+  .perfiles { grid-template-columns: minmax(0, 1fr); }
+  .pf-form { gap: 28px; }
+  .tm-todos { margin-bottom: 8px; }
+}
+html[data-contraste="alto"] .pf-hoja .preview-vacio, html[data-contraste="alto"] .tm-datos dt,
+html[data-contraste="alto"] .pf-inicio, html[data-contraste="alto"] .tm-nota { color: #f0e4c8; }
+.pf-col .c5-ayuda { color: var(--t-ceniza) !important; }
+.pf-col .c5-ayuda a { color: var(--t-oro); }
+.c7-op-tematica:has(input:checked) { background: #f8eed6; box-shadow: inset 0 0 0 2px var(--t-carmesi), 0 16px 32px rgba(0, 0, 0, 0.45); }
+
+/* ===================================================================== Temas (ajuste)
+   Cuadrícula de 2 columnas como en el mockup: las tarjetas de una misma fila miden lo mismo
+   y cada materia lista sus temas uno debajo de otro. */
+.pf-main .tm-barra {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  margin: 0 0 14px; padding: 0 0 12px; border-bottom: 1px solid rgba(201, 161, 58, 0.18);
+}
+.pf-main .tm-barra-txt { font-size: 1rem; color: var(--t-ceniza); }
+.pf-main .tm-todos {
+  margin: 0; min-height: 40px; padding: 0 14px; border-radius: 4px;
+  border: 1px solid rgba(201, 161, 58, 0.45); text-decoration: none; letter-spacing: 0.06em;
+}
+.pf-main .tm-todos:hover { border-color: var(--t-oro); background: rgba(201, 161, 58, 0.08); }
+.pf-main .tm-todos[aria-pressed="true"] { color: var(--t-ceniza); }
+
+.pf-main .tm-modulos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.pf-main .modulo-card .perfil-card { height: 100%; }
+.pf-main .modulo-card .perfil-card { padding: 20px 22px; gap: 6px; }
+.pf-main .tm-modulo-cab h3 { margin: 0; font-size: 1.1875rem; }
+.pf-main .contador-modulo:not(:empty) {
+  display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 13px;
+  font-size: 0.875rem; color: var(--t-pergamino); background: var(--t-carmesi);
+}
+.pf-main .modulo-card .perfil-card > p { margin: 0 0 6px; font-size: 1rem; }
+.pf-main .tm-temas { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin: 0; }
+.pf-main .tema-chip { height: 100%; min-height: 48px; padding: 8px 12px; font-size: 1.0625rem; line-height: 1.3; }
+.pf-main .tema input:checked + .tema-chip { background: rgba(142, 42, 42, 0.1); box-shadow: inset 0 0 0 1px rgba(142, 42, 42, 0.35); }
+
+/* Temática: opciones compactas en fila, mismo lenguaje que los temas */
+.pf-col .c7-selector { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(201, 161, 58, 0.18); }
+.pf-col .c7-sec { display: block; float: none; width: auto; margin: 0 0 6px; padding: 0; }
+.pf-col .c7-opciones-tematica { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.pf-col .c7-op-tematica {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 12px; row-gap: 0;
+  align-items: center; text-align: left; padding: 14px 46px 14px 16px; border-radius: 8px;
+  background: #ead9b2; border: 0; box-shadow: inset 0 0 0 1px #c4a970, 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+.pf-col .c7-op-tematica:hover { transform: none; box-shadow: inset 0 0 0 1px #b8995a, 0 12px 26px rgba(0, 0, 0, 0.4); }
+.pf-col .c7-op-tematica .emblem { grid-row: 1 / 3; margin: 0; width: 44px; height: 44px; font-size: 1.25rem; box-shadow: inset 0 0 0 1px #cdb685; }
+.pf-col .c7-op-nombre { align-self: end; font-weight: 600; font-size: 1.0625rem; }
+.pf-col .c7-op-desc { align-self: start; font-size: 0.9375rem; color: var(--t-tinta-suave); }
+.pf-col .c7-op-tematica:has(input:checked) { background: #f8eed6; box-shadow: inset 0 0 0 2px var(--t-carmesi), 0 14px 28px rgba(0, 0, 0, 0.4); }
+.pf-col .c7-op-tematica:has(input:checked)::after {
+  content: "✓"; top: 50%; right: 14px; width: 24px; height: 24px; margin-top: -12px;
+  font-size: 0.8rem; font-weight: 700; color: var(--t-pergamino);
+  background: var(--t-carmesi); box-shadow: none; border-radius: 50%; animation: none;
+}
+.pf-col .c7-op-tematica:has(input:focus-visible) { outline: 3px solid var(--t-oro-vivo); outline-offset: 3px; }
+.pf-col .c7-sec-sub.c5-ayuda { margin: 12px 0 0; font-style: normal; font-size: 0.9375rem; }
+.pf-col .c5-ayuda a { color: var(--t-oro); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .pf-main .tm-modulos { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Temática un poco más grande (antes era una tarjeta centrada con emblema de 64 px) */
+.pf-col .c7-opciones-tematica { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.pf-col .c7-op-tematica { grid-template-columns: 60px minmax(0, 1fr); column-gap: 16px; padding: 20px 56px 20px 20px; }
+.pf-col .c7-op-tematica .emblem { width: 60px; height: 60px; font-size: 1.6rem; }
+.pf-col .c7-op-nombre { font-size: 1.25rem; }
+.pf-col .c7-op-desc { font-size: 1.0625rem; }
+.pf-col .c7-op-tematica:has(input:checked)::after { right: 18px; width: 28px; height: 28px; margin-top: -14px; font-size: 0.9rem; }
+@media (max-width: 720px) { .pf-col .c7-opciones-tematica { grid-template-columns: minmax(0, 1fr); } }

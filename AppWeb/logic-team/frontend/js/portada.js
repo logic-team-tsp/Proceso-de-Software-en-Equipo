@@ -1,5 +1,6 @@
-// Portada: encuadre del paisaje. El botón "Iniciar juego" es un enlace normal (abre el menú de modos, CU05).
-// (La animación del libro que se abre quedó guardada en js/transicion-libro.js para usarla en otras páginas.)
+// Portada: encuadre del paisaje y animación de entrada. Al dar «Iniciar juego» (o «Continuar»),
+// el libro de la cima vuela al centro, se abre brillando y da paso a la siguiente pantalla
+// (js/transicion-libro.js, unos 2 s, siempre). Sin JavaScript los enlaces funcionan igual.
 (function () {
   const fondo = document.getElementById("fondo-svg");
   if (!fondo) return;
@@ -18,4 +19,14 @@
   }
   window.addEventListener("resize", encuadrar);
   encuadrar();
+
+  const libro = document.getElementById("libro-cima");
+  const escena = document.getElementById("escena");
+  document.querySelectorAll("#btn-iniciar, .btn-continuar").forEach((enlace) => {
+    enlace.addEventListener("click", (e) => {
+      if (!window.TransicionLibro || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      window.TransicionLibro.abrir({ origen: libro, destino: enlace.href, atenuar: escena, ocultar: libro });
+    });
+  });
 })();

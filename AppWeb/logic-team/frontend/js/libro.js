@@ -47,14 +47,35 @@
     drawMotes();
   }
 
-  // --- Entrada: se quita la pantalla de carga y se abre el libro ---
+  // --- Pantalla de carga de la partida: una frase al azar de la ingeniería de software ---
+  const FRASES = [
+    ["La parte más difícil de construir un sistema de software es decidir con precisión qué construir.", "Fred Brooks"],
+    ["Cualquier tonto puede escribir código que una computadora entienda. Los buenos programadores escriben código que las personas pueden entender.", "Martin Fowler"],
+    ["La simplicidad es requisito previo de la confiabilidad.", "Edsger W. Dijkstra"],
+    ["Probar un programa puede mostrar la presencia de errores, pero nunca su ausencia.", "Edsger W. Dijkstra"],
+    ["Los programas deben escribirse para que las personas los lean, y solo de paso para que las máquinas los ejecuten.", "Harold Abelson y Gerald Sussman"],
+    ["Hazlo funcionar, hazlo correcto, hazlo rápido.", "Kent Beck"],
+    ["El código se lee muchas más veces de las que se escribe.", "Guido van Rossum"],
+    ["La mejor forma de predecir el futuro es inventarlo.", "Alan Kay"],
+  ];
+  const frase = document.getElementById("loader-frase");
+  const autor = document.getElementById("loader-autor");
+  if (frase && autor) {
+    const [texto, quien] = FRASES[Math.floor(Math.random() * FRASES.length)];
+    frase.textContent = texto;
+    autor.textContent = "— " + quien;
+  }
+
+  // --- Entrada: la pantalla de carga se queda 2 s y luego se quita ---
   window.addEventListener("load", () => {
+    const loader = document.getElementById("loader-overlay");
+    const book = document.getElementById("main-book");
+    const reducido = reduceMotion || document.documentElement.dataset.movimiento === "reducido";
+    const pausa = loader && !reducido ? 2000 : 0;
     setTimeout(() => {
-      const loader = document.getElementById("loader-overlay");
-      const book = document.getElementById("main-book");
       if (loader) loader.classList.add("hidden");
       if (book) book.classList.add("visible");
-    }, reduceMotion ? 0 : 2200);
+    }, pausa);
   });
 
   // --- Llegada desde la transición "el libro se abre" (ver js/transicion.js) ---
@@ -65,7 +86,7 @@
       luz.className = "tr-llegada";
       document.body.appendChild(luz);
       requestAnimationFrame(() => requestAnimationFrame(() => luz.classList.add("fuera")));
-      setTimeout(() => luz.remove(), 1300);
+      setTimeout(() => luz.remove(), 700);
     }
   } catch (e) { /* sin almacenamiento: no pasa nada */ }
 })();

@@ -6,114 +6,102 @@
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'css/personalizar.css' %}">
-  <link rel="stylesheet" href="{% static 'css/transicion.css' %}">
   <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
 {% endblock %}
 
 {% block loader %}{% endblock %}
 
+{# CU02 pantalla 2 (mockup «Temas»): materias con sus temas y el resumen «Tu partida» a la derecha #}
 {% block page %}
-  <header class="pc-topbar"><span class="file">modulos</span><span class="ext">.json</span></header>
+  {% url 'personalizar_perfil' as url_perfil %}
+  {% include "_topbar.html" with volver_url=url_perfil volver_texto="Perfil" seccion="Nueva historia" %}
 
-  <main class="pc-main">
-    <h1 class="pc-title">¿Qué temas quieres practicar?</h1>
-    <p class="pc-sub">Marca todos los temas que quieras, de una o varias materias: solo se cargarán esos escenarios (la partida dura hasta {{ max_eventos }} eventos). (2/2 · personalización)</p>
-
-    <form id="form-modulo" method="post" action="{% url 'personalizar_modulo' %}" novalidate>
+  <main class="pc-main pf-main">
+    <form id="form-modulo" class="pf-form" method="post" action="{% url 'personalizar_modulo' %}" novalidate>
       {% csrf_token %}
 
-      <div class="pc-todos">
-        <button type="button" class="book-btn" id="todos-temas" aria-pressed="false">☑ Seleccionar todos</button>
-      </div>
+      <section class="pf-col">
+        <p class="tt-eyebrow">Paso 2 de 2 · Temas</p>
+        <h1 class="pc-title">¿Qué temas quieres practicar?</h1>
+        <p class="pc-sub">Marca uno o varios, de una o varias materias. Solo se cargarán esos escenarios.</p>
 
-      <fieldset class="perfiles" id="modulos">
-        <legend style="position:absolute;left:-9999px;">Temas de la partida (al menos uno)</legend>
+        <div class="tm-barra">
+          <span class="tm-barra-txt">{{ modulos|length }} materias · elige al menos un tema</span>
+          <button type="button" class="tm-todos" id="todos-temas" aria-pressed="false">Marcar todos</button>
+        </div>
 
-        {% for m in modulos %}
-        <div class="perfil modulo-card" data-modulo="{{ m.id }}">
-          <div class="perfil-card">
-            <div class="perfil-head">
-              <span class="perfil-class">module <b>{{ m.clase }}</b></span>
-              <span class="contador-modulo" aria-hidden="true"></span>
-            </div>
-            <h3>{{ m.titulo }}</h3>
-            <p>{{ m.descripcion }}</p>
-            <div class="tags">
-              {% for t in m.subtemas %}
-              <label class="tema">
-                <input type="checkbox" name="tema" value="{{ t.id }}" data-titulo="{{ t.titulo }}"
-                       {% if t.id in marcados %}checked{% endif %}>
-                <span class="tema-chip">{{ t.titulo }}</span>
-              </label>
-              {% endfor %}
+        <fieldset class="perfiles tm-modulos" id="modulos">
+          <legend class="tc-sr">Temas de la partida (al menos uno)</legend>
+
+          {% for m in modulos %}
+          <div class="perfil modulo-card" data-modulo="{{ m.id }}">
+            <div class="perfil-card">
+              <div class="tm-modulo-cab">
+                <h3>{{ m.titulo }}</h3>
+                <span class="contador-modulo" aria-hidden="true"></span>
+              </div>
+              <p>{{ m.descripcion }}</p>
+              <div class="tm-temas">
+                {% for t in m.subtemas %}
+                <label class="tema">
+                  <input type="checkbox" name="tema" value="{{ t.id }}" data-titulo="{{ t.titulo }}"
+                         {% if t.id in marcados %}checked{% endif %}>
+                  <span class="tema-chip"><span class="tm-caja" aria-hidden="true"><span class="ic ic-palomita"></span></span>{{ t.titulo }}</span>
+                </label>
+                {% endfor %}
+              </div>
             </div>
           </div>
-        </div>
-        {% endfor %}
-      </fieldset>
-
-      {# CU07 paso B1: la Clásica y las temáticas adquiridas en la tienda (RN06) #}
-      {% if tematicas %}
-      <fieldset class="c7-selector" id="tematicas">
-        <legend class="c7-sec">Temática de la historia</legend>
-        <p class="pc-sub c7-sec-sub">Solo cambia la narración: los eventos, las opciones y la respuesta correcta son los mismos.</p>
-        <div class="c7-opciones-tematica">
-          {% for t in tematicas %}
-          <label class="perfil-card c7-op-tematica">
-            <input type="radio" name="tematica" value="{{ t.id }}" {% if t.id == tematica_elegida %}checked{% endif %}>
-            <span class="emblem" aria-hidden="true">{{ t.icono }}</span>
-            <span class="c7-op-nombre">{{ t.nombre }}</span>
-            <span class="c7-op-desc">{% if t.id == "clasica" %}La historia como existe hoy{% else %}✔ Adquirida{% endif %}</span>
-          </label>
           {% endfor %}
-        </div>
-        {% if tematicas|length == 1 %}
-        <p class="c5-ayuda c7-sec-sub">Gana estrellas en los minijuegos y compra más temáticas en la <a href="{% url 'tienda' %}">Tienda de temáticas</a>.</p>
-        {% endif %}
-      </fieldset>
-      {% endif %}
+        </fieldset>
 
-      <!-- Hoja de personaje: perfil de la pantalla 1 + módulo elegido (tiempo real) -->
-      <section class="preview" aria-live="polite">
-        <h2>Hoja de personaje</h2>
-        <div class="preview-datos">
-          <div>
-            <div class="dato-label">Perfil</div>
-            <div class="dato-nivel">{{ perfil.titulo }}</div>
+        {# CU07 paso B1: la Clásica y las temáticas adquiridas en la tienda (RN06) #}
+        {% if tematicas %}
+        <fieldset class="c7-selector" id="tematicas">
+          <legend class="c7-sec">Temática de la historia</legend>
+          <p class="pc-sub c7-sec-sub">Solo cambia la narración: los eventos, las opciones y la respuesta correcta son los mismos.</p>
+          <div class="c7-opciones-tematica">
+            {% for t in tematicas %}
+            <label class="perfil-card c7-op-tematica">
+              <input type="radio" name="tematica" value="{{ t.id }}" {% if t.id == tematica_elegida %}checked{% endif %}>
+              <span class="emblem" aria-hidden="true">{{ t.icono }}</span>
+              <span class="c7-op-nombre">{{ t.nombre }}</span>
+              <span class="c7-op-desc">{% if t.id == "clasica" %}La historia como existe hoy{% else %}✔ Adquirida{% endif %}</span>
+            </label>
+            {% endfor %}
           </div>
-          <div>
-            <div class="dato-label">Vidas</div>
-            <div class="dato-valor">❤️ {{ perfil.vidas }}</div>
-          </div>
-          <div>
-            <div class="dato-label">Experiencia</div>
-            <div class="dato-valor">⭐ {{ perfil.xp }} XP</div>
-          </div>
-          {% if tematicas %}
-          <div>
-            <div class="dato-label">Temática</div>
-            <div class="dato-nivel" id="prev-tematica">{% for t in tematicas %}{% if t.id == tematica_elegida %}{{ t.icono }} {{ t.nombre }}{% endif %}{% endfor %}</div>
-          </div>
+          {% if tematicas|length == 1 %}
+          <p class="c5-ayuda c7-sec-sub">Gana estrellas en los minijuegos y compra más temáticas en la <a href="{% url 'tienda' %}">Tienda de temáticas</a>.</p>
           {% endif %}
-          <div>
-            <div class="dato-label">Temas <span id="prev-cuenta">0</span></div>
-            <div class="dato-nivel" id="prev-modulo">Aún no has elegido ninguno</div>
-          </div>
-        </div>
+        </fieldset>
+        {% endif %}
       </section>
 
-      <!-- RN02: al menos un tema obligatorio -->
-      <p class="pc-error" id="error-modulo" role="alert" {% if not error %}hidden{% endif %}>{{ error|default:"Debes seleccionar al menos un tema para continuar." }}</p>
+      <!-- Tu partida: perfil de la pantalla 1 + temas elegidos (tiempo real) -->
+      <aside class="pf-hoja" aria-live="polite" aria-labelledby="tm-resumen">
+        <h2 id="tm-resumen">Tu partida</h2>
+        <dl class="tm-datos">
+          <div><dt>Perfil</dt><dd>{{ perfil.titulo }} <a href="{% url 'personalizar_perfil' %}">cambiar</a></dd></div>
+          {% if tematicas %}
+          <div><dt>Temática</dt><dd><span id="prev-tematica">{% for t in tematicas %}{% if t.id == tematica_elegida %}{{ t.nombre }}{% endif %}{% endfor %}</span> <a href="{% url 'tienda' %}">ver tienda</a></dd></div>
+          {% endif %}
+          <div><dt>Inicias con</dt><dd>{{ perfil.vidas }} vidas · {{ perfil.xp }} XP</dd></div>
+          <div class="tm-elegidos"><dt>Temas elegidos (<span id="prev-cuenta">0</span>)</dt><dd id="prev-modulo">Aún no has elegido ninguno</dd></div>
+        </dl>
+        <p class="tm-nota">La partida dura hasta {{ max_eventos }} eventos.</p>
 
-      <div class="pc-actions dos">
-        <a class="book-btn" href="{% url 'personalizar_perfil' %}">⬅ Atrás</a>
-        <button type="submit" class="book-btn go">⚔️ Comenzar Aventura</button>
-      </div>
+        <!-- RN02: al menos un tema obligatorio -->
+        <p class="pc-error" id="error-modulo" role="alert" {% if not error %}hidden{% endif %}>{{ error|default:"Debes seleccionar al menos un tema para continuar." }}</p>
+
+        <div class="pf-acciones">
+          <button type="submit" class="book-btn go">Comenzar aventura <span class="ic ic-flecha" aria-hidden="true"></span></button>
+          <a class="tt-enlace" href="{% url 'personalizar_perfil' %}">Atrás</a>
+        </div>
+      </aside>
     </form>
   </main>
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/transicion.js' %}"></script>
   <script src="{% static 'js/personalizar_modulo.js' %}"></script>
 {% endblock %}

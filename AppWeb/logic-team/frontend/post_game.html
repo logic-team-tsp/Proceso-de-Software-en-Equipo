@@ -16,12 +16,23 @@
   </script>
 {% endblock %}
 
+{% block body_class %}pagina-partida{% endblock %}
+
 {% block loader_title %}{{ resumen.titulo }}{% endblock %}
 {% block loader_sub %}{% if resumen.completada %}escribiendo el epílogo...{% else %}cerrando el libro...{% endif %}{% endblock %}
 
 {# CU01 FA1 / FE1: resumen Post Game con puntuación, logros y mapa de decisiones.
    CU08 pasos 7-9: antes, una hoja con la puntuación del ranking personal y su desglose. #}
-{% block book %}
+{% block page %}
+  {# Barra superior (mockup «Final»): volver al menú y el nombre de la pantalla #}
+  <header class="pt-hud pg-top">
+    <div class="pt-hud-izq"><a class="tt-fantasma pt-salir" href="{% url 'menu_modos' %}"><span class="ic ic-flecha-izq" aria-hidden="true"></span>Menú</a></div>
+    <div class="pt-hud-centro"><span class="pt-hud-cap">{% if resumen.completada %}Historia terminada{% else %}Fin de la historia{% endif %}</span></div>
+    <div class="pt-hud-der"></div>
+  </header>
+
+  <div class="pt-escena">
+  <div class="book" id="main-book">
   <div class="ribbon">FIN<b>{% if resumen.completada %}✔{% else %}✘{% endif %}</b></div>
 
   <div class="pages">
@@ -88,7 +99,6 @@
         </div>
 
         <div class="btn-row">
-          <a class="book-btn" href="{% url 'home' %}">⬅ Portada</a>
           <button type="button" class="book-btn" data-lg-abrir="ranking">🏆 Ver mi ranking</button>
           <button type="button" class="book-btn go" data-pg-ir="pg-mapa">Mapa de decisiones ➔</button>
         </div>
@@ -105,11 +115,11 @@
         <div class="ornament" aria-hidden="true"></div>
         <p class="story">{{ resumen.texto }}</p>
 
-        <div class="sheet">
-          <div class="sheet-row"><span class="k">Puntuación acumulada</span><span class="v">🏆 {{ resumen.puntuacion }}</span></div>
-          <div class="sheet-row"><span class="k">Decisiones correctas</span><span class="v">🎯 {{ resumen.precision }}% ({{ resumen.aciertos }} de {{ resumen.decisiones }})</span></div>
-          <div class="sheet-row"><span class="k">Vidas restantes</span><span class="v">❤️ {{ resumen.hp }}/{{ resumen.hp_max }}</span></div>
-        </div>
+        <dl class="pg-cifras">
+          <div><dt>Puntuación</dt><dd>{{ resumen.puntuacion }}</dd></div>
+          <div><dt>Decisiones correctas</dt><dd>{{ resumen.aciertos }} <span>de {{ resumen.decisiones }} · {{ resumen.precision }}%</span></dd></div>
+          <div><dt>Vidas restantes</dt><dd>{{ resumen.hp }} <span>de {{ resumen.hp_max }}</span></dd></div>
+        </dl>
 
         {% if resumen.logros %}
           <h2 class="choose-title pt-subtitulo">Logros desbloqueados</h2>
@@ -123,7 +133,7 @@
       </section>
 
       <section class="page right">
-        <h2 class="choose-title">Mapa de decisiones</h2>
+        <div class="pg-mapa-cab"><h2 class="choose-title">Mapa de decisiones</h2><span>{{ resumen.mapa|length }} decisi{{ resumen.mapa|length|pluralize:"ón,ones" }}</span></div>
         <p class="choose-sub">Así se escribió tu historia, {{ resumen.perfil }}.</p>
 
         <ol class="pt-mapa">
@@ -134,6 +144,14 @@
                 <strong>{{ r.evento_titulo }}</strong>
                 <em>{{ r.subtema_nombre }}{% if r.tipo == "probabilidad" %} · 🎲 {{ r.probabilidad }}% (tirada {{ r.tirada }}){% endif %}</em>
                 <span>{{ r.opcion_texto }}</span>
+                {% if r.repaso %}
+                  {# Idea UX: el final también sirve de repaso #}
+                  <details class="pt-repaso">
+                    <summary>Repasar por qué</summary>
+                    <p>{{ r.repaso }}</p>
+                    <a href="{% url 'bitacora' %}">Ver los tecnicismos en tu bitácora ➔</a>
+                  </details>
+                {% endif %}
               </div>
             </li>
           {% endfor %}
@@ -146,6 +164,8 @@
         <div class="page-num">{% if ranking %}– IV –{% else %}– II –{% endif %}</div>
       </section>
     </div>
+  </div>
+  </div>
   </div>
 {% endblock %}
 

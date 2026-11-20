@@ -32,7 +32,7 @@
 .lg-nivel-badge {
   position: absolute; right: -6px; bottom: -6px; min-width: 22px; height: 22px; padding: 0 5px;
   display: grid; place-items: center;
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.72rem; line-height: 1;
+  font-family: var(--f-titulo); font-weight: 700; font-size: 0.72rem; line-height: 1;
   color: #2e0f0f; background: var(--lg-gold-bright);
   border: 2px solid #7d1f16; border-radius: 999px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
 }
@@ -47,13 +47,13 @@
 .lg-nivel .num {
   grid-row: span 2; width: 48px; height: 48px; border-radius: 50%;
   display: grid; place-items: center; align-content: center;
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.25rem; line-height: 1; color: var(--lg-gold-bright);
+  font-family: var(--f-titulo); font-weight: 700; font-size: 1.25rem; line-height: 1; color: var(--lg-gold-bright);
   background: radial-gradient(circle at 35% 30%, #7d2a2a, #3a1010); border: 2px solid var(--lg-gold);
 }
 .lg-nivel .num { width: 52px; height: 52px; gap: 1px; }
 .lg-nivel .num small { display: block; font-size: 0.5rem; letter-spacing: 1px; line-height: 1; }
-.lg-nivel .tit { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; }
-.lg-nivel .tit span { font-family: 'IM Fell English', serif; font-weight: 400; font-style: italic; font-size: 0.9rem; color: var(--lg-ink-soft); }
+.lg-nivel .tit { font-family: var(--f-titulo); font-weight: 700; font-size: 1rem; }
+.lg-nivel .tit span { font-family: var(--f-texto); font-weight: 400; font-style: italic; font-size: 0.9rem; color: var(--lg-ink-soft); }
 .lg-xp { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-xp .pista { flex: 1; height: 8px; border-radius: 4px; background: rgba(110, 70, 30, 0.2); overflow: hidden; }
 .lg-xp .pista i { display: block; height: 100%; background: linear-gradient(90deg, var(--lg-gold), var(--lg-gold-bright)); }
@@ -63,7 +63,7 @@
 
 /* ===== Botones y medallas propias (la portada no tiene libro.css) ===== */
 .lg-btn {
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;
+  font-family: var(--f-titulo); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;
   color: var(--lg-gold-bright); cursor: pointer; text-decoration: none; display: inline-block;
   background: linear-gradient(180deg, #6a2626, #3a1111);
   border: 2px solid var(--lg-gold); border-radius: 5px; padding: 10px 18px;
@@ -76,23 +76,24 @@
 .lg-med {
   width: 32px; height: 32px; border-radius: 50%; flex: none;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem; color: var(--lg-gold-bright);
+  font-family: var(--f-titulo); font-weight: 700; font-size: 0.9rem; color: var(--lg-gold-bright);
   background: radial-gradient(circle at 35% 30%, #7d2a2a, #3a1010);
   border: 2px solid var(--lg-gold); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 .lg-marca {
   display: inline-block; margin: 0 0 0 6px; padding: 1px 8px; transform: rotate(-2deg);
-  font-family: 'MedievalSharp', cursive; font-size: 0.7rem; color: #6b4e0c;
+  font-family: var(--f-texto); font-size: 0.7rem; color: #6b4e0c;
   border: 1.5px solid var(--lg-gold); border-radius: 3px; background: rgba(201, 161, 58, 0.14);
 }
 
 /* ===== Notificación «¡Logro desbloqueado!» (paso 6, FA1) ===== */
+/* Entra desde la derecha, debajo del trofeo y el engranaje (propuesta de animación 8) */
 .lg-toasts {
-  position: fixed; top: 14px; left: 50%; z-index: 65;
-  transform: translateX(-50%);
-  width: min(25rem, calc(100% - 150px));
+  position: fixed; top: calc(70px + env(safe-area-inset-top, 0px)); right: calc(14px + env(safe-area-inset-right, 0px)); z-index: 65;
+  width: min(23rem, calc(100% - 28px));
   display: grid; pointer-events: none;
 }
+.lg-toast { pointer-events: auto; }
 .lg-toast {
   position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 12px; align-items: center;
   padding: 10px 16px 14px 10px; overflow: hidden;
@@ -102,11 +103,27 @@
     linear-gradient(160deg, #4a1818, #230b0b);
   border: 2px solid var(--lg-gold); border-radius: 10px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 22px rgba(255, 200, 100, 0.28);
-  animation: lgEntra 0.35s ease-out both;
+  animation: lgEntra 0.32s cubic-bezier(.2, .8, .2, 1) both;
 }
-.lg-toast.sale { animation: lgSale 0.3s ease-in both; }
-@keyframes lgEntra { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
-@keyframes lgSale { to { opacity: 0; transform: translateY(-10px); } }
+.lg-toast.sale { animation: lgSale 0.26s ease-in both; }
+@keyframes lgEntra { from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: none; } }
+@keyframes lgSale { to { opacity: 0; transform: translateY(-8px); } }
+/* Un solo brillo cruza la medalla al entrar */
+.lg-toast:not(.atras)::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -50%; width: 40%;
+  background: linear-gradient(100deg, rgba(255, 230, 160, 0), rgba(255, 230, 160, 0.22), rgba(255, 230, 160, 0));
+  transform: skewX(-18deg); pointer-events: none;
+  animation: lgBrillo 0.9s ease-out 0.35s 1 both;
+}
+@keyframes lgBrillo { from { left: -50%; } to { left: 130%; } }
+.lg-toast:hover .tiempo { animation-play-state: paused; }
+/* Subir de nivel se celebra un poco más */
+.lg-toast.nivel { box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 34px rgba(255, 210, 110, 0.45); }
+.lg-toast.nivel .sello { animation: lgSello 0.5s cubic-bezier(.3, 1.6, .5, 1) 0.15s both; }
+@keyframes lgSello { from { transform: scale(0.4) rotate(-20deg); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .lg-toast, .lg-toast::after, .lg-toast.nivel .sello { animation: none !important; }
+}
 .lg-toast .sello {
   width: 52px; height: 52px; border-radius: 50%;
   display: grid; place-items: center; font-size: 1.55rem;
@@ -114,10 +131,10 @@
   box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(201, 161, 58, 0.65);
 }
 .lg-toast small {
-  display: block; font-family: 'Cinzel', serif; font-weight: 700;
+  display: block; font-family: var(--f-titulo); font-weight: 700;
   font-size: 0.72rem; letter-spacing: 1.5px; color: var(--lg-gold-bright);
 }
-.lg-toast b { display: block; font-family: 'Cinzel', serif; font-size: 1.08rem; color: #fff1d6; line-height: 1.2; }
+.lg-toast b { display: block; font-family: var(--f-titulo); font-size: 1.08rem; color: #fff1d6; line-height: 1.2; }
 .lg-toast .d { display: block; font-size: 0.92rem; font-style: italic; color: #d9c79e; }
 /* Barra que se vacía: la notificación se va sola en 3-4 s */
 .lg-toast .tiempo {
@@ -133,7 +150,7 @@
 }
 .lg-cola {
   position: absolute; top: -10px; right: 12px; z-index: 2;
-  padding: 2px 10px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.7rem;
+  padding: 2px 10px; font-family: var(--f-titulo); font-weight: 700; font-size: 0.7rem;
   color: #2e0f0f; background: var(--lg-gold-bright);
   border: 1.5px solid #7d1f16; border-radius: 999px;
 }
@@ -148,12 +165,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
 }
 .lg-aviso[hidden] { display: none; }
-.lg-aviso b { font-family: 'Cinzel', serif; }
+.lg-aviso b { font-family: var(--f-titulo); }
 .lg-aviso em { color: #6b2a10; font-size: 0.9rem; }
 
 /* ===== Resultados al llegar a un final (pasos 7-9, FA5) ===== */
 .lg-final-txt { text-align: center; font-style: italic; color: var(--lg-ink-soft); margin: -4px 0 8px; font-size: 1.02rem; }
-.lg-final-txt b { font-style: normal; font-family: 'Cinzel', serif; color: var(--lg-ink); }
+.lg-final-txt b { font-style: normal; font-family: var(--f-titulo); color: var(--lg-ink); }
 .lg-puntaje {
   margin: 4px auto 10px; width: 128px; height: 128px; border-radius: 50%;
   display: grid; place-items: center;
@@ -167,11 +184,11 @@
   background: radial-gradient(circle at 35% 30%, #fff6df, #ead39e);
   border: 2px solid var(--lg-gold);
 }
-.lg-puntaje b { font-family: 'Cinzel', serif; font-size: 1.75rem; line-height: 1; color: var(--lg-ink); }
+.lg-puntaje b { font-family: var(--f-titulo); font-size: 1.75rem; line-height: 1; color: var(--lg-ink); }
 .lg-puntaje span { font-size: 0.8rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-record {
   display: block; width: max-content; margin: 2px auto 8px; padding: 4px 16px;
-  font-family: 'Cinzel', serif; font-weight: 900; font-size: 1rem; letter-spacing: 1px;
+  font-family: var(--f-titulo); font-weight: 900; font-size: 1rem; letter-spacing: 1px;
   color: var(--lg-crimson); border: 3px double var(--lg-crimson); border-radius: 4px;
   background: rgba(168, 46, 46, 0.08); transform: rotate(-3deg);
 }
@@ -179,19 +196,19 @@
   margin: 2px 0 8px; padding: 9px 12px; text-align: center; font-size: 1rem; line-height: 1.4;
   background: rgba(255, 250, 235, 0.65); border: 1.5px dashed rgba(110, 70, 30, 0.5); border-radius: 8px;
 }
-.lg-nota-marca b { font-family: 'Cinzel', serif; }
+.lg-nota-marca b { font-family: var(--f-titulo); }
 .lg-res .btn-row { flex-wrap: wrap; }
 
-.lg-subt { margin: 14px 0 8px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: var(--lg-crimson); text-align: center; }
+.lg-subt { margin: 14px 0 8px; font-family: var(--f-titulo); font-weight: 700; font-size: 1rem; color: var(--lg-crimson); text-align: center; }
 .lg-subt:first-child { margin-top: 0; }
 .lg-ayuda { margin: 0; text-align: center; font-size: 0.95rem; font-style: italic; color: var(--lg-ink-soft); }
 
 .lg-desglose { width: 100%; border-collapse: collapse; font-size: 1rem; }
 .lg-desglose th, .lg-desglose td { padding: 7px 4px; border-bottom: 1px dotted rgba(110, 70, 30, 0.55); text-align: left; }
-.lg-desglose th { font-family: 'MedievalSharp', cursive; font-weight: 400; font-size: 0.82rem; color: var(--lg-crimson); }
+.lg-desglose th { font-family: var(--f-texto); font-weight: 400; font-size: 0.82rem; color: var(--lg-crimson); }
 .lg-desglose .n { text-align: right; font-style: italic; color: var(--lg-ink-soft); white-space: nowrap; }
-.lg-desglose .p { text-align: right; font-family: 'Cinzel', serif; font-weight: 700; white-space: nowrap; }
-.lg-desglose tfoot td { border-top: 2px solid var(--lg-ink); border-bottom: 0; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.08rem; }
+.lg-desglose .p { text-align: right; font-family: var(--f-titulo); font-weight: 700; white-space: nowrap; }
+.lg-desglose tfoot td { border-top: 2px solid var(--lg-ink); border-bottom: 0; font-family: var(--f-titulo); font-weight: 700; font-size: 1.08rem; }
 
 /* ===== Tarjeta de logro ===== */
 .lg-lista { display: grid; gap: 8px; }
@@ -208,10 +225,10 @@
   background: radial-gradient(circle at 35% 30%, #fff3d0, #e5c98a);
   border: 2px solid var(--lg-gold);
 }
-.lg-logro h4 { margin: 0; font-family: 'Cinzel', serif; font-size: 0.95rem; line-height: 1.2; color: var(--lg-ink); }
+.lg-logro h4 { margin: 0; font-family: var(--f-titulo); font-size: 0.95rem; line-height: 1.2; color: var(--lg-ink); }
 .lg-logro p { margin: 2px 0 0; font-size: 0.9rem; line-height: 1.3; color: var(--lg-ink-soft); }
 .lg-estado { display: grid; justify-items: center; gap: 2px; min-width: 4.6rem; text-align: center; }
-.lg-estado .t { font-family: 'MedievalSharp', cursive; font-size: 0.68rem; letter-spacing: 0.5px; }
+.lg-estado .t { font-family: var(--f-texto); font-size: 0.68rem; letter-spacing: 0.5px; }
 .lg-estado .f { font-size: 0.78rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-sello {
   width: 30px; height: 30px; border-radius: 50%;
@@ -227,12 +244,12 @@
 .lg-logro.bloqueado .ico { background: #d8ccb0; border-color: rgba(110, 70, 30, 0.45); }
 .lg-logro.bloqueado .t { color: var(--lg-ink-soft); }
 .lg-candado { font-size: 1.15rem; }
-.lg-logro.oculto .ico { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.3rem; color: var(--lg-ink-soft); }
+.lg-logro.oculto .ico { font-family: var(--f-titulo); font-weight: 900; font-size: 1.3rem; color: var(--lg-ink-soft); }
 /* Progresivo (FA2) */
 .lg-avance { display: flex; align-items: center; gap: 8px; margin-top: 5px; font-size: 0.8rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-avance .pista { flex: 1; height: 6px; border-radius: 3px; background: rgba(110, 70, 30, 0.2); overflow: hidden; }
 .lg-avance .pista i { display: block; height: 100%; background: linear-gradient(90deg, var(--lg-leather-1), var(--lg-crimson)); }
-.lg-logro.progreso .lg-estado b { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--lg-ink); }
+.lg-logro.progreso .lg-estado b { font-family: var(--f-titulo); font-size: 0.95rem; color: var(--lg-ink); }
 
 /* ===== Panel de logros (pasos 10-16) ===== */
 .lg-velo {
@@ -258,7 +275,7 @@
 .lg-panel:focus { outline: none; }
 .lg-hoja {
   position: relative; padding: 16px 22px 16px; color: var(--lg-ink); border-radius: 6px;
-  font-family: 'IM Fell English', serif;
+  font-family: var(--f-texto);
   background:
     radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.5), transparent 45%),
     radial-gradient(circle at 85% 95%, rgba(150, 100, 50, 0.16), transparent 55%),
@@ -266,7 +283,7 @@
   box-shadow: inset 0 0 40px rgba(110, 70, 20, 0.3);
 }
 .lg-cab { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; }
-.lg-cab h2 { margin: 0; font-family: 'Cinzel Decorative', 'Cinzel', serif; font-weight: 900; font-size: 1.45rem; }
+.lg-cab h2 { margin: 0; font-family: var(--f-titulo); font-weight: 900; font-size: 1.45rem; }
 .lg-pausa {
   padding: 3px 10px; font-size: 0.85rem; font-style: italic; color: #fff1d6;
   background: rgba(60, 30, 10, 0.88); border: 1px solid var(--lg-gold); border-radius: 999px;
@@ -280,12 +297,12 @@
 .lg-tabs { display: flex; gap: 6px; margin: 14px 0 0; padding: 0 2px; border-bottom: 2px solid var(--lg-gold); overflow-x: auto; }
 .lg-tab {
   flex: none; padding: 9px 16px 8px; cursor: pointer; white-space: nowrap;
-  font: inherit; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+  font: inherit; font-family: var(--f-titulo); font-weight: 700; font-size: 0.9rem;
   color: var(--lg-ink-soft); background: rgba(110, 70, 30, 0.12);
   border: 1.5px solid rgba(110, 70, 30, 0.4); border-bottom: 0; border-radius: 8px 8px 0 0;
 }
 .lg-tab[aria-selected="true"] { color: var(--lg-gold-bright); background: linear-gradient(180deg, #6a2626, #3a1111); border-color: var(--lg-gold); }
-.lg-tab .pct { margin-left: 4px; font-family: 'IM Fell English', serif; font-weight: 400; font-style: italic; font-size: 0.88rem; }
+.lg-tab .pct { margin-left: 4px; font-family: var(--f-texto); font-weight: 400; font-style: italic; font-size: 0.88rem; }
 .lg-cuerpo {
   max-height: calc(100vh - 300px); min-height: 300px; overflow-y: auto;
   padding: 14px 8px 4px 2px;
@@ -300,14 +317,14 @@
   background: rgba(255, 250, 235, 0.65);
   border: 1.5px solid rgba(110, 70, 30, 0.35); border-left: 5px solid var(--lg-gold); border-radius: 2px 12px 12px 2px;
 }
-.lg-progreso .big { grid-row: span 2; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.9rem; line-height: 1; color: var(--lg-crimson); }
-.lg-progreso .k { font-family: 'MedievalSharp', cursive; color: var(--lg-ink); }
+.lg-progreso .big { grid-row: span 2; font-family: var(--f-titulo); font-weight: 700; font-size: 1.9rem; line-height: 1; color: var(--lg-crimson); }
+.lg-progreso .k { font-family: var(--f-texto); color: var(--lg-ink); }
 .lg-barra { height: 10px; border-radius: 6px; background: rgba(110, 70, 30, 0.2); overflow: hidden; }
 .lg-barra i { display: block; height: 100%; background: linear-gradient(90deg, var(--lg-leather-1), var(--lg-crimson)); }
 
 .lg-filtros { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin: 0 0 12px; }
 .lg-filtros .grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.lg-filtros .k { font-family: 'MedievalSharp', cursive; color: var(--lg-crimson); font-size: 0.85rem; }
+.lg-filtros .k { font-family: var(--f-texto); color: var(--lg-crimson); font-size: 0.85rem; }
 .lg-chip {
   padding: 4px 11px; cursor: pointer; font: inherit; font-size: 0.88rem;
   color: var(--lg-ink); background: rgba(255, 250, 230, 0.7);
@@ -322,10 +339,10 @@
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px;
   margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid rgba(110, 70, 30, 0.4);
 }
-.lg-cat-cab h3 { margin: 0; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--lg-crimson); }
-.lg-cat-cab h3 span { font-family: 'IM Fell English', serif; font-weight: 400; font-style: italic; color: var(--lg-ink-soft); }
+.lg-cat-cab h3 { margin: 0; font-family: var(--f-titulo); font-size: 1rem; color: var(--lg-crimson); }
+.lg-cat-cab h3 span { font-family: var(--f-texto); font-weight: 400; font-style: italic; color: var(--lg-ink-soft); }
 .lg-cat-cab .cont { font-size: 0.92rem; font-style: italic; color: var(--lg-ink-soft); }
-.lg-cat-cab .cont b { font-style: normal; font-family: 'Cinzel', serif; color: var(--lg-ink); }
+.lg-cat-cab .cont b { font-style: normal; font-family: var(--f-titulo); color: var(--lg-ink); }
 
 /* Finales */
 .lg-resumen-fin { text-align: center; margin: 0 0 12px; font-size: 1.02rem; }
@@ -335,7 +352,7 @@
   padding: 12px 14px; background: rgba(255, 250, 235, 0.6);
   border: 1.5px solid rgba(110, 70, 30, 0.4); border-radius: 4px 12px 4px 12px;
 }
-.lg-historia h3 { margin: 0 0 2px; font-family: 'Cinzel', serif; font-size: 1rem; }
+.lg-historia h3 { margin: 0 0 2px; font-family: var(--f-titulo); font-size: 1rem; }
 .lg-historia .cnt { font-size: 0.92rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-anillo {
   width: 78px; height: 78px; border-radius: 50%; display: grid; place-items: center;
@@ -343,19 +360,19 @@
 }
 .lg-anillo b {
   width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center;
-  font-family: 'Cinzel', serif; font-size: 1.05rem;
+  font-family: var(--f-titulo); font-size: 1.05rem;
   background: radial-gradient(circle at 35% 30%, #fff6df, #ead39e); border: 2px solid var(--lg-gold);
 }
 .lg-finales { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
 .lg-fin { padding: 3px 10px; font-size: 0.88rem; color: #6b4e0c; background: rgba(201, 161, 58, 0.14); border: 1.5px solid var(--lg-gold); border-radius: 3px; }
 .lg-fin::before { content: "🗝 "; }
-.lg-fin.no { min-width: 2.4rem; text-align: center; font-family: 'Cinzel', serif; font-weight: 900; color: var(--lg-ink-soft); background: transparent; border: 1.5px dashed rgba(110, 70, 30, 0.5); }
+.lg-fin.no { min-width: 2.4rem; text-align: center; font-family: var(--f-titulo); font-weight: 900; color: var(--lg-ink-soft); background: transparent; border: 1.5px dashed rgba(110, 70, 30, 0.5); }
 .lg-fin.no::before { content: ""; }
 .lg-fin.nuevo { color: #fff1d6; background: var(--lg-crimson); border-color: var(--lg-gold); }
 
 /* Ranking (paso 13) */
 .lg-rank { width: 100%; border-collapse: separate; border-spacing: 0 5px; font-size: 1rem; }
-.lg-rank th { padding: 0 10px; text-align: left; font-family: 'MedievalSharp', cursive; font-weight: 400; font-size: 0.82rem; color: var(--lg-crimson); }
+.lg-rank th { padding: 0 10px; text-align: left; font-family: var(--f-texto); font-weight: 400; font-size: 0.82rem; color: var(--lg-crimson); }
 .lg-rank td {
   padding: 7px 10px; background: rgba(255, 250, 235, 0.6);
   border-top: 1.5px solid rgba(110, 70, 30, 0.3); border-bottom: 1.5px solid rgba(110, 70, 30, 0.3);
@@ -364,7 +381,7 @@
 .lg-rank td:last-child { border-right: 1.5px solid rgba(110, 70, 30, 0.3); border-radius: 0 12px 12px 0; }
 .lg-rank tbody tr { cursor: pointer; }
 .lg-rank tbody tr:focus-visible { outline: 3px solid var(--lg-crimson); outline-offset: 2px; }
-.lg-rank .pts { text-align: right; font-family: 'Cinzel', serif; font-weight: 700; white-space: nowrap; }
+.lg-rank .pts { text-align: right; font-family: var(--f-titulo); font-weight: 700; white-space: nowrap; }
 .lg-rank .fecha { font-style: italic; color: var(--lg-ink-soft); white-space: nowrap; }
 .lg-rank .hist small { display: block; font-size: 0.82rem; font-style: italic; color: var(--lg-ink-soft); }
 .lg-rank tr.top1 .lg-med { background: radial-gradient(circle at 35% 30%, #e8b94f, #8a6012); color: #fff6df; }
@@ -378,12 +395,12 @@
 .lg-informe { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .lg-ficha { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; margin: 0 0 12px; padding: 10px 14px; background: rgba(255, 244, 214, 0.95); border: 1.5px solid var(--lg-gold); border-radius: 4px 12px 4px 12px; }
 .lg-ficha .lg-med { width: 52px; height: 52px; font-size: 1.2rem; }
-.lg-ficha h3 { margin: 0; font-family: 'Cinzel', serif; font-size: 1.05rem; }
+.lg-ficha h3 { margin: 0; font-family: var(--f-titulo); font-size: 1.05rem; }
 .lg-ficha p { margin: 2px 0 0; font-size: 0.95rem; font-style: italic; color: var(--lg-ink-soft); }
-.lg-ficha .total { text-align: right; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.5rem; line-height: 1; }
-.lg-ficha .total small { display: block; font-family: 'IM Fell English', serif; font-weight: 400; font-style: italic; font-size: 0.8rem; color: var(--lg-ink-soft); }
+.lg-ficha .total { text-align: right; font-family: var(--f-titulo); font-weight: 700; font-size: 1.5rem; line-height: 1; }
+.lg-ficha .total small { display: block; font-family: var(--f-texto); font-weight: 400; font-style: italic; font-size: 0.8rem; color: var(--lg-ink-soft); }
 .lg-hoja .sheet-row { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; border-bottom: 1px dotted rgba(110, 70, 30, 0.55); font-size: 1rem; }
-.lg-hoja .sheet-row .k { font-family: 'MedievalSharp', cursive; color: var(--lg-crimson); }
+.lg-hoja .sheet-row .k { font-family: var(--f-texto); color: var(--lg-crimson); }
 .lg-hoja .sheet-row .v { margin-left: auto; font-style: italic; }
 
 /* Vacío (FA6) y error (FE2) */
@@ -394,7 +411,7 @@
   background: radial-gradient(circle at 35% 30%, #fff3d0, #e5c98a);
   border: 3px double var(--lg-gold);
 }
-.lg-vacio h3 { margin: 0; font-family: 'Cinzel', serif; font-size: 1.15rem; }
+.lg-vacio h3 { margin: 0; font-family: var(--f-titulo); font-size: 1.15rem; }
 .lg-vacio p { margin: 0; max-width: 28rem; font-size: 1.05rem; line-height: 1.45; color: var(--lg-ink-soft); }
 .lg-vacio.error h3 { color: var(--lg-crimson); }
 .lg-vacio .botones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 6px; }

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Bitácora de tecnicismos{% endblock %}
+{% block body_class %}pagina-plana{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/personalizar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bitacora.css' %}">
+{% endblock %}
+
+{% block loader %}{% endblock %}
+
+{# Idea UX «Bitácora de tecnicismos»: repasar lo descubierto en las historias #}
+{% block page %}
+  {% url 'menu_modos' as url_modos %}
+  {% include "_topbar.html" with volver_url=url_modos volver_texto="Modos" seccion="Bitácora" %}
+
+  <main class="pc-main">
+    <p class="tt-eyebrow">Repaso</p>
+    <h1 class="pc-title">Tu bitácora de tecnicismos</h1>
+    <p class="pc-sub">
+      Llevas <b class="bt-cuenta">{{ total }}</b> de {{ catalogo }} tecnicismos descubiertos.
+      Cada historia te deja nuevos; repásalos aquí antes del cuestionario.
+    </p>
+
+    {% if total == 0 %}
+      <section class="perfil-card bt-vacia">
+        <h2>Tu bitácora está en blanco</h2>
+        <p>Los tecnicismos aparecen subrayados dentro de los eventos de la historia. En cuanto leas uno, se anota aquí con su definición.</p>
+        <a class="book-btn go" href="{% url 'personalizar_perfil' %}">Empezar una historia ➔</a>
+      </section>
+    {% else %}
+      <div class="bt-acciones">
+        {% if resumen.desbloqueado %}
+          <a class="book-btn go" href="{% url 'cuestionario' %}">Ponerte a prueba en el cuestionario ➔</a>
+        {% else %}
+          <p class="bt-nota">Te faltan {{ resumen.faltan }} para abrir el Cuestionario súbito.</p>
+        {% endif %}
+      </div>
+
+      {% for m in materias %}
+        <section class="bt-materia" aria-labelledby="bt-m{{ forloop.counter }}">
+          <div class="bt-materia-cab">
+            <h2 id="bt-m{{ forloop.counter }}">{{ m.titulo }}</h2>
+            <span>{{ m.tarjetas|length }} de {{ m.total }}</span>
+          </div>
+          <div class="bt-tarjetas">
+            {% for t in m.tarjetas %}
+              <article class="perfil-card bt-tarjeta">
+                <div class="bt-tarjeta-cab">
+                  <h3>{{ t.nombre }}</h3>
+                  {% if t.reciente %}<span class="stamp pt-stamp-oro">Reciente</span>{% endif %}
+                </div>
+                {% if t.tema %}<p class="bt-tema">{{ t.tema }}</p>{% endif %}
+                <p class="bt-def">{{ t.descripcion }}</p>
+                {% if t.ejemplo %}<p class="bt-ejemplo"><b>Ejemplo:</b> {{ t.ejemplo }}</p>{% endif %}
+              </article>
+            {% endfor %}
+            {% if m.faltan %}
+              <div class="bt-faltan{% if m.tarjetas|length|divisibleby:2 %} ancha{% endif %}">
+                <b>{{ m.faltan }}</b> por descubrir en tus historias
+              </div>
+            {% endif %}
+          </div>
+        </section>
+      {% endfor %}
+    {% endif %}
+
+  </main>
+{% endblock %}
