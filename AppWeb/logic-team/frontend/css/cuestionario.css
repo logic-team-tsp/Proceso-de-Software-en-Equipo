@@ -55,7 +55,7 @@
   top: 14px;
   right: -8px;
   padding: 3px 12px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 1px;
@@ -155,7 +155,7 @@
 .c5-pregunta .nombre {
   display: block;
   margin: 2px 0 6px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
   font-size: 1.4rem;
 }
@@ -168,7 +168,7 @@
 
 .c5-pregunta .pide {
   margin: 12px 0 0;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
   font-size: 1rem;
   color: var(--crimson);
@@ -179,7 +179,7 @@
   min-width: 7rem;
   border-bottom: 3px solid var(--crimson);
   color: var(--crimson);
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
 }
 
@@ -224,7 +224,7 @@
   place-items: center;
   width: 2.3rem;
   height: 2.3rem;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
   color: var(--gold-bright);
   border-radius: 50%;
@@ -274,7 +274,7 @@
 
 .c5-marcador h2 {
   margin: 0 0 10px;
-  font-family: 'Cinzel Decorative', serif;
+  font-family: var(--f-titulo);
   font-weight: 900;
   font-size: 1.25rem;
 }
@@ -301,7 +301,7 @@
 }
 
 .c5-anillo b {
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 2.2rem;
   line-height: 1;
 }
@@ -328,7 +328,7 @@
 
 .c5-cuenta b {
   display: block;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1.5rem;
 }
 
@@ -353,7 +353,7 @@
 
 .c5-repaso h3 {
   margin: 0 0 10px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1.05rem;
   color: var(--crimson);
 }
@@ -376,7 +376,7 @@
 }
 
 .c5-error strong {
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1rem;
 }
 
@@ -505,7 +505,7 @@
 
 .c5-dialogo h2 {
   margin: 0 0 6px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1.15rem;
 }
 
@@ -544,7 +544,7 @@ body.pagina-mesa {
 .c5-cargando {
   padding: 60px 20px;
   text-align: center;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-size: 1.1rem;
   color: #f4e7c9;
 }

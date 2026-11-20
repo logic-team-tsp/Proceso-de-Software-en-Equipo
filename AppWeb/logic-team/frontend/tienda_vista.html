@@ -3,6 +3,8 @@
 
 {% block title %}Vista previa — {{ vista.tematica.nombre }}{% endblock %}
 
+{% block body_class %}pagina-partida{% endblock %}
+
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'css/partida.css' %}">
   <link rel="stylesheet" href="{% static 'css/cuestionario.css' %}">
@@ -15,8 +17,13 @@
 {# CU07 pasos 3 y 4: la misma escena en la Clásica (izquierda) y con la temática (derecha) #}
 {% block page %}
   {% with t=vista.tematica %}
-  <span class="c7-chip-top">Tu saldo: <b id="c7-saldo-top">★ {{ vista.saldo }}</b></span>
+  <header class="pt-hud pg-top">
+    <div class="pt-hud-izq"><a class="tt-fantasma pt-salir" href="{% url 'tienda' %}"><span class="ic ic-flecha-izq" aria-hidden="true"></span>Tienda</a></div>
+    <div class="pt-hud-centro"><span class="pt-hud-cap">Vista previa · {{ t.nombre }}</span></div>
+    <div class="pt-hud-der"><span class="c7-chip-top">Tu saldo: <b id="c7-saldo-top">★ {{ vista.saldo }}</b></span></div>
+  </header>
 
+  <div class="pt-escena">
   <div class="book visible c7-libro" id="main-book">
     {% if t.precio %}<div class="ribbon" aria-label="Precio: {{ t.precio }} estrellas">PRECIO<b>★{{ t.precio }}</b></div>{% endif %}
     <div class="pages"><div class="spread active">
@@ -86,6 +93,7 @@
         <div class="page-num">– 2 –</div>
       </section>
     </div></div>
+  </div>
   </div>
 
   {# Pasos 5 y 6: confirmación con el precio y el saldo que le quedará (FA2: cancelar) #}

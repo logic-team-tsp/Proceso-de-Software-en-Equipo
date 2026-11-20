@@ -10,7 +10,10 @@
 //     atenuar: document.getElementById("escena"),   // opcional: elemento que se oscurece durante el vuelo
 //     ocultar: document.getElementById("mi-libro"), // opcional: elemento a esconder mientras vuela el libro
 //     alTerminar: () => {},                         // opcional: se ejecuta en vez de navegar si no hay destino
-//   });
+//     mantener: true,                               // opcional: con alTerminar, deja la pantalla oscura
+//   });                                             //   (p. ej. cuando alTerminar envía un formulario)
+//
+// Dura unos 2 s: se acerca (0.6 s), se abre brillando (0.75 s) y la luz da paso a lo oscuro (0.6 s).
 //
 // Devuelve una promesa que se resuelve al terminar. Respeta el ajuste "reducir animaciones" (CU03):
 // en ese caso no anima y navega (o ejecuta alTerminar) de inmediato.
@@ -52,8 +55,11 @@
 
   let enCurso = false;
 
+  let ultimo = null; // para deshacer la transición si el usuario regresa con «atrás»
+
   function sinMovimiento() {
-    return document.documentElement.dataset.movimiento === "reducido";
+    return document.documentElement.dataset.movimiento === "reducido" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
   function ir(opts) {
@@ -97,6 +103,7 @@
     const destello = vuelo.querySelector(".tl-destello");
     Object.assign(libro.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
 
+    ultimo = opts;
     const ocultar = opts.ocultar || null;
     const atenuar = opts.atenuar || null;
     if (ocultar) ocultar.style.visibility = "hidden";
@@ -116,29 +123,29 @@
 
     // 1) Se acerca
     const a1 = libro.animate([{ transform: T(0, 0, 1) }, { transform: T(dx, dy, k) }],
-      { duration: 1300, easing: "cubic-bezier(.45,.05,.2,1)", fill: "forwards" });
-    paginas.animate([{ boxShadow: SOMBRA0 }, { boxShadow: SOMBRA1 }], { duration: 1300, easing: "ease-in", fill: "forwards" });
+      { duration: 600, easing: "cubic-bezier(.45,.05,.2,1)", fill: "forwards" });
+    paginas.animate([{ boxShadow: SOMBRA0 }, { boxShadow: SOMBRA1 }], { duration: 600, easing: "ease-in", fill: "forwards" });
     await a1.finished.catch(() => {});
 
     // 2) Se abre brillando
-    const dur = 1700, ease = "cubic-bezier(.5,0,.25,1)";
+    const dur = 900, ease = "cubic-bezier(.5,0,.25,1)";
     libro.animate([{ transform: T(dx, dy, k) }, { transform: T(dxAbierto, dy, k) }], { duration: dur, easing: ease, fill: "forwards" });
     tapa.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-168deg)" }], { duration: dur, easing: ease, fill: "forwards" });
     luz.animate([{ opacity: 0, transform: "scale(.4)" }, { opacity: .9, transform: "scale(1.4)", offset: .55 }, { opacity: 1, transform: "scale(3)" }],
       { duration: dur, easing: "ease-in", fill: "forwards" });
     paginas.animate([{ boxShadow: SOMBRA1, filter: "brightness(1)" }, { boxShadow: SOMBRA2, filter: "brightness(1.25)" }],
       { duration: dur, easing: "ease-in", fill: "forwards" });
-    await new Promise((res) => setTimeout(res, dur - 250));
+    await new Promise((res) => setTimeout(res, dur - 150));
 
     // 3) La luz inunda la pantalla y se apaga hacia el tono oscuro de la pantalla de carga
     const fin = destello.animate([
       { opacity: 0, backgroundColor: "#fff1c2" },
       { opacity: 1, backgroundColor: "#fff1c2", offset: .5 },
       { opacity: 1, backgroundColor: "#0d0705" }],
-      { duration: 1100, easing: "ease-in-out", fill: "forwards" });
+      { duration: 600, easing: "ease-in-out", fill: "forwards" });
     await fin.finished.catch(() => {});
 
-    if (opts.destino) {
+    if (opts.destino || opts.mantener) {
       ir(opts);
     } else {
       // Sin navegación: se limpia todo y se avisa
@@ -155,6 +162,8 @@
     if (!e.persisted) return;
     enCurso = false;
     document.querySelectorAll(".tl-vuelo").forEach((n) => n.remove());
+    if (ultimo && ultimo.ocultar) ultimo.ocultar.style.visibility = "";
+    if (ultimo && ultimo.atenuar) { ultimo.atenuar.style.transition = ""; ultimo.atenuar.style.filter = ""; }
   });
 
   window.TransicionLibro = { abrir };

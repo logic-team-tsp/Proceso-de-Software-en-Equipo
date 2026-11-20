@@ -36,14 +36,15 @@
     return { expresion, porForma };
   }
 
-  function marca(texto, tecnicismo, interactivo) {
+  function marca(texto, tecnicismo, interactivo, recien) {
     if (!interactivo) {
       // Dentro de una opción (que ya es un botón) solo se colorea: la explicación está en la tira
       const span = el("span", "tc-termino tc-pasivo", texto);
       span.title = tecnicismo.nombre;
       return span;
     }
-    const boton = el("button", "tc-termino", texto);
+    // Recién descubierto: el subrayado se dibuja como tinta la primera vez (tecnicismos.css)
+    const boton = el("button", "tc-termino" + (recien ? " tc-recien" : ""), texto);
     boton.type = "button";
     boton.dataset.tc = tecnicismo.id;
     boton.setAttribute("aria-haspopup", "dialog");
@@ -56,6 +57,8 @@
   // RF-39: recorre los textos de los nodos y envuelve cada tecnicismo encontrado.
   function resaltar(nodos, tecnicismos, opciones) {
     const interactivo = !opciones || opciones.interactivo !== false;
+    const recien = new Set((opciones && opciones.nuevos) || []);
+    const subrayados = new Set(); // la tinta solo en la primera aparición de cada uno
     const preparado = preparar(tecnicismos || []);
     if (!preparado) return;
     (Array.isArray(nodos) ? nodos : [nodos]).forEach((nodo) => {
@@ -76,7 +79,9 @@
           const tecnicismo = preparado.porForma.get(minusculas(m[0]));
           if (!tecnicismo) continue;
           if (m.index > ultimo) piezas.push(document.createTextNode(valor.slice(ultimo, m.index)));
-          piezas.push(marca(m[0], tecnicismo, interactivo));
+          const primera = recien.has(tecnicismo.id) && !subrayados.has(tecnicismo.id);
+          if (primera) subrayados.add(tecnicismo.id);
+          piezas.push(marca(m[0], tecnicismo, interactivo, primera));
           ultimo = m.index + m[0].length;
         }
         if (!piezas.length) return;
@@ -148,7 +153,7 @@
 
   // Tira con los tecnicismos del evento: así también se puede ver la explicación de los que
   // solo aparecen en las opciones, y se avisa cuáles se acaban de descubrir.
-  function tira(tecnicismos, nuevos) {
+  function tira(tecnicismos, nuevos, bitacora) {
     if (!tecnicismos || !tecnicismos.length) return null;
     const recien = new Set(nuevos || []);
     const caja = el("div", "tc-tira");
@@ -169,7 +174,17 @@
       chip.addEventListener("click", (ev) => { ev.stopPropagation(); alternar(chip, t); });
       caja.appendChild(chip);
     });
+    // Contador de la bitácora: sube al descubrir un tecnicismo y lleva a la página de repaso
+    if (typeof bitacora === "number") {
+      const enlace = el("a", "tc-bitacora" + (recien.size ? " sube" : ""));
+      enlace.href = "/jugar/bitacora/";
+      enlace.setAttribute("aria-label", `Bitácora: ${bitacora} tecnicismos descubiertos. Abrir para repasarlos`);
+      enlace.append(el("span", null, "Bitácora "), el("b", null, String(bitacora)));
+      caja.appendChild(enlace);
+    }
     if (recien.size) {
+      // La pluma raspa el papel mientras se dibuja el subrayado (js/sonidos.js)
+      setTimeout(() => { if (window.LTSonidos) window.LTSonidos.tocar("pluma"); }, 400);
       const nombres = tecnicismos.filter((t) => recien.has(t.id)).map((t) => t.nombre);
       const aviso = el("span", "tc-sr", `Nuevos tecnicismos descubiertos: ${nombres.join(", ")}`);
       aviso.setAttribute("role", "status");

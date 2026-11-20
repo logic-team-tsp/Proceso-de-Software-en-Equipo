@@ -15,6 +15,7 @@
     contraste: "normal",
     movimiento: reduceSistema ? "reducido" : "normal",
     musica: false,
+    efectos: true, // efectos de sonido cortos (js/sonidos.js)
     volumen: 40,
   });
 
@@ -36,6 +37,7 @@
   const ctlContraste = document.getElementById("aj-contraste");
   const ctlMovimiento = document.getElementById("aj-movimiento");
   const ctlMusica = document.getElementById("aj-musica");
+  const ctlEfectos = document.getElementById("aj-efectos");
   const ctlVolumen = document.getElementById("aj-volumen");
 
   let almacenamientoOk = true;
@@ -53,6 +55,7 @@
       if (VALIDOS[k].indexOf(obj[k]) !== -1) out[k] = obj[k];
     });
     if (typeof obj.musica === "boolean") out.musica = obj.musica;
+    if (typeof obj.efectos === "boolean") out.efectos = obj.efectos;
     const v = Number(obj.volumen);
     if (obj.volumen !== null && obj.volumen !== "" && Number.isFinite(v) && v >= 0 && v <= 100) {
       out.volumen = Math.round(v);
@@ -113,6 +116,7 @@
     if (ctlContraste) ctlContraste.checked = estado.contraste === "alto";
     if (ctlMovimiento) ctlMovimiento.checked = estado.movimiento === "reducido";
     if (ctlMusica) ctlMusica.checked = estado.musica;
+    if (ctlEfectos) ctlEfectos.checked = estado.efectos;
     if (ctlVolumen) ctlVolumen.value = String(estado.volumen);
   }
 
@@ -227,6 +231,10 @@
       else if (t.id === "aj-contraste") cambiar("contraste", t.checked ? "alto" : "normal");
       else if (t.id === "aj-movimiento") cambiar("movimiento", t.checked ? "reducido" : "normal");
       else if (t.id === "aj-musica") cambiar("musica", t.checked);
+      else if (t.id === "aj-efectos") {
+        cambiar("efectos", t.checked);
+        if (t.checked && window.LTSonidos) window.LTSonidos.tocar("pagina"); // muestra cómo suena
+      }
     });
     panel.addEventListener("input", function (e) {
       if (e.target && e.target.id === "aj-volumen") cambiar("volumen", Number(e.target.value));

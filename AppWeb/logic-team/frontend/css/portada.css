@@ -42,24 +42,28 @@ body { overflow: hidden; background: #14080d; }
   border-radius: 50%;
   background: #e8c46a;
   box-shadow: 0 0 calc(var(--d) * 3) calc(var(--d) * 1) rgba(232, 196, 106, 0.4);
-  opacity: 0.75;
-  animation: chispa 4.5s ease-in-out infinite;
-  animation-delay: var(--t);
+  opacity: 0;
+  /* Suben despacio y se apagan, como polvo dorado sobre una vela */
+  animation: chispa 9s linear infinite;
+  animation-delay: calc(var(--t) * -3);
 }
 @keyframes chispa {
-  0%, 100% { opacity: 0.25; transform: translateY(0); }
-  50%      { opacity: 0.9;  transform: translateY(-6px); }
+  0%   { opacity: 0;    transform: translate(0, 0); }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.6; }
+  100% { opacity: 0;    transform: translate(var(--x, 8px), -90px); }
 }
 
 /* Halo que "respira" detrás del libro de la cima */
 .halo-libro {
   transform-box: fill-box;
   transform-origin: center;
-  animation: halo-libro 4.2s ease-in-out infinite;
+  /* Respira lento, como la luz de una vela */
+  animation: halo-libro 6s ease-in-out infinite;
 }
 @keyframes halo-libro {
-  0%, 100% { opacity: 0.25; transform: scale(0.88); }
-  50%      { opacity: 0.8;  transform: scale(1.08); }
+  0%, 100% { opacity: 0.45; transform: scale(0.92); }
+  50%      { opacity: 0.9;  transform: scale(1.06); }
 }
 
 /* ===== Título, subtítulo y botón ===== */
@@ -75,7 +79,7 @@ body { overflow: hidden; background: #14080d; }
 
 .titulo {
   margin: 0;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 900;
   font-size: max(2.75rem, calc(72 * var(--u)));
   line-height: 1;
@@ -93,7 +97,7 @@ body { overflow: hidden; background: #14080d; }
 
 .subtitulo {
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--f-texto);
   font-style: italic;
   font-weight: 500;
   font-size: max(1.15rem, calc(22 * var(--u)));
@@ -108,7 +112,7 @@ body { overflow: hidden; background: #14080d; }
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 48px;
   padding: 0.875em 2.1em;
-  font-family: 'Cinzel', serif;
+  font-family: var(--f-titulo);
   font-weight: 700;
   font-size: max(1rem, calc(16 * var(--u)));
   letter-spacing: 2px;
@@ -121,43 +125,48 @@ body { overflow: hidden; background: #14080d; }
   overflow: hidden;                      /* recorta el destello que lo cruza */
   cursor: pointer;
   box-shadow: 0 5px 0 var(--p-sombra);
-  animation: btn-latido 2.8s ease-in-out infinite;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  transition: background 0.2s, transform 0.12s ease-out, box-shadow 0.16s ease-out;
 }
 .btn-texto { position: relative; z-index: 1; }
 
-/* Subida de brillo + resplandor dorado */
-@keyframes btn-latido {
-  0%, 100% {
-    box-shadow: 0 5px 0 var(--p-sombra), 0 0 0 0 rgba(240, 207, 122, 0);
-    border-color: var(--p-oro);
-    filter: brightness(1);
-  }
-  50% {
-    box-shadow: 0 5px 0 var(--p-sombra), 0 0 26px 5px rgba(240, 207, 122, 0.55);
-    border-color: var(--p-oro-claro);
-    filter: brightness(1.22);
-  }
-}
-
-/* Destello diagonal que cruza el botón cada pocos segundos */
+/* Un solo destello: al cargar la portada (1.2 s después) y cada vez que pasa el cursor.
+   Ya no late sin parar: así no compite con el libro. */
 .btn-aventura::after {
   content: "";
   position: absolute; top: 0; bottom: 0; left: -60%;
   width: 40%;
   background: linear-gradient(100deg, transparent, rgba(255, 236, 170, 0.6), transparent);
   transform: skewX(-20deg);
-  animation: btn-destello 3.6s ease-in-out infinite;
+  animation: btn-destello 0.9s ease-out 1.2s 1 both;
   pointer-events: none;
 }
-@keyframes btn-destello {
-  0%, 55% { left: -60%; }
-  100%    { left: 140%; }
-}
+.btn-aventura:hover::after { animation: btn-destello-hover 0.9s ease-out 1 both; }
+@keyframes btn-destello { from { left: -60%; } to { left: 140%; } }
+@keyframes btn-destello-hover { from { left: -60%; } to { left: 140%; } }
 
-.btn-aventura:hover { background: #6e1d20; transform: translateY(-2px); }
+.btn-aventura:hover {
+  background: #6e1d20;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--p-sombra), 0 0 22px 4px rgba(240, 207, 122, 0.35);
+}
 .btn-aventura:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--p-sombra), 0 0 22px 4px rgba(240, 207, 122, 0.5); }
 .btn-aventura:focus-visible { outline: 3px solid #ffd96a; outline-offset: 5px; }
+
+/* «Continuar tu historia»: acción secundaria bajo el botón principal */
+.portada-accion { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.btn-continuar {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 6px;
+  font-family: var(--f-texto); font-style: italic; font-weight: 600;
+  font-size: max(1.05rem, calc(19 * var(--u)));
+  color: #f0d78c; text-decoration: underline; text-underline-offset: 5px;
+  text-decoration-color: rgba(240, 215, 140, 0.5);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.btn-continuar:hover { color: #ffe9a8; text-decoration-color: currentColor; }
+.btn-continuar:focus-visible { outline: 3px solid #ffd96a; outline-offset: 4px; border-radius: 4px; }
+.btn-continuar svg { transition: transform 0.15s ease-out; }
+.btn-continuar:hover svg { transform: translateX(3px); }
 
 /* ===== Pantallas verticales / estrechas ===== */
 @media (max-aspect-ratio: 6/5) {
@@ -186,3 +195,26 @@ html[data-fuente="legible"] .btn-aventura {
 html[data-fuente="dislexia"] .titulo { font-size: max(2.25rem, calc(56 * var(--u))); }
 html[data-contraste="alto"] .subtitulo { color: #fff6dc; }
 html[data-contraste="alto"] .btn-aventura { background: #3a0c0e; border-color: #ffe08a; }
+
+/* ===== Reducir animaciones: todo quieto, pero visible ===== */
+@media (prefers-reduced-motion: reduce) {
+  .chispas i, .halo-libro, .btn-aventura::after { animation: none; }
+}
+html[data-movimiento="reducido"] .chispas i { opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) { .chispas i { opacity: 0.6; } }
+
+/* ===== Sistema visual (mockup «Portada») ===== */
+.titulo { font-weight: 700; letter-spacing: 0.02em; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5); }
+.btn-aventura {
+  gap: 12px; min-height: 56px; padding: 0 34px;
+  font-weight: 600; letter-spacing: 0.1em; text-transform: none;
+  font-size: max(1rem, calc(17 * var(--u)));
+  background: #8e2a2a; border: 1px solid #c9a13a; border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 217, 106, 0.25), 0 3px 0 #4a1414, 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+.btn-aventura svg { position: relative; z-index: 1; transition: transform 0.15s ease-out; }
+.btn-aventura:hover { background: #a03030; box-shadow: inset 0 1px 0 rgba(255, 217, 106, 0.3), 0 4px 0 #4a1414, 0 0 22px 4px rgba(240, 207, 122, 0.3); }
+.btn-aventura:hover svg { transform: translateX(3px); }
+.btn-aventura:active { box-shadow: inset 0 1px 0 rgba(255, 217, 106, 0.2), 0 1px 0 #4a1414; }
+.portada-estado { margin: 0; font-family: var(--f-texto); font-size: max(1rem, calc(16 * var(--u))); color: #c8b48e; text-align: center; }
+html[data-contraste="alto"] .portada-estado { color: #fff6dc; }

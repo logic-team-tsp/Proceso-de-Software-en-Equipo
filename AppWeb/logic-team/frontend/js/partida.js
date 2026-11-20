@@ -14,6 +14,9 @@
   const LETRAS = "ABCD";
 
   // ------------------------------------------------------------ utilidades
+  // Efectos de sonido (js/sonidos.js); se apagan desde el panel de ajustes
+  const sonar = (nombre) => { if (window.LTSonidos) window.LTSonidos.tocar(nombre); };
+
   function el(etiqueta, clase, texto) {
     const nodo = document.createElement(etiqueta);
     if (clase) nodo.className = clase;
@@ -82,38 +85,124 @@
   // CU05 (cambios a CU01, RF-39 y RF-40): resalta y explica los tecnicismos (js/tecnicismos.js).
   const tec = window.CU01Tecnicismos || null;
   function resaltar(nodos, e, interactivo = true) {
-    if (tec && e.tecnicismos && e.tecnicismos.length) tec.resaltar(nodos, e.tecnicismos, { interactivo });
+    if (tec && e.tecnicismos && e.tecnicismos.length) tec.resaltar(nodos, e.tecnicismos, { interactivo, nuevos: e.tecnicismos_nuevos });
   }
 
   // ------------------------------------------------------------ piezas del libro
   const ornamento = () => { const o = el("div", "ornament"); o.setAttribute("aria-hidden", "true"); return o; };
-  const numeroPagina = (n) => el("div", "page-num", `– ${n} –`);
+  const numeroPagina = (n) => el("span", "page-num", `— ${n} —`);
   const sello = (texto, extra) => el("span", `stamp${extra ? " " + extra : ""}`, texto);
 
-  function barra(etiqueta, valor, maximo, clase, texto) {
-    const relleno = el("div", `pt-relleno ${clase}`);
-    relleno.style.width = `${maximo ? Math.min(100, (valor / maximo) * 100) : 0}%`;
-    return con(
-      el("div"),
-      con(el("div", "pt-barra-cab"), el("span", "k", etiqueta), el("span", "v", texto)),
-      con(el("div", "pt-pista"), relleno)
-    );
+  const porcentaje = (valor, maximo) => (maximo ? Math.min(100, (valor / maximo) * 100) : 0);
+
+  // Último estado pintado: sirve para animar lo que cambió (vidas, XP, avance).
+  let previo = null;
+
+  // Número que sale flotando de una barra («−1», «+30 XP») y se desvanece
+  function flotante(fila, texto, clase) {
+    if (sinMovimiento()) return;
+    const f = el("span", `pt-flota ${clase}`, texto);
+    f.setAttribute("aria-hidden", "true");
+    fila.appendChild(f);
+    setTimeout(() => f.remove(), 1100);
   }
 
-  // Hoja de personaje: vidas, XP, avance y atributos (RF-05). Ocupa el lugar del emblema.
-  function ficha(e) {
-    const atributos = el("div", "pt-atributos");
-    e.atributos.forEach((a) => con(atributos, sello(`${a.icono} ${a.nombre} ${a.valor}/${a.maximo}`)));
-    if (e.puntos_atributo > 0) con(atributos, sello(`✨ ${e.puntos_atributo} por asignar`, "pt-stamp-oro"));
-    return con(
-      el("div", "pt-ficha"),
-      barra("❤️ Vidas", e.hp, e.hp_max, "hp", `${e.hp}/${e.hp_max}`),
-      vidas && e.vidas ? vidas.boton(e) : null,
-      barra(`⭐ Nivel ${e.nivel}`, e.xp_en_nivel, e.xp_por_nivel, "xp",
-        e.nivel >= e.nivel_maximo ? "nivel máximo" : `${e.xp_en_nivel}/${e.xp_por_nivel} XP para el nivel ${e.nivel + 1}`),
-      barra("📖 Historia", e.progreso, 100, "progreso", `${e.progreso}% · evento ${e.evento_numero} de ${e.evento_total}`),
-      atributos
-    );
+  // Cuenta del número de XP de la etiqueta de la barra, de «desde» a «hasta»
+  function contar(nodo, desde, hasta, plantilla) {
+    if (sinMovimiento() || desde === hasta) return;
+    const t0 = performance.now(), dura = 650;
+    (function paso(t) {
+      const k = Math.min(1, (t - t0) / dura);
+      nodo.textContent = plantilla(Math.round(desde + (hasta - desde) * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(paso);
+    })(t0);
+  }
+
+  // HUD fuera del libro (sistema visual): capítulo y avance al centro; vidas, nivel y XP a la
+  // derecha; «Conseguir vidas» (CU06) a su lado. Anima lo que cambió respecto al estado anterior.
+  const hudCap = document.getElementById("hud-cap");
+  const hudSeg = document.getElementById("hud-seg");
+  const hudEvento = document.getElementById("hud-evento");
+  const hudVidas = document.getElementById("hud-vidas");
+  const hudXp = document.getElementById("hud-xp");
+  const hudCv = document.getElementById("hud-cv");
+
+  function hud(e) {
+    const p = previo;
+    hudCap.textContent = `Capítulo ${e.bloque.capitulo} · ${e.bloque.nombre}`;
+
+    // Avance: un segmento por evento (si son muchos, se agrupan para que quepan)
+    const total = Math.max(1, e.evento_total);
+    const tramos = Math.min(total, 20);
+    const hechos = Math.round((Math.max(0, e.evento_numero - (e.fase === "evento" ? 1 : 0)) / total) * tramos);
+    const actual = Math.min(tramos - 1, Math.floor(((e.evento_numero - 1) / total) * tramos));
+    vaciar(hudSeg);
+    for (let i = 0; i < tramos; i++) {
+      con(hudSeg, el("i", i < hechos ? "on" : (i === actual ? "actual" : "")));
+    }
+    hudEvento.textContent = `Evento ${e.evento_numero} de ${e.evento_total}`;
+    hudSeg.parentNode.setAttribute("aria-label", `Historia: ${e.progreso}% · evento ${e.evento_numero} de ${e.evento_total}`);
+
+    // Vidas: corazones llenos y vacíos
+    const corazones = el("span", "k pt-hud-corazones");
+    for (let i = 0; i < e.hp_max; i++) con(corazones, el("span", i < e.hp ? "lleno" : "vacio", i < e.hp ? "❤" : "♡"));
+    vaciar(hudVidas);
+    con(hudVidas, corazones);
+    hudVidas.setAttribute("aria-label", `Vidas: ${e.hp} de ${e.hp_max}`);
+    hudVidas.classList.remove("pt-pierde", "pt-gana");
+
+    // Nivel y XP
+    const mismoNivel = p && p.nivel === e.nivel;
+    const maximo = e.nivel >= e.nivel_maximo;
+    const textoXp = (x) => (maximo ? "nivel máximo" : `${x} / ${e.xp_por_nivel} XP`);
+    const meta = maximo ? 100 : porcentaje(e.xp_en_nivel, e.xp_por_nivel);
+    const desde = p ? (mismoNivel ? porcentaje(p.xp_en_nivel, p.xp_por_nivel) : 0) : meta;
+    const relleno = el("i");
+    const anima = p && !sinMovimiento() && desde !== meta;
+    relleno.style.width = `${anima ? desde : meta}%`;
+    if (anima) requestAnimationFrame(() => requestAnimationFrame(() => { relleno.style.width = `${meta}%`; }));
+    const valorXp = el("span", "v", textoXp(e.xp_en_nivel));
+    vaciar(hudXp);
+    con(hudXp,
+      con(el("div", "pt-hud-xp-cab"), con(el("span", "k"), document.createTextNode(`⭐ Nivel ${e.nivel}`)), valorXp),
+      con(el("span", "pt-pista"), relleno));
+    hudXp.classList.remove("pt-pierde", "pt-gana");
+
+    if (p && !sinMovimiento()) {
+      void hudVidas.offsetWidth;
+      // Vidas: los corazones se sacuden al perder y rebotan al recuperar
+      if (e.hp < p.hp) { hudVidas.classList.add("pt-pierde"); flotante(hudVidas, `−${p.hp - e.hp}`, "mal"); setTimeout(() => sonar("vida-menos"), 250); }
+      if (e.hp > p.hp) { hudVidas.classList.add("pt-gana"); flotante(hudVidas, `+${e.hp - p.hp}`, "bien"); setTimeout(() => sonar("vida-mas"), 150); }
+      // XP: sube un «+N XP» y el número cuenta hasta el valor nuevo
+      if (e.xp > p.xp) {
+        flotante(hudXp, `+${e.xp - p.xp} XP`, "oro");
+        if (mismoNivel) contar(valorXp, p.xp_en_nivel, e.xp_en_nivel, textoXp);
+        else hudXp.classList.add("pt-gana");
+      }
+    }
+
+    // CU06: botón permanente de «Conseguir vidas», siempre a la vista junto a las vidas
+    vaciar(hudCv);
+    if (vidas && e.vidas) con(hudCv, vidas.boton(e));
+  }
+
+  // Pie de página del libro: atributos (RF-05) a la izquierda y número de página
+  function pie(n, izquierda) {
+    return con(el("div", "pt-pie"), izquierda || el("span"), numeroPagina(n));
+  }
+
+  function atributosPie(e) {
+    const fila = el("span", "pt-pie-attr");
+    e.atributos.forEach((a) => con(fila, con(el("span"), document.createTextNode(`${a.icono} ${a.nombre} `), el("b", null, String(a.valor)))));
+    if (e.puntos_atributo > 0) con(fila, sello(`✨ ${e.puntos_atributo} por asignar`, "pt-stamp-oro"));
+    return fila;
+  }
+
+  function atajos(n) {
+    const fila = el("span", "pt-atajos");
+    con(fila, document.createTextNode("Elige con "));
+    LETRAS.slice(0, n).split("").forEach((l) => con(fila, el("kbd", null, l)));
+    return fila;
   }
 
   function tarjeta(medallon, texto, sellos) {
@@ -125,7 +214,7 @@
       sellos.forEach((s) => con(fila, s));
       con(cuerpo, fila);
     }
-    return con(boton, el("div", "medallion" + (medallon.length > 1 ? " pt-icono" : ""), medallon), cuerpo);
+    return con(boton, el("span", "pt-letra" + (medallon.length > 1 ? " pt-icono" : ""), medallon), cuerpo);
   }
 
   // Al reactivar, las tarjetas de atributos que ya están al máximo siguen bloqueadas
@@ -257,15 +346,13 @@
     resaltar(historia, e); // RF-39
     con(
       izq,
-      el("div", "chapter-label", `CAPÍTULO ${e.bloque.capitulo} · ${e.bloque.nombre.toUpperCase()}`),
+      el("div", "chapter-label", `${ev.tema} · ${ev.subtema}`),
       el("h1", "chapter-title", ev.titulo),
       ornamento(),
       marcaTematica(e), // CU07
-      el("p", "pt-tema", `${ev.tema} · ${ev.subtema}`),
       historia,
-      tec ? tec.tira(e.tecnicismos, e.tecnicismos_nuevos) : null, // RF-40 y aviso de RF-41
-      ficha(e),
-      numeroPagina(e.evento_numero * 2 - 1)
+      tec ? tec.tira(e.tecnicismos, e.tecnicismos_nuevos, e.bitacora) : null, // RF-40, aviso de RF-41 y bitácora
+      pie(e.evento_numero * 2 - 1, atributosPie(e))
     );
 
     const lista = el("div", "choices");
@@ -277,18 +364,21 @@
       const boton = tarjeta(LETRAS[i], op.texto, sellos);
       resaltar(boton.querySelector(".pt-opcion"), e, false); // dentro de un botón: solo color
       boton.setAttribute("aria-label", `Opción ${LETRAS[i]}: ${op.texto}` + (probabilidad ? `, probabilidad ${op.probabilidad}%` : ""));
-      boton.addEventListener("click", () => elegir(op.id, boton, botones));
+      boton.addEventListener("click", () => { letraElegida = LETRAS[i]; elegir(op.id, boton, botones); });
       botones.push(boton);
       con(lista, boton);
     });
+    opcionesActuales = botones;
 
     con(
       der,
-      el("h2", "choose-title", "¿Qué decides?"),
-      el("p", "choose-sub", probabilidad ? "Tu probabilidad depende de tus atributos" : "Analiza la situación y elige con criterio"),
-      con(el("div", "pt-tipo"), sello(probabilidad ? "🎲 Prueba de atributos" : "🔎 Decisión de análisis")),
+      el("div", "chapter-label", "Tu decisión"),
+      con(el("div", "pt-decide-cab"),
+        el("h2", "choose-title", "¿Qué decides?"),
+        con(el("div", "pt-tipo"), sello(probabilidad ? "🎲 Prueba de atributos" : "🔎 Decisión de análisis"))),
+      el("p", "choose-sub", probabilidad ? "Tu probabilidad depende de tus atributos." : "Analiza la situación y elige con criterio."),
       lista,
-      numeroPagina(e.evento_numero * 2)
+      pie(e.evento_numero * 2, atajos(botones.length))
     );
   }
 
@@ -301,9 +391,11 @@
       const estado = await llamar("decision/", { opcion_id: opcionId });
       const acierto = estado.resultado && estado.resultado.acierto;
       boton.classList.add(acierto ? "sello-ok" : "sello-mal", "golpe");
+      if (boton.parentNode) boton.parentNode.classList.add("pt-decidido"); // las demás se apagan
       boton.appendChild(selloDeTinta(acierto));
+      sonar(acierto ? "sello" : "sello-mal");
       boton.setAttribute("aria-label", (acierto ? "Correcta: " : "Errónea: ") + boton.getAttribute("aria-label"));
-      await new Promise((res) => setTimeout(res, sinMovimiento() ? 400 : 1300));
+      await new Promise((res) => setTimeout(res, sinMovimiento() ? 400 : 1000));
       pintar(estado);
     } catch (err) {
       mostrarAviso(err.message);
@@ -315,35 +407,29 @@
   // Flujo normal pasos 3-6 (y FA2.2-2.3): retroalimentación, indicadores, desenlace y botón.
   function pintarResultado(e) {
     const r = e.resultado;
-    const eleccion = el("p", "pt-eleccion", `Elegiste: «${r.opcion.texto}»`);
-    const retro = el("p", "pt-retro", r.retroalimentacion);
-    resaltar([eleccion, retro], e); // RF-39 también en la retroalimentación
-    con(
-      izq,
-      el("div", "chapter-label", "RETROALIMENTACIÓN TÉCNICA"),
-      el("h1", "chapter-title", r.evento_titulo),
-      ornamento(),
-      el("p", `pt-veredicto ${r.acierto ? "ok" : "mal"}`, r.acierto ? "✔ Decisión acertada" : "✘ Decisión errónea"),
-      eleccion,
-      retro
-    );
-    if (r.riesgo) {
-      con(
-        izq,
-        con(
-          el("div", "pt-riesgo"),
-          el("b", null, `🎲 ${r.riesgo.atributo} · probabilidad ${r.riesgo.probabilidad}% · riesgo ${r.riesgo.nivel}`),
-          el("span", null, `Salió ${r.riesgo.tirada} de 100: ${r.acierto ? "éxito" : "fallo"}. ${r.riesgo.mensaje}`)
-        )
-      );
-    }
-    con(izq, ficha(e), numeroPagina(e.evento_numero * 2 - 1));
+    const desenlace = el("p", "story", r.desenlace);
+    resaltar(desenlace, e);
 
     const cambios = el("div", "pt-cambios");
     if (r.cambios.hp) con(cambios, sello(`❤️ ${r.cambios.hp} vida`, "pt-stamp-mal"));
     if (r.cambios.xp) con(cambios, sello(`⭐ +${r.cambios.xp} XP`, "pt-stamp-oro"));
     if (r.cambios.puntos) con(cambios, sello(`🏆 +${r.cambios.puntos}`, "pt-stamp-oro"));
     if (r.cambios.puntos_atributo) con(cambios, sello(`✨ +${r.cambios.puntos_atributo} punto de atributo`, "pt-stamp-oro"));
+
+    con(
+      izq,
+      el("div", "chapter-label", "Lo que pasó"),
+      el("h1", "chapter-title", r.evento_titulo),
+      el("p", "pt-tema", `${r.tema} · ${r.subtema}`),
+      desenlace,
+      pie(e.evento_numero * 2 - 1, cambios.childNodes.length ? cambios : null)
+    );
+
+    const eleccion = con(el("div", "pt-eleccion"),
+      el("span", "pt-eleccion-tit", letraElegida ? `Elegiste ${letraElegida}` : "Elegiste"),
+      el("span", "pt-eleccion-txt", r.opcion.texto));
+    const retro = el("p", "pt-retro", r.retroalimentacion);
+    resaltar([eleccion.lastChild, retro], e); // RF-39 también en la retroalimentación
 
     const termino = r.estado_final !== "en_curso";
     const boton = el("button", "book-btn go", termino ? "Ver el final ➔" : "Pasar la página ➔");
@@ -358,17 +444,24 @@
       }
     });
 
-    const desenlace = el("p", "story", r.desenlace);
-    resaltar(desenlace, e);
     con(
       der,
-      el("h2", "choose-title", "Desenlace"),
-      el("p", "choose-sub", `${r.tema} · ${r.subtema}`),
-      desenlace,
-      cambios,
-      con(el("div", "btn-row"), el("span"), boton),
-      numeroPagina(e.evento_numero * 2)
+      el("div", "chapter-label", "Retroalimentación técnica"),
+      el("p", `pt-veredicto ${r.acierto ? "ok" : "mal"}`, r.acierto ? "✔ Decisión acertada" : "✘ Decisión errónea"),
+      eleccion,
+      retro
     );
+    if (r.riesgo) {
+      con(
+        der,
+        con(
+          el("div", "pt-riesgo"),
+          el("b", null, `🎲 ${r.riesgo.atributo} · probabilidad ${r.riesgo.probabilidad}% · riesgo ${r.riesgo.nivel}`),
+          el("span", null, `Salió ${r.riesgo.tirada} de 100: ${r.acierto ? "éxito" : "fallo"}. ${r.riesgo.mensaje}`)
+        )
+      );
+    }
+    con(der, con(el("div", "pt-pie"), numeroPagina(e.evento_numero * 2), boton));
     boton.focus({ preventScroll: true });
   }
 
@@ -376,12 +469,11 @@
   function pintarMejora(e) {
     con(
       izq,
-      el("div", "chapter-label", `CAPÍTULO ${e.bloque.capitulo} · ${e.bloque.nombre.toUpperCase()}`),
+      el("div", "chapter-label", `Capítulo ${e.bloque.capitulo} · ${e.bloque.nombre}`),
       el("h1", "chapter-title", `¡Subes al nivel ${e.nivel}!`),
       ornamento(),
       el("p", "story", "Cada acierto te dio experiencia, y la experiencia se convierte en talento. Antes de seguir, elige qué atributo quieres fortalecer (máximo 10): las pruebas de probabilidad que vienen dependen de él."),
-      ficha(e),
-      numeroPagina(e.evento_numero * 2 - 1)
+      pie(e.evento_numero * 2 - 1, atributosPie(e))
     );
     const lista = el("div", "choices");
     const botones = [];
@@ -406,20 +498,60 @@
       con(lista, boton);
     });
     desactivar(botones, false);
+    opcionesActuales = botones;
     con(
       der,
+      el("div", "chapter-label", "Subes de nivel"),
       el("h2", "choose-title", "Elige tu atributo"),
       el("p", "choose-sub", `Puntos disponibles: ${e.puntos_atributo}`),
       lista,
-      numeroPagina(e.evento_numero * 2)
+      pie(e.evento_numero * 2)
     );
   }
 
   // ------------------------------------------------------------ dibujo general
+  // En celular (páginas una sobre otra) se usa la entrada suave de libro.css
   function pasarPagina() {
     spread.classList.remove("active");
     void spread.offsetWidth; // reinicia la animación turnPage de libro.css
     spread.classList.add("active");
+  }
+
+  // En pantalla ancha la hoja derecha gira de verdad sobre el lomo: por delante lleva la
+  // página que se va y por detrás la nueva página izquierda, donde cae al terminar el giro.
+  function prepararHoja() {
+    if (sinMovimiento() || window.innerWidth <= 820 || !document.body.animate) return null;
+    const r = der.getBoundingClientRect();
+    if (!r.width) return null;
+    const capa = el("div", "pt-hoja");
+    capa.setAttribute("aria-hidden", "true");
+    Object.assign(capa.style, {
+      left: `${r.left + window.scrollX}px`, top: `${r.top + window.scrollY}px`,
+      width: `${r.width}px`, height: `${r.height}px`,
+    });
+    const giro = el("div", "pt-hoja-giro");
+    const frente = con(el("div", "pt-hoja-cara frente"), copiaDePagina(der));
+    const dorso = el("div", "pt-hoja-cara dorso");
+    const sombra = el("div", "pt-hoja-sombra");
+    con(document.body, con(capa, con(giro, frente, dorso), sombra));
+    return { capa, giro, dorso, sombra };
+  }
+
+  function voltearHoja(h) {
+    // El libro puede cambiar de alto con la página nueva: la hoja se acomoda donde quedó
+    const r = der.getBoundingClientRect();
+    Object.assign(h.capa.style, {
+      left: `${r.left + window.scrollX}px`, top: `${r.top + window.scrollY}px`,
+      width: `${r.width}px`, height: `${r.height}px`,
+    });
+    h.dorso.appendChild(copiaDePagina(izq));
+    izq.style.visibility = "hidden"; // aparece cuando la hoja cae encima
+    sonar("pagina");
+    const ritmo = { duration: 650, easing: "cubic-bezier(.45,.05,.25,1)", fill: "forwards" };
+    h.sombra.animate([{ opacity: 0 }, { opacity: 0.55, offset: 0.5 }, { opacity: 0 }], ritmo);
+    h.giro.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }], ritmo).finished
+      .catch(() => {})
+      .then(() => { izq.style.visibility = ""; h.capa.remove(); });
   }
 
   function pintar(e, animar = true) {
@@ -429,19 +561,41 @@
       terminar(e); // FA1 / FE1: pantalla Post Game
       return;
     }
+    const hoja = animar ? prepararHoja() : null;
+    opcionesActuales = [];
     vaciar(izq);
     vaciar(der);
     aplicarTematica(e); // CU07
     listonCap.textContent = e.bloque.capitulo;
+    hud(e);
     if (e.fase === "resultado") pintarResultado(e);
     else if (e.fase === "mejora") pintarMejora(e);
     else pintarEvento(e);
-    if (animar) {
-      pasarPagina();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (hoja) voltearHoja(hoja);
+    else if (animar) { pasarPagina(); sonar("pagina"); }
+    if (animar) window.scrollTo({ top: 0, behavior: sinMovimiento() ? "auto" : "smooth" });
     if (vidas) vidas.sincronizar(e); // CU06: retoma la ronda o muestra la sugerencia (FA1)
+    previo = {
+      hp: e.hp, hp_max: e.hp_max, xp: e.xp, nivel: e.nivel,
+      xp_en_nivel: e.xp_en_nivel, xp_por_nivel: e.xp_por_nivel, progreso: e.progreso,
+    };
   }
+
+  // Atajos de teclado: A, B, C, D (o 1-4) eligen la opción. Enter ya pasa la página porque
+  // ese botón recibe el foco. No hacen nada si hay una ventana abierta encima o se está escribiendo.
+  let opcionesActuales = [];
+  let letraElegida = "";
+  document.addEventListener("keydown", (ev) => {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.repeat) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName)) return;
+    const abierta = [...document.querySelectorAll('[aria-modal="true"], [role="dialog"]')]
+      .some((d) => !d.hidden && d.offsetParent !== null);
+    if (abierta) return;
+    const k = ev.key.toUpperCase();
+    const i = LETRAS.indexOf(k) >= 0 ? LETRAS.indexOf(k) : "1234".indexOf(ev.key);
+    const boton = i >= 0 ? opcionesActuales[i] : null;
+    if (boton && !boton.disabled) { ev.preventDefault(); boton.focus({ preventScroll: true }); boton.click(); }
+  });
 
   // Al terminar: si perdió, el libro se cierra; en ambos casos el Post Game abre sin
   // pantalla de carga (ver post_game.html).

@@ -9,6 +9,7 @@
 //    para enviar el formulario). La página siguiente (el libro abierto del CU01) aparece desde
 //    esa misma luz: ver ".tr-llegada" en js/libro.js.
 // Respeta "reducir animaciones" (sistema operativo o ajuste de CU03): en ese caso no anima.
+// Dura ≈2 s la primera vez y ≈1.2 s las siguientes. Un clic, Enter, Espacio o Esc la saltan.
 (function () {
   // Copia del fondo sin el libro: se pone debajo del libro que vuela para que no se vea el
   // libro original "quedarse atrás". Se precarga para que esté lista al empezar.
@@ -58,6 +59,12 @@
   const esperar = (ms) => new Promise((res) => setTimeout(res, ms));
   let enCurso = false;
 
+  // Desde la segunda vez la transición es más corta (≈1 s); la primera vez dura ≈2 s.
+  const CLAVE_VISTO = "logicteam.libroVisto";
+  function yaVista() {
+    try { return localStorage.getItem(CLAVE_VISTO) === "1"; } catch (e) { return false; }
+  }
+
   async function abrir(alTerminar) {
     if (enCurso) return;
     enCurso = true;
@@ -76,9 +83,32 @@
     const dx = vw / 2 - (L + W / 2), dy = vh / 2 - (T + H / 2);
     const mover = (x, s) => `translate(${x}px, ${dy}px) scale(${s})`;
 
+    // Ritmo: completo la primera vez, más rápido las siguientes
+    const r = yaVista() ? 0.6 : 1;
+    try { localStorage.setItem(CLAVE_VISTO, "1"); } catch (e) { /* sin almacenamiento */ }
+
+    // Un clic, Enter, Espacio o Esc saltan la animación y van directo a la partida
+    let saltada = false;
+    const animaciones = [];
+    function saltar(e) {
+      if (e.type === "keydown" && !["Enter", " ", "Escape"].includes(e.key)) return;
+      if (saltada) return;
+      saltada = true;
+      animaciones.forEach((a) => { try { a.finish(); } catch (err) { /* ya terminó */ } });
+      quitarSaltos();
+      alTerminar();
+    }
+    function quitarSaltos() {
+      window.removeEventListener("pointerdown", saltar, true);
+      window.removeEventListener("keydown", saltar, true);
+    }
+    window.addEventListener("pointerdown", saltar, true);
+    window.addEventListener("keydown", saltar, true);
+
     // Primero se desvanece el contenido de la página para dejar libre el libro del fondo
     document.body.classList.add("tr-saliendo");
-    await esperar(500);
+    await esperar(250 * r);
+    if (saltada) return;
 
     const capa = document.createElement("div");
     capa.className = "tr-capa";
@@ -118,30 +148,36 @@
 
     // 1) El libro se acerca
     const acercar = libro.animate([{ transform: mover(0, 1) }, { transform: mover(dx, k) }],
-      { duration: 1300, easing: "cubic-bezier(.45,.05,.2,1)", fill: "forwards" });
+      { duration: 550 * r, easing: "cubic-bezier(.45,.05,.2,1)", fill: "forwards" });
+    animaciones.push(acercar);
     await acercar.finished.catch(() => {});
+    if (saltada) return;
 
     // 2) La tapa se abre y la luz sale desde dentro
-    const dur = 1800, suave = "cubic-bezier(.55,0,.25,1)";
-    libro.animate([{ transform: mover(dx, k) }, { transform: mover(dx + (W * k) / 2, k) }],
-      { duration: dur, easing: suave, fill: "forwards" });
-    tapa.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-172deg)" }],
-      { duration: dur, easing: suave, fill: "forwards" });
-    brillo.animate([{ opacity: 0 }, { opacity: 0.6, offset: 0.35 }, { opacity: 1 }],
-      { duration: dur, easing: "ease-in", fill: "forwards" });
+    const dur = 850 * r, suave = "cubic-bezier(.55,0,.25,1)";
+    animaciones.push(libro.animate([{ transform: mover(dx, k) }, { transform: mover(dx + (W * k) / 2, k) }],
+      { duration: dur, easing: suave, fill: "forwards" }));
+    animaciones.push(tapa.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-172deg)" }],
+      { duration: dur, easing: suave, fill: "forwards" }));
+    animaciones.push(brillo.animate([{ opacity: 0 }, { opacity: 0.6, offset: 0.35 }, { opacity: 1 }],
+      { duration: dur, easing: "ease-in", fill: "forwards" }));
     Object.assign(luz.style, { width: W * k * 2 + "px", height: H * k + "px" });
-    luz.animate([
+    animaciones.push(luz.animate([
       { opacity: 0, transform: "translate(-50%, -50%) scale(.25)" },
       { opacity: 0.85, transform: "translate(-50%, -50%) scale(1.1)", offset: 0.6 },
       { opacity: 1, transform: "translate(-50%, -50%) scale(2.6)" }],
-      { duration: dur, easing: "ease-in", fill: "forwards" });
-    await esperar(dur - 350);
+      { duration: dur, easing: "ease-in", fill: "forwards" }));
+    await esperar(dur - 150 * r);
+    if (saltada) return;
 
     // 3) La luz ilumina toda la pantalla y da paso a la siguiente página
     const inundar = destello.animate([{ opacity: 0 }, { opacity: 1 }],
-      { duration: 650, easing: "ease-in", fill: "forwards" });
+      { duration: 350 * r, easing: "ease-in", fill: "forwards" });
+    animaciones.push(inundar);
     await inundar.finished.catch(() => {});
-    await esperar(180);
+    if (saltada) return;
+    saltada = true;
+    quitarSaltos();
     alTerminar();
   }
 

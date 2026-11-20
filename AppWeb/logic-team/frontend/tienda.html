@@ -15,9 +15,11 @@
 
 {# CU07 paso 2: saldo (RN01) y catálogo de temáticas con su estado #}
 {% block page %}
-  <header class="pc-topbar"><span class="file">tienda_de_tematicas</span><span class="ext">.jsx</span></header>
+  {% url 'menu_modos' as url_modos %}
+  {% include "_topbar.html" with volver_url=url_modos volver_texto="Modos" seccion="Tienda de temáticas" %}
 
   <main class="pc-main">
+    <p class="tt-eyebrow">Gasta tus estrellas</p>
     <h1 class="pc-title">Tienda de temáticas</h1>
     <p class="pc-sub">Cambia la ambientación de la Historia narrativa con las estrellas que ganas en los minijuegos. La historia, las opciones y los tecnicismos no cambian.</p>
 
@@ -68,6 +70,7 @@
             <span class="c7-estado">★ DISPONIBLE</span>
           {% else %}
             <span class="c7-estado">🔒 FALTAN {{ t.faltan }} ★</span>
+            <span class="c7-pista">Unos {{ t.niveles }} nivel{{ t.niveles|pluralize:"es" }} de minijuego con 3 ★</span>
           {% endif %}
           <a class="book-btn{% if t.estado == 'disponible' %} go{% endif %}" href="{% url 'tienda_vista' t.id %}"
              aria-label="Ver vista previa de {{ t.nombre }}">Ver vista previa{% if t.estado == 'disponible' %} ➔{% endif %}</a>
@@ -77,6 +80,5 @@
     {% endif %}
 
     {# FA7: regresa al menú de modos sin hacer cambios #}
-    <div class="pc-volver"><a class="book-btn" href="{% url 'menu_modos' %}">⬅ Volver</a></div>
   </main>
 {% endblock %}

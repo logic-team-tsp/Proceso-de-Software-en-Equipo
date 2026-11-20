@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
 from django.views.generic import RedirectView
+
+from app.views import portada
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -13,5 +14,5 @@ urlpatterns = [
     path("jugar/tienda/", include("app.urls_tienda")),
     path("jugar/", include("app.urls_cuestionario")),
     path("personalizar-partida/", RedirectView.as_view(pattern_name="personalizar_perfil")),
-    path("", TemplateView.as_view(template_name="index.html"), name="home"),
+    path("", portada, name="home"),
 ]

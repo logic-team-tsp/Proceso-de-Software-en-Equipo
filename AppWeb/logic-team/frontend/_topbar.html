@@ -1,0 +1,20 @@
+{% comment %}
+  Barra superior de las pantallas planas (sistema visual de los mockups):
+  volver · TECHTALE ◆ SECCIÓN · tienda. Logros y Ajustes flotan a la derecha (base.html).
+  Parámetros: volver_url, volver_texto, seccion y, opcional, tienda (con .saldo).
+{% endcomment %}
+<header class="pc-topbar tt-top">
+  <div class="tt-izq">
+    {% if volver_url %}<a class="tt-fantasma tt-volver" href="{{ volver_url }}" aria-label="Volver a {{ volver_texto }}"><span class="ic ic-flecha-izq" aria-hidden="true"></span><span class="tt-volver-txt">{{ volver_texto }}</span></a>{% endif %}
+  </div>
+  <nav class="tt-ruta" aria-label="Ruta"><span class="marca">TechTale</span><i aria-hidden="true"></i><span>{{ seccion }}</span></nav>
+  <div class="tt-der">
+    {% if tienda %}
+    {# CU07 paso 1: la tienda se abre en 1 clic, con el saldo a la vista #}
+    <a class="tt-tienda" id="btn-tienda" href="{% url 'tienda' %}" aria-label="Tienda de temáticas, tienes {{ tienda.saldo }} estrellas">
+      <span class="ic ic-tienda" aria-hidden="true"></span><span class="tt-tienda-txt">Tienda</span>
+      <span class="tt-saldo">★ {{ tienda.saldo }}</span>
+    </a>
+    {% endif %}
+  </div>
+</header>

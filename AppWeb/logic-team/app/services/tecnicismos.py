@@ -248,8 +248,14 @@ def registrar_del_estado(jugador, estado, partida=None):
     tecnicismos y marca en el estado cuales son nuevos para avisar al usuario."""
     if estado.get("fase") != "evento" or not estado.get("tecnicismos"):
         estado["tecnicismos_nuevos"] = []
-        return estado
-    estado["tecnicismos_nuevos"] = registrar(
-        jugador, [t["id"] for t in estado["tecnicismos"]], partida
-    )
+    else:
+        estado["tecnicismos_nuevos"] = registrar(
+            jugador, [t["id"] for t in estado["tecnicismos"]], partida
+        )
+    estado["bitacora"] = total_registrados(jugador)
     return estado
+
+
+def total_registrados(jugador):
+    """Cuántos tecnicismos lleva descubiertos el jugador (contador de la bitácora)."""
+    return len(registrados(jugador))

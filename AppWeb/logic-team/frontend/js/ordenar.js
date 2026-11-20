@@ -308,7 +308,7 @@
   function contadores() {
     const c = s.mesa.contadores;
     const caja = el("div", "c9-contadores");
-    [["Comparaciones", c.comparaciones, ""], ["Intercambios", c.intercambios, ""], ["Errores", c.errores, " err"]].forEach(([t, v, extra]) => {
+    [["Comparaciones", c.comparaciones, ""], ["Intercambios", c.intercambios, ""], ["Errores", c.errores, c.errores ? " err" : ""]].forEach(([t, v, extra]) => {
       con(caja, con(el("div", `c9-cont${extra}`), el("b", null, String(v)), el("span", null, t)));
     });
     caja.setAttribute("aria-live", "polite");
@@ -528,20 +528,21 @@
       const dx = previa.left - ahora.left;
       const dy = previa.top - ahora.top;
       if (!dx && !dy) return;
-      b.style.transition = "none";
-      b.style.transform = `translate(${dx}px, ${dy}px)`;
-      movidas.push(b);
+      movidas.push({ b, dx, dy });
     });
     if (!movidas.length) return Promise.resolve();
-    return new Promise((listo) => {
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        movidas.forEach((b) => {
-          b.style.transition = "transform 420ms cubic-bezier(.3,.7,.3,1)";
-          b.style.transform = "";
-        });
-        setTimeout(listo, 440);
-      }));
+    if (window.LTSonidos) window.LTSonidos.tocar("carta");
+    // Viajan en un arco corto: la que va a la derecha pasa por arriba y la otra por abajo,
+    // así se ve exactamente qué se cruzó con qué (propuesta de animación 7)
+    const viajes = movidas.map(({ b, dx, dy }) => {
+      const arco = dx > 0 ? 18 : -18; // dx > 0: venía de la derecha, va hacia la izquierda
+      return b.animate([
+        { transform: `translate(${dx}px, ${dy}px)` },
+        { transform: `translate(${dx / 2}px, ${dy / 2 + arco}px)`, offset: 0.5 },
+        { transform: "none" },
+      ], { duration: 340, easing: "cubic-bezier(.3,.7,.3,1)" }).finished.catch(() => {});
     });
+    return Promise.all(viajes);
   }
 
   async function mover(movimiento) {

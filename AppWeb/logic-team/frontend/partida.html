@@ -14,11 +14,37 @@
   </script>
 {% endblock %}
 
-{% block loader_title %}Capítulo {{ estado.bloque.capitulo }}{% endblock %}
-{% block loader_sub %}tu historia continúa...{% endblock %}
+{% block body_class %}pagina-partida{% endblock %}
 
-{# CU01: el libro de la partida. js/partida.js llena las dos páginas con el estado del servidor. #}
-{% block book %}
+{# Pantalla de carga: una frase de la ingeniería de software (se elige al azar en js/libro.js) #}
+{% block loader_title %}<span class="loader-frase" id="loader-frase">La parte más difícil de construir un sistema de software es decidir con precisión qué construir.</span>{% endblock %}
+{% block loader_sub %}<span id="loader-autor">— Fred Brooks</span>{% endblock %}
+
+{# CU01: el libro de la partida. js/partida.js llena las dos páginas y el HUD con el estado del servidor. #}
+{% block page %}
+  {# HUD fuera del libro (mockup «Partida»): salir · capítulo y avance · vidas, nivel y XP #}
+  <header class="pt-hud" id="pt-hud">
+    <div class="pt-hud-izq">
+      {# Salir: la partida se guarda sola en el servidor; desde el menú se retoma con «Continuar» #}
+      <a class="tt-fantasma pt-salir" href="{% url 'menu_modos' %}?guardada=1"><span class="ic ic-flecha-izq" aria-hidden="true"></span>Salir</a>
+    </div>
+    <div class="pt-hud-centro">
+      <span class="pt-hud-cap" id="hud-cap">Capítulo {{ estado.bloque.capitulo }} · {{ estado.bloque.nombre }}</span>
+      <div class="pt-hud-avance" role="img" aria-label="Avance de la historia">
+        <span class="pt-hud-seg" id="hud-seg" aria-hidden="true"></span>
+        <span class="pt-hud-evento" id="hud-evento" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="pt-hud-der">
+      <div class="pt-hud-vidas" id="hud-vidas" role="img" aria-label="Vidas"></div>
+      <span class="pt-hud-sep" aria-hidden="true"></span>
+      <div class="pt-hud-xp" id="hud-xp"></div>
+      <div class="pt-hud-cv" id="hud-cv"></div>
+    </div>
+  </header>
+
+  <div class="pt-escena">
+  <div class="book" id="main-book">
   <div class="ribbon" aria-label="Capítulo">CAP.<b id="ribbon-cap">{{ estado.bloque.capitulo }}</b></div>
 
   <p class="pt-aviso" id="pt-aviso" role="alert" hidden></p>
@@ -36,6 +62,8 @@
   </div>
 
   {{ estado|json_script:"pt-estado" }}
+  </div>
+  </div>
 {% endblock %}
 
 {% block extra_js %}

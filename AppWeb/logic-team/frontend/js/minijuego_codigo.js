@@ -202,12 +202,42 @@
     cambio(null);
   }
 
-  // Cualquier cambio quita las marcas del último intento
+  // Cualquier cambio quita las marcas del último intento. Las líneas viajan de donde estaban
+  // a donde quedaron (del banco al programa, al subir o bajar): técnica FLIP.
   function cambio(foco) {
+    const antes = posicionesLineas();
     s.errores = {};
     s.aviso = null;
     pintar();
     enfocar(foco);
+    viajar(antes);
+  }
+
+  function sinMovimiento() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      document.documentElement.dataset.movimiento === "reducido";
+  }
+
+  function posicionesLineas() {
+    const mapa = {};
+    document.querySelectorAll("[data-linea]").forEach((n) => {
+      mapa[n.dataset.linea] = n.getBoundingClientRect();
+    });
+    return mapa;
+  }
+
+  function viajar(antes) {
+    if (sinMovimiento() || !document.body.animate) return;
+    document.querySelectorAll("[data-linea]").forEach((n) => {
+      const previa = antes[n.dataset.linea];
+      if (!previa) return;
+      const ahora = n.getBoundingClientRect();
+      const dx = previa.left - ahora.left;
+      const dy = previa.top - ahora.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      n.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }],
+        { duration: 280, easing: "cubic-bezier(.3,.7,.3,1)" });
+    });
   }
 
   function enfocar(indice) {
@@ -288,6 +318,7 @@
       codigo.appendChild(resaltar(CODIGO[id]));
       con(b, codigo);
       b.setAttribute("aria-label", `Pasar a tu programa: ${CODIGO[id]}`);
+      b.dataset.linea = id;
       b.disabled = !editable();
       arrastrable(b, { id, desde: "banco" });
       con(nodos.listaBanco, con(el("li"), b));
@@ -313,6 +344,7 @@
   function filaPrograma(linea, i) {
     const fila = el("li", "c4-fila");
     fila.dataset.indice = i;
+    fila.dataset.linea = linea.id;
     fila.tabIndex = 0;
     fila.style.setProperty("--s", linea.sangria);
     if (s.seleccion === i) fila.classList.add("elegida");

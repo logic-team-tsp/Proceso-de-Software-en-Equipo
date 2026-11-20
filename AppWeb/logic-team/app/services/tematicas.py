@@ -330,6 +330,9 @@ def saldo(jugador):
     }
 
 
+ESTRELLAS_POR_NIVEL = 3  # máximo por nivel en el Minijuego de código y en Ordenar algoritmos
+
+
 def _compras(jugador):
     return {c.tematica_id: c for c in CompraTematica.objects.filter(**jugador.filtro())}
 
@@ -352,7 +355,9 @@ def tienda(jugador):
     for tid in cat["orden"]:
         datos = cat["tematicas"][tid]
         estado, faltan = _estado(datos, compras, cuenta["saldo"])
-        items.append({**publica(datos), "estado": estado, "faltan": faltan})
+        # Cada nivel de los minijuegos da hasta 3 estrellas: «unos N niveles» orienta mejor
+        niveles = -(-faltan // ESTRELLAS_POR_NIVEL) if faltan else 0
+        items.append({**publica(datos), "estado": estado, "faltan": faltan, "niveles": niveles})
     de_pago = [i for i in items if i["id"] != CLASICA]
     return {
         **cuenta,
@@ -539,4 +544,7 @@ def tematizar_final(resumen, tematica_id):
     resumen["tematica"] = publica(tema)
     resumen["titulo"] = aplicar_texto(resumen["titulo"], tema)
     resumen["texto"] = aplicar_texto(resumen["texto"], tema)
+    for registro in resumen.get("mapa", []):
+        if getattr(registro, "repaso", ""):
+            registro.repaso = aplicar_texto(registro.repaso, tema)
     return resumen

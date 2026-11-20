@@ -22,6 +22,7 @@ from .services import (
     tecnicismos,
     tematicas,
 )
+from .services.continuar import partida_para_continuar
 
 
 def _cuerpo_json(request):
@@ -57,10 +58,86 @@ def menu_modos(request):
         tienda = tematicas.resumen_menu(jugador)
     except (tematicas.CatalogoError, DatabaseError):
         tienda = None  # FE6: el botón abre la tienda, que muestra «Reintentar»
+    try:  # Sistema visual: el panel «Tu bitácora» muestra el nivel del jugador
+        nivel = logros.nivel(jugador)
+    except (escenarios.CatalogoError, DatabaseError):
+        nivel = None
     return render(
         request,
         "modos.html",
-        {"resumen": resumen, "codigo": codigo, "ordenar": algoritmos, "tienda": tienda},
+        {
+            "resumen": resumen,
+            "codigo": codigo,
+            "ordenar": algoritmos,
+            "tienda": tienda,
+            "nivel": nivel,
+            # Ideas UX: «Continuar donde te quedaste» y aviso al salir de la partida
+            "continuar": partida_para_continuar(request),
+            "partida_guardada": request.GET.get("guardada") == "1",
+        },
+    )
+
+
+@require_GET
+def bitacora(request):
+    """Idea UX «Bitácora de tecnicismos»: repasar los tecnicismos descubiertos.
+
+    Muestra, por materia, los que el jugador ya descubrió (definición, ejemplo y el tema donde
+    aparecen) y cuántos le faltan, sin revelar cuáles. Lleva al cuestionario si ya se abrió.
+    """
+    from .models import TecnicismoRegistrado
+    from .views_personalizar import MODULOS, TEMAS
+
+    jugador = tecnicismos.jugador_de(request)
+    try:
+        _, catalogo = tecnicismos.cargar()
+        resumen = cuestionario.resumen_jugador(jugador)
+    except escenarios.CatalogoError as exc:
+        return render(request, "partida_error.html", {"errores": exc.errores}, status=500)
+
+    registros = TecnicismoRegistrado.objects.filter(**jugador.filtro()).order_by("registrado")
+    descubiertos = {r.tecnicismo_id: r for r in registros if r.tecnicismo_id in catalogo}
+    recientes = [tid for tid in reversed(list(descubiertos))][:3]
+
+    materias = []
+    for modulo in MODULOS:
+        del_modulo = [
+            (tid, t)
+            for tid, t in catalogo.items()
+            if t.get("subtema", "").split(":")[0] == modulo["id"]
+        ]
+        if not del_modulo:
+            continue
+        tarjetas = [
+            {
+                "id": tid,
+                "nombre": t["nombre"],
+                "descripcion": t["descripcion"],
+                "ejemplo": t.get("escenario_aplicacion", ""),
+                "tema": TEMAS.get(t.get("subtema", ""), ""),
+                "reciente": tid in recientes,
+            }
+            for tid, t in del_modulo
+            if tid in descubiertos
+        ]
+        tarjetas.sort(key=lambda x: x["nombre"].lower())
+        materias.append(
+            {
+                "titulo": modulo["titulo"],
+                "tarjetas": tarjetas,
+                "total": len(del_modulo),
+                "faltan": len(del_modulo) - len(tarjetas),
+            }
+        )
+    return render(
+        request,
+        "bitacora.html",
+        {
+            "materias": materias,
+            "total": len(descubiertos),
+            "catalogo": len(catalogo),
+            "resumen": resumen,
+        },
     )
 
 
