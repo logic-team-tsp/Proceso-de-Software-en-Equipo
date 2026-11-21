@@ -1,0 +1,21 @@
+# Despliegue de TechTale en Render (Blueprint). Render lee este archivo desde la raíz del repo.
+# Cada push a main vuelve a publicar la página.
+services:
+  - type: web
+    name: techtale
+    runtime: python
+    plan: free
+    rootDir: AppWeb/logic-team
+    branch: main
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: ./start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false  # la cadena de conexión de Neon; se captura en el panel de Render
