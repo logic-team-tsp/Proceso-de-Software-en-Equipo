@@ -203,22 +203,22 @@
   // ------------------------------------------------------------ hoja de personaje (celular)
   // Bottom sheet al estilo Life in Adventure: todos los atributos, qué significan, nivel y vidas.
   const hudStats = document.getElementById("hud-stats");
-  const hojaVelo = document.getElementById("pt-hoja-velo");
-  const hojaCuerpo = document.getElementById("pt-hoja-cuerpo");
+  const hojaVelo = document.getElementById("pt-ficha-velo");
+  const hojaCuerpo = document.getElementById("pt-ficha-cuerpo");
   let estadoHoja = null;
   let focoAntesHoja = null;
 
   function llenarHoja(e) {
     vaciar(hojaCuerpo);
-    const lista = el("ul", "pt-hoja-attrs");
+    const lista = el("ul", "pt-ficha-attrs");
     e.atributos.forEach((a) => {
       const pista = el("span", "pt-pista");
       const relleno = el("i");
       relleno.style.width = `${porcentaje(a.valor, a.maximo || 1)}%`;
       con(pista, relleno);
       con(lista, con(el("li"),
-        con(el("div", "pt-hoja-fila"),
-          el("span", "pt-hoja-nombre", `${a.icono} ${a.nombre}`),
+        con(el("div", "pt-ficha-fila"),
+          el("span", "pt-ficha-nombre", `${a.icono} ${a.nombre}`),
           el("b", null, `${a.valor}${a.maximo ? ` / ${a.maximo}` : ""}`)),
         pista,
         a.descripcion ? el("p", null, a.descripcion) : null));
@@ -226,15 +226,15 @@
     const bonus = e.atributos[0] && e.atributos[0].bonus_por_punto;
     con(hojaCuerpo,
       lista,
-      el("p", "pt-hoja-nota", bonus
+      el("p", "pt-ficha-nota", bonus
         ? `🎲 Cada punto suma +${bonus} % a la probabilidad de éxito de las opciones que usan ese atributo.`
         : "🎲 Cada punto sube la probabilidad de éxito de las opciones que usan ese atributo."));
     if (e.puntos_atributo > 0) {
-      con(hojaCuerpo, el("p", "pt-hoja-nota pt-hoja-oro",
+      con(hojaCuerpo, el("p", "pt-ficha-nota pt-ficha-oro",
         `✨ Tienes ${e.puntos_atributo} punto${e.puntos_atributo === 1 ? "" : "s"} por asignar al terminar el evento.`));
     }
     const maximo = e.nivel >= e.nivel_maximo;
-    con(hojaCuerpo, con(el("dl", "pt-hoja-resumen"),
+    con(hojaCuerpo, con(el("dl", "pt-ficha-resumen"),
       con(el("div"), el("dt", null, "❤ Vidas"), el("dd", null, `${e.hp} / ${e.hp_max}`)),
       con(el("div"), el("dt", null, "⭐ Nivel"), el("dd", null,
         maximo ? `${e.nivel} · máximo` : `${e.nivel} · ${e.xp_en_nivel} / ${e.xp_por_nivel} XP`)),
@@ -247,17 +247,19 @@
     llenarHoja(estadoHoja);
     focoAntesHoja = document.activeElement;
     hojaVelo.hidden = false;
+    sonar("abrir");
     hudStats.setAttribute("aria-expanded", "true");
-    document.documentElement.classList.add("pt-hoja-abierta");
+    document.documentElement.classList.add("pt-ficha-abierta");
     requestAnimationFrame(() => hojaVelo.classList.add("abierta"));
-    hojaVelo.querySelector(".pt-hoja").focus();
+    hojaVelo.querySelector(".pt-ficha").focus();
   }
 
   function cerrarHoja() {
     if (!hojaVelo || hojaVelo.hidden) return;
     hojaVelo.classList.remove("abierta");
+    sonar("cerrar");
     hudStats.setAttribute("aria-expanded", "false");
-    document.documentElement.classList.remove("pt-hoja-abierta");
+    document.documentElement.classList.remove("pt-ficha-abierta");
     setTimeout(() => { hojaVelo.hidden = true; }, sinMovimiento() ? 0 : 220);
     if (focoAntesHoja && focoAntesHoja.focus) focoAntesHoja.focus();
   }
@@ -269,7 +271,7 @@
     [hudVidas, hudXp].forEach((n) => n.addEventListener("click", () => {
       if (window.matchMedia("(max-width: 820px)").matches) abrirHoja();
     }));
-    document.getElementById("pt-hoja-cerrar").addEventListener("click", cerrarHoja);
+    document.getElementById("pt-ficha-cerrar").addEventListener("click", cerrarHoja);
     hojaVelo.addEventListener("click", (ev) => { if (ev.target === hojaVelo) cerrarHoja(); });
     document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") cerrarHoja(); });
   }
@@ -575,7 +577,9 @@
         desactivar(botones, true);
         boton.classList.add("selected");
         try {
-          pintar(await llamar("mejorar/", { atributo: a.id }));
+          const nuevo = await llamar("mejorar/", { atributo: a.id });
+          sonar("punto");
+          pintar(nuevo);
         } catch (err) {
           mostrarAviso(err.message);
           boton.classList.remove("selected");

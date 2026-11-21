@@ -198,12 +198,14 @@
 
   // ---------- Panel ----------
   function abrir() {
+    if (panel.hidden) if (window.LTSonidos) window.LTSonidos.tocar("abrir");
     panel.hidden = false;
     btn.setAttribute("aria-expanded", "true");
     panel.focus();
   }
 
   function cerrar(devolverFoco) {
+    if (!panel.hidden) if (window.LTSonidos) window.LTSonidos.tocar("cerrar");
     panel.hidden = true;
     btn.setAttribute("aria-expanded", "false");
     if (devolverFoco) btn.focus();

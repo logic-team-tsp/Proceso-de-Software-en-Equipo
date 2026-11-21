@@ -976,14 +976,14 @@ html[data-movimiento="reducido"] .pt-hud-xp .pt-pista i, html[data-movimiento="r
 }
 
 /* ===================================================================== hoja de personaje */
-.pt-hoja-velo {
+.pt-ficha-velo {
   position: fixed; inset: 0; z-index: 66;
   display: flex; align-items: flex-end; justify-content: center;
   background: rgba(0, 0, 0, 0); transition: background-color 0.2s ease;
 }
-.pt-hoja-velo[hidden] { display: none; }
-.pt-hoja-velo.abierta { background: rgba(0, 0, 0, 0.55); }
-.pt-hoja {
+.pt-ficha-velo[hidden] { display: none; }
+.pt-ficha-velo.abierta { background: rgba(0, 0, 0, 0.55); }
+.pt-ficha {
   width: min(100%, 520px); max-height: 85vh; overflow-y: auto; overscroll-behavior: contain;
   padding: 8px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   color: var(--t-tinta); background: #f4e8cc;
@@ -992,23 +992,23 @@ html[data-movimiento="reducido"] .pt-hud-xp .pt-pista i, html[data-movimiento="r
   transform: translateY(100%); transition: transform 0.22s cubic-bezier(.2, .8, .2, 1);
   outline: none;
 }
-.pt-hoja-velo.abierta .pt-hoja { transform: none; }
-.pt-hoja-asa { display: block; width: 40px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: rgba(93, 70, 48, 0.35); }
-.pt-hoja-cab { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.pt-hoja-cab h2 { margin: 0; font-family: var(--f-titulo); font-size: 1.125rem; letter-spacing: 0.08em; color: var(--t-carmesi); }
-.pt-hoja-cerrar { width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(93, 70, 48, 0.12); color: var(--t-tinta); font-size: 1rem; cursor: pointer; }
-.pt-hoja-attrs { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; }
-.pt-hoja-fila { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.pt-hoja-nombre { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 1.0625rem; }
-.pt-hoja-nombre .ic { color: var(--t-carmesi); }
-.pt-hoja-attrs .pt-pista { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: rgba(93, 70, 48, 0.18); overflow: hidden; }
-.pt-hoja-attrs .pt-pista i { display: block; height: 100%; background: var(--t-carmesi); }
-.pt-hoja-attrs p { margin: 6px 0 0; font-size: 0.9375rem; line-height: 1.4; color: var(--t-tinta-suave); }
-.pt-hoja-nota { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 0.9375rem; line-height: 1.4; background: rgba(93, 70, 48, 0.08); }
-.pt-hoja-oro { background: rgba(201, 161, 58, 0.22); }
-.pt-hoja-resumen { margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.pt-hoja-resumen > div { padding: 8px; border-radius: 8px; background: #f9f1dd; border: 1px solid #cdb685; text-align: center; }
-.pt-hoja-resumen dt { font-size: 0.8125rem; color: var(--t-tinta-suave); }
-.pt-hoja-resumen dd { margin: 2px 0 0; font-weight: 700; font-size: 0.9375rem; }
-html[data-movimiento="reducido"] .pt-hoja, html[data-movimiento="reducido"] .pt-hoja-velo { transition: none; }
-@media (prefers-reduced-motion: reduce) { .pt-hoja, .pt-hoja-velo { transition: none; } }
+.pt-ficha-velo.abierta .pt-ficha { transform: none; }
+.pt-ficha-asa { display: block; width: 40px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: rgba(93, 70, 48, 0.35); }
+.pt-ficha-cab { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pt-ficha-cab h2 { margin: 0; font-family: var(--f-titulo); font-size: 1.125rem; letter-spacing: 0.08em; color: var(--t-carmesi); }
+.pt-ficha-cerrar { width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(93, 70, 48, 0.12); color: var(--t-tinta); font-size: 1rem; cursor: pointer; }
+.pt-ficha-attrs { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; }
+.pt-ficha-fila { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.pt-ficha-nombre { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 1.0625rem; }
+.pt-ficha-nombre .ic { color: var(--t-carmesi); }
+.pt-ficha-attrs .pt-pista { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: rgba(93, 70, 48, 0.18); overflow: hidden; }
+.pt-ficha-attrs .pt-pista i { display: block; height: 100%; background: var(--t-carmesi); }
+.pt-ficha-attrs p { margin: 6px 0 0; font-size: 0.9375rem; line-height: 1.4; color: var(--t-tinta-suave); }
+.pt-ficha-nota { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 0.9375rem; line-height: 1.4; background: rgba(93, 70, 48, 0.08); }
+.pt-ficha-oro { background: rgba(201, 161, 58, 0.22); }
+.pt-ficha-resumen { margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.pt-ficha-resumen > div { padding: 8px; border-radius: 8px; background: #f9f1dd; border: 1px solid #cdb685; text-align: center; }
+.pt-ficha-resumen dt { font-size: 0.8125rem; color: var(--t-tinta-suave); }
+.pt-ficha-resumen dd { margin: 2px 0 0; font-weight: 700; font-size: 0.9375rem; }
+html[data-movimiento="reducido"] .pt-ficha, html[data-movimiento="reducido"] .pt-ficha-velo { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pt-ficha, .pt-ficha-velo { transition: none; } }

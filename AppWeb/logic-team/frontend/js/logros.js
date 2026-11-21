@@ -288,6 +288,7 @@
       enfoqueAntes = document.activeElement;
       abierto = true;
       velo.hidden = false;
+      if (window.LTSonidos) window.LTSonidos.tocar("abrir");
       boton.setAttribute("aria-expanded", "true");
       pausa.hidden = !hayPartida();
       document.documentElement.classList.add("lg-abierto");
@@ -300,6 +301,7 @@
     if (!abierto) return;
     abierto = false;
     velo.hidden = true;
+    if (window.LTSonidos) window.LTSonidos.tocar("cerrar");
     boton.setAttribute("aria-expanded", "false");
     document.documentElement.classList.remove("lg-abierto");
     // Paso 16: regresa a donde estaba (el foco vuelve al control que abrió el panel)
