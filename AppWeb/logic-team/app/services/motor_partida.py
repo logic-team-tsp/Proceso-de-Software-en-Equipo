@@ -466,6 +466,7 @@ def estado_publico(partida):
                 **a,
                 "valor": partida.atributos.get(a["id"], 0),
                 "maximo": config["niveles"]["maximo_atributo"],
+                "bonus_por_punto": config["probabilidad"]["bonus_por_punto_atributo"],
             }
             for a in config["atributos"]
         ],

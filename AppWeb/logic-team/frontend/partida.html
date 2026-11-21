@@ -26,7 +26,7 @@
   <header class="pt-hud" id="pt-hud">
     <div class="pt-hud-izq">
       {# Salir: la partida se guarda sola en el servidor; desde el menú se retoma con «Continuar» #}
-      <a class="tt-fantasma pt-salir" href="{% url 'menu_modos' %}?guardada=1"><span class="ic ic-flecha-izq" aria-hidden="true"></span>Salir</a>
+      <a class="tt-fantasma pt-salir" href="{% url 'menu_modos' %}?guardada=1"><span class="ic ic-flecha-izq" aria-hidden="true"></span><span class="pt-salir-txt">Salir</span></a>
     </div>
     <div class="pt-hud-centro">
       <span class="pt-hud-cap" id="hud-cap">Capítulo {{ estado.bloque.capitulo }} · {{ estado.bloque.nombre }}</span>
@@ -40,6 +40,8 @@
       <span class="pt-hud-sep" aria-hidden="true"></span>
       <div class="pt-hud-xp" id="hud-xp"></div>
       <div class="pt-hud-cv" id="hud-cv"></div>
+      {# Celular: atributos resumidos; al tocarlos se abre la hoja con el detalle (estilo Life in Adventure) #}
+      <button type="button" class="pt-hud-stats" id="hud-stats" aria-haspopup="dialog" aria-controls="pt-hoja-velo"></button>
     </div>
   </header>
 
@@ -63,6 +65,18 @@
 
   {{ estado|json_script:"pt-estado" }}
   </div>
+  </div>
+
+  {# Hoja de personaje (celular): atributos, qué significan, nivel y vidas #}
+  <div class="pt-hoja-velo" id="pt-hoja-velo" hidden>
+    <div class="pt-hoja" role="dialog" aria-modal="true" aria-labelledby="pt-hoja-titulo" tabindex="-1">
+      <span class="pt-hoja-asa" aria-hidden="true"></span>
+      <div class="pt-hoja-cab">
+        <h2 id="pt-hoja-titulo">Tu personaje</h2>
+        <button type="button" class="pt-hoja-cerrar" id="pt-hoja-cerrar" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="pt-hoja-cuerpo" id="pt-hoja-cuerpo"></div>
+    </div>
   </div>
 {% endblock %}
 
