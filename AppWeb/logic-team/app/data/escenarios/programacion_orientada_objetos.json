@@ -252,6 +252,40 @@
       ]
     },
     {
+      "id": "poo-clases-n8",
+      "subtema": "programacion-oo:0",
+      "titulo": "Las Calificaciones Compartidas",
+      "contexto": "En el sistema escolar, la clase Alumno declara calificaciones = [] fuera del constructor. Al agregar un 10 a un alumno, el 10 aparece en la lista de todos los objetos. Los papás empiezan a ver calificaciones que no son de sus hijos.",
+      "tecnicismos": [
+        "constructor",
+        "clase",
+        "objeto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Crear la lista dentro del constructor (__init__) para que cada objeto tenga la suya.",
+          "correcta": true,
+          "retroalimentacion": "Lo que se declara a nivel de clase lo comparten todos los objetos; los datos propios de cada uno se crean en el constructor.",
+          "desenlace": "Con la lista creada en el constructor, cada alumno tiene sus propias calificaciones. Corriges los datos mezclados con el respaldo. Los papás vuelven a ver solo las calificaciones de sus hijos."
+        },
+        {
+          "id": "b",
+          "texto": "Borrar la lista cada vez que se consulta un alumno.",
+          "correcta": false,
+          "retroalimentacion": "Borrar los datos esconde el problema y además destruye información; la lista sigue siendo compartida.",
+          "desenlace": "Las calificaciones desaparecen cada vez que alguien abre la boleta. Los maestros tienen que capturarlas de nuevo. Nadie confía en el sistema."
+        },
+        {
+          "id": "c",
+          "texto": "Crear una clase distinta para cada alumno.",
+          "correcta": false,
+          "retroalimentacion": "Una clase por alumno multiplica el código; el problema es dónde se crea la lista, no cuántas clases hay.",
+          "desenlace": "Para el cierre de semestre hay 600 clases casi iguales. Cualquier cambio requiere editar todas. El proyecto se vuelve imposible de mantener."
+        }
+      ]
+    },
+    {
       "id": "poo-exc-n",
       "subtema": "programacion-oo:1",
       "titulo": "El Reporte que Desaparece",
@@ -482,6 +516,39 @@
           "correcta": false,
           "retroalimentacion": "Reiniciar puede ocultar la falla un rato, pero no explica la causa ni la corrige.",
           "desenlace": "Los reinicios cortan otros procesos y el error regresa al día siguiente. Nadie descubre que la contraseña de la base de datos había caducado. El problema dura semanas."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n8",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Saldo Insuficiente",
+      "contexto": "En la app del monedero escolar, cuando el saldo no alcanza el método cobrar() hace raise Exception('error'). La pantalla de la caja no puede distinguir este caso de cualquier otra falla y muestra «Error del sistema» a los alumnos que solo no tienen saldo.",
+      "tecnicismos": [
+        "lanzar-excepcion",
+        "excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Definir una excepción propia, SaldoInsuficiente, y capturarla en la caja para mostrar un mensaje claro.",
+          "correcta": true,
+          "retroalimentacion": "Una excepción específica dice qué pasó y permite manejar cada caso a su manera, en lugar de tratar todo como un error genérico.",
+          "desenlace": "La caja ahora muestra «Saldo insuficiente, te faltan 12 pesos» y ofrece recargar. Las fallas reales siguen apareciendo como errores del sistema. Las filas avanzan sin confusiones."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar el texto del mensaje de error para saber qué pasó.",
+          "correcta": false,
+          "retroalimentacion": "Depender del texto del mensaje es frágil: cualquier cambio de redacción rompe la lógica.",
+          "desenlace": "Alguien cambia el mensaje a «Error al cobrar» y la caja vuelve a mostrar errores del sistema. Nadie sabe por qué se rompió. Soporte recibe quejas por días."
+        },
+        {
+          "id": "c",
+          "texto": "Regresar False en lugar de lanzar una excepción.",
+          "correcta": false,
+          "retroalimentacion": "Un valor de retorno especial se puede ignorar sin querer; quien llama podría seguir como si el cobro hubiera pasado.",
+          "desenlace": "En una parte del código nadie revisa el False y se entrega comida sin cobrar. La cooperativa pierde dinero toda la semana. Hay que revisar cada llamada a cobrar()."
         }
       ]
     }

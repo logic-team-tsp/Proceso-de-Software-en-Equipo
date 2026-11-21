@@ -14,7 +14,7 @@ from django.shortcuts import redirect, render
 from .services import escenarios, motor_partida, tecnicismos, tematicas
 
 # Atributos de 1 a 10 (los mismos del juego, ver app/data/config_juego.json).
-# Equilibrio: todos los perfiles reparten 9 puntos y empiezan con 3 vidas y 0 XP;
+# Equilibrio: todos los perfiles reparten 9 puntos y empiezan con 5 vidas y 0 XP;
 # lo que cambia es en qué destaca cada uno y qué le cuesta.
 PERFILES = [
     {
@@ -24,7 +24,7 @@ PERFILES = [
         "descripcion": "17 años, conocimiento nulo en programación. Empieza desde cero, con "
         "mucha curiosidad y facilidad para hacer equipo, pero poca base técnica.",
         "teoria": 1, "equipo": 4, "inteligencia": 4,
-        "vidas": 3, "xp": 0,
+        "vidas": 5, "xp": 0,
     },
     {
         "id": "carrera-afin",
@@ -33,7 +33,7 @@ PERFILES = [
         "descripcion": "Viene de una ingeniería relacionada (mecatrónica, industrial). Tiene "
         "bases de lógica pero no de programación, y le cuesta delegar.",
         "teoria": 3, "equipo": 2, "inteligencia": 4,
-        "vidas": 3, "xp": 0,
+        "vidas": 5, "xp": 0,
     },
     {
         "id": "segunda-carrera",
@@ -42,7 +42,7 @@ PERFILES = [
         "descripcion": "Cambia de carrera desde un área no relacionada. Trae disciplina y "
         "don de gente, pero arranca casi de cero en lo técnico.",
         "teoria": 2, "equipo": 5, "inteligencia": 2,
-        "vidas": 3, "xp": 0,
+        "vidas": 5, "xp": 0,
     },
     {
         "id": "lobo-solitario",
@@ -51,7 +51,7 @@ PERFILES = [
         "descripcion": "Aprendió por su cuenta con documentación y foros. Domina la teoría y "
         "resuelve problemas rápido, pero trabajar en equipo no es lo suyo.",
         "teoria": 4, "equipo": 1, "inteligencia": 4,
-        "vidas": 3, "xp": 0,
+        "vidas": 5, "xp": 0,
     },
     {
         "id": "abierto",
@@ -60,7 +60,7 @@ PERFILES = [
         "descripcion": "Sin historia predefinida: atributos equilibrados para quien prefiere "
         "descubrir su camino sobre la marcha.",
         "teoria": 3, "equipo": 3, "inteligencia": 3,
-        "vidas": 3, "xp": 0,
+        "vidas": 5, "xp": 0,
     },
 ]
 

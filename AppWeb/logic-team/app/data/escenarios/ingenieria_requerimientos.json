@@ -258,6 +258,39 @@
       ]
     },
     {
+      "id": "ir-fund-n8",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "El Cuestionario por Correo",
+      "contexto": "Para la app del transporte escolar, tu equipo solo mandó un cuestionario por correo a los papás. Contestaron pocos y nadie habló con los choferes ni con la escuela. Hay que hacer una elicitación más completa antes de diseñar.",
+      "tecnicismos": [
+        "elicitacion",
+        "stakeholder"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Identificar a todos los interesados y combinar técnicas: entrevistas con choferes, observar una ruta y un taller con papás.",
+          "correcta": true,
+          "retroalimentacion": "Una buena elicitación usa varias técnicas y llega a todos los interesados, porque cada uno conoce una parte del problema.",
+          "desenlace": "En la ruta observada descubres que los choferes no tienen señal en una zona, algo que ningún cuestionario hubiera revelado. El diseño incluye un modo sin conexión. La app funciona desde el primer día."
+        },
+        {
+          "id": "b",
+          "texto": "Esperar más respuestas del cuestionario.",
+          "correcta": false,
+          "retroalimentacion": "Un cuestionario con pocas respuestas y un solo tipo de interesado deja huecos que esperar no resuelve.",
+          "desenlace": "Pasan dos semanas y solo llegan cinco respuestas más. El diseño se hace con suposiciones. Los choferes no pueden usar la app en su ruta."
+        },
+        {
+          "id": "c",
+          "texto": "Diseñar con lo que imagina el equipo.",
+          "correcta": false,
+          "retroalimentacion": "Suponer las necesidades sin consultarlas es el error más común en la ingeniería de requerimientos.",
+          "desenlace": "La app tiene funciones que nadie pidió y le falta lo esencial. Los papás no la descargan. La escuela vuelve a los grupos de mensajes."
+        }
+      ]
+    },
+    {
       "id": "ir-ciclo-n",
       "subtema": "ingenieria-requerimientos:1",
       "titulo": "El Cambio de Última Hora",
@@ -487,6 +520,40 @@
           "correcta": false,
           "retroalimentacion": "Absorber cambios sin registro repite el problema en la siguiente entrega.",
           "desenlace": "En la siguiente entrega la clienta vuelve a decir que pidió otra cosa. El equipo no tiene cómo demostrar lo contrario. El proyecto se alarga sin fin."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n8",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "El Sprint de Cuarenta Historias",
+      "contexto": "En la planeación, el cliente quiere meter 40 historias del backlog en un sprint de dos semanas; el equipo suele terminar 12. Todos dicen que «sí se puede» para no quedar mal.",
+      "tecnicismos": [
+        "sprint",
+        "backlog",
+        "priorizacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Aceptar las 40 historias y trabajar horas extra.",
+          "correcta": false,
+          "retroalimentacion": "Comprometerse con el triple de la capacidad garantiza un sprint fallido y un equipo agotado.",
+          "desenlace": "Al cierre del sprint hay 9 historias terminadas y 31 a medias. El cliente se siente engañado. El equipo queda agotado para el siguiente sprint."
+        },
+        {
+          "id": "b",
+          "texto": "Priorizar el backlog con el cliente y tomar solo las 12 historias más valiosas que caben.",
+          "correcta": true,
+          "retroalimentacion": "La capacidad del equipo define cuánto entra al sprint; priorizar asegura que lo que se termina sea lo más valioso.",
+          "desenlace": "El sprint termina con las 12 historias más importantes terminadas y probadas. El cliente ve valor real en la demo. La confianza en las estimaciones crece."
+        },
+        {
+          "id": "c",
+          "texto": "Tomar 40 historias pero hacerlas a medias.",
+          "correcta": false,
+          "retroalimentacion": "Una historia a medias no entrega valor; es mejor menos historias terminadas.",
+          "desenlace": "Nada se puede mostrar en la demo porque todo está incompleto. El cliente no puede usar ninguna función. El proyecto se retrasa un mes."
         }
       ]
     },
@@ -721,6 +788,39 @@
       ]
     },
     {
+      "id": "ir-esp-n8",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Como Base de Datos Quiero un Índice",
+      "contexto": "En el tablero aparece la historia de usuario «Como base de datos quiero un índice en la tabla de pedidos». El cliente no entiende para qué sirve ni puede priorizarla.",
+      "tecnicismos": [
+        "historia-usuario",
+        "indice"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Reescribirla desde quien usa el sistema: «Como cajera quiero encontrar un pedido en menos de un segundo para atender rápido».",
+          "correcta": true,
+          "retroalimentacion": "Una historia de usuario describe una necesidad de una persona; los detalles técnicos, como el índice, son la forma de resolverla.",
+          "desenlace": "Con la historia reescrita, el cliente entiende el valor y la sube de prioridad. El índice se crea como parte de la solución. La cajera nota la mejora desde el primer día."
+        },
+        {
+          "id": "b",
+          "texto": "Dejarla así, porque los programadores la entienden.",
+          "correcta": false,
+          "retroalimentacion": "Si el cliente no entiende la historia, no puede priorizarla ni aceptarla.",
+          "desenlace": "El cliente la deja al final del backlog porque no ve para qué sirve. Las búsquedas siguen lentas meses. La cajera sigue haciendo esperar a la gente."
+        },
+        {
+          "id": "c",
+          "texto": "Quitarla del tablero porque no es de usuario.",
+          "correcta": false,
+          "retroalimentacion": "Detrás de una historia mal escrita hay una necesidad real; hay que reescribirla, no eliminarla.",
+          "desenlace": "Nadie vuelve a hablar del problema y las búsquedas siguen lentas. Tiempo después alguien lo descubre como «nuevo». Se pierde el trabajo de análisis."
+        }
+      ]
+    },
+    {
       "id": "ir-val-n",
       "subtema": "ingenieria-requerimientos:3",
       "titulo": "La Pregunta de la Clienta",
@@ -949,6 +1049,39 @@
           "correcta": false,
           "retroalimentacion": "Ocultar el hueco rompe la trazabilidad y engaña a quien revisa la calidad.",
           "desenlace": "En la auditoría se descubre que el requerimiento desapareció de la matriz sin justificación. El equipo pierde credibilidad. Hay que rehacer la matriz completa."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n8",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "Validar con Quien Lo Usa",
+      "contexto": "El sistema de turnos de un hospital está listo. El director quiere validarlo él solo en su oficina, aunque los interesados que lo usarán todos los días son las enfermeras de urgencias.",
+      "tecnicismos": [
+        "validacion",
+        "stakeholder"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Validar con las enfermeras de urgencias en su turno real, además del director.",
+          "correcta": true,
+          "retroalimentacion": "La validación confirma que el sistema resuelve la necesidad de quienes lo usan; hay que hacerla con esos interesados y en su contexto.",
+          "desenlace": "En la validación con las enfermeras aparece que necesitan cambiar turnos desde el celular. Se agrega antes del lanzamiento. El sistema se adopta en todo el hospital."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que el director valide solo, porque él aprueba el proyecto.",
+          "correcta": false,
+          "retroalimentacion": "Quien aprueba no siempre es quien usa; validar solo con él deja fuera las necesidades reales del día a día.",
+          "desenlace": "El director aprueba, pero las enfermeras no pueden usar el sistema en plena guardia. Vuelven a las hojas de papel. El hospital pierde la inversión."
+        },
+        {
+          "id": "c",
+          "texto": "Saltarse la validación porque todas las pruebas pasaron.",
+          "correcta": false,
+          "retroalimentacion": "Pasar las pruebas es verificación; no confirma que el sistema sirva para lo que se necesita.",
+          "desenlace": "El sistema funciona según la especificación, pero nadie lo usa. Al mes se piden cambios grandes. El equipo tiene que rehacer partes completas."
         }
       ]
     }

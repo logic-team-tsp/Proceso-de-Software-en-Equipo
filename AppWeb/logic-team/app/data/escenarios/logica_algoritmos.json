@@ -248,6 +248,39 @@
       ]
     },
     {
+      "id": "la-repr-n8",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Orden de los Pasos del Cajero",
+      "contexto": "Tu compañero escribió el pseudocódigo de un cajero de la caja de ahorro: «mostrar saldo, pedir tarjeta, validar NIP, entregar dinero». En la revisión alguien nota que el orden no tiene sentido. Debes corregir el algoritmo antes de programar.",
+      "tecnicismos": [
+        "pseudocodigo",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Reordenar el pseudocódigo: pedir tarjeta, validar NIP, mostrar saldo y entregar dinero solo si alcanza.",
+          "correcta": true,
+          "retroalimentacion": "En un algoritmo el orden importa: cada paso debe usar solo datos que ya se tienen y validar antes de actuar.",
+          "desenlace": "Con los pasos en orden, el cajero solo muestra información a quien ya se identificó. La revisión de seguridad aprueba el diseño. El equipo programa a partir de un pseudocódigo correcto."
+        },
+        {
+          "id": "b",
+          "texto": "Dejarlo así, porque en el código se puede acomodar.",
+          "correcta": false,
+          "retroalimentacion": "Si el algoritmo está mal ordenado, el código lo copiará igual; el pseudocódigo existe para encontrar estos errores antes.",
+          "desenlace": "El programa se escribe tal cual y en las pruebas muestra el saldo antes de pedir el NIP. Hay que rehacerlo una semana antes de la entrega. El equipo pierde tiempo valioso."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el paso de validar NIP para simplificar.",
+          "correcta": false,
+          "retroalimentacion": "Simplificar quitando un paso esencial cambia el problema; un algoritmo debe resolver lo que se pidió.",
+          "desenlace": "El cajero entrega dinero sin validar a nadie. La caja de ahorro cancela el proyecto en la primera revisión. El equipo pierde la confianza del cliente."
+        }
+      ]
+    },
+    {
       "id": "la-busq-n",
       "subtema": "logica-algoritmos:1",
       "titulo": "El Millón de Usuarios",
@@ -477,6 +510,40 @@
           "correcta": false,
           "retroalimentacion": "Ese es el promedio de la búsqueda lineal; la binaria no revisa los datos uno por uno.",
           "desenlace": "El gerente cree que la mejora será de apenas la mitad y no autoriza el cambio. El sistema sigue igual de lento en temporada alta. Los clientes se quejan de esperar."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n8",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "El Expediente que Tarda",
+      "contexto": "En la clínica, la recepción busca expedientes por CURP entre 300,000 registros sin ningún orden. Cada búsqueda revisa los registros uno por uno y se hacen miles al día. Las filas en recepción ya salen a la calle.",
+      "tecnicismos": [
+        "busqueda-lineal",
+        "indice",
+        "base-datos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Seguir con búsqueda lineal, porque siempre encuentra el expediente.",
+          "correcta": false,
+          "retroalimentacion": "La búsqueda lineal es correcta, pero con miles de búsquedas diarias sobre 300,000 registros el tiempo total se vuelve enorme.",
+          "desenlace": "Las búsquedas siguen tardando y la recepción sigue saturada. Los pacientes pierden sus citas por la espera. La dirección de la clínica pide soluciones urgentes."
+        },
+        {
+          "id": "b",
+          "texto": "Crear un índice por CURP en la base de datos.",
+          "correcta": true,
+          "retroalimentacion": "Cuando se busca muchas veces por la misma columna, un índice evita revisar los registros uno por uno.",
+          "desenlace": "Con el índice, cada búsqueda tarda milisegundos y la fila desaparece. La recepción atiende el doble de pacientes por hora. Otras clínicas de la red piden el mismo cambio."
+        },
+        {
+          "id": "c",
+          "texto": "Imprimir los expedientes en orden alfabético para buscarlos en papel.",
+          "correcta": false,
+          "retroalimentacion": "Volver al papel no aprovecha la base de datos y se desactualiza al instante.",
+          "desenlace": "El listado impreso queda viejo en una semana y nadie encuentra los expedientes nuevos. La recepción mezcla papel y sistema. El caos aumenta."
         }
       ]
     }

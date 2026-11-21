@@ -67,7 +67,8 @@ def _jugar_hasta_el_final(client, partida, correcta=True):
     with tiradas(exito=correcta):
         while estado["fase"] != "fin":
             if estado["fase"] == "mejora":
-                estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": "teoria"})
+                bajo = min(estado["atributos"], key=lambda a: a["valor"])["id"]
+                estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": bajo})
                 estado = estado.json()
                 continue
             nuevos += (_decidir(client, partida, correcta).get("cu08") or {}).get("nuevos", [])

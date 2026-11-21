@@ -1,5 +1,5 @@
 {
-  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (50/10 = 5). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje y atributos, 1 a 10). Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_evento sea >= eventos jugados. Largo: la partida dura entre min_eventos_por_partida y max_eventos_por_partida eventos sin repetir; si los subtemas elegidos no alcanzan, se completa con subtemas de las mismas materias y luego del resto. bloques: cada uno llega hasta su hasta_porcentaje de la partida y probabilidad_evento es la parte exacta de sus eventos que son de probabilidad.",
+  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (30/10 = 3). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje hasta 25, cada atributo hasta 16). Balance: se empieza con 9 puntos y se ganan como mucho 24, así que solo alcanza para llevar 2 atributos al máximo; con +4 % por punto, una opción de base 30-35 % llega a 94-95 % con el atributo al máximo. Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_evento sea >= eventos jugados. Largo: la partida dura entre min_eventos_por_partida y max_eventos_por_partida eventos sin repetir; si los subtemas elegidos no alcanzan, se completa con subtemas de las mismas materias y luego del resto. bloques: cada uno llega hasta su hasta_porcentaje de la partida y probabilidad_evento es la parte exacta de sus eventos que son de probabilidad.",
   "min_eventos_por_partida": 80,
   "max_eventos_por_partida": 100,
   "bloques": [
@@ -7,25 +7,25 @@
       "capitulo": "II",
       "nombre": "Los Cimientos",
       "hasta_porcentaje": 25,
-      "probabilidad_evento": 0.1
+      "probabilidad_evento": 0.0
     },
     {
       "capitulo": "III",
       "nombre": "¿Esto es Difícil?",
       "hasta_porcentaje": 50,
-      "probabilidad_evento": 0.25
+      "probabilidad_evento": 0.15
     },
     {
       "capitulo": "IV",
       "nombre": "El Mundo Real",
       "hasta_porcentaje": 75,
-      "probabilidad_evento": 0.35
+      "probabilidad_evento": 0.25
     },
     {
       "capitulo": "V",
       "nombre": "El Gran Lanzamiento",
       "hasta_porcentaje": 100,
-      "probabilidad_evento": 0.5
+      "probabilidad_evento": 0.4
     }
   ],
   "hp": {
@@ -33,11 +33,11 @@
   },
   "xp": {
     "por_acierto": 10,
-    "por_nivel": 50
+    "por_nivel": 30
   },
   "niveles": {
-    "maximo_personaje": 10,
-    "maximo_atributo": 10
+    "maximo_personaje": 25,
+    "maximo_atributo": 16
   },
   "puntos": {
     "por_acierto": 100,
@@ -46,7 +46,7 @@
   "probabilidad": {
     "minima": 5,
     "maxima": 95,
-    "bonus_por_punto_atributo": 6
+    "bonus_por_punto_atributo": 4
   },
   "atributos": [
     {

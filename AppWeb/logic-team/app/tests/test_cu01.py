@@ -64,7 +64,8 @@ def _jugar_hasta_el_final(client, partida):
     with tiradas(exito=True):
         while estado["fase"] != "fin":
             if estado["fase"] == "mejora":
-                estado = _post(client, _url(partida, "mejorar/"), {"atributo": "teoria"}).json()
+                bajo = min(estado["atributos"], key=lambda a: a["valor"])["id"]
+                estado = _post(client, _url(partida, "mejorar/"), {"atributo": bajo}).json()
                 continue
             _post(client, _url(partida, "decision/"), {"opcion_id": _opcion(partida)})
             estado = _post(client, _url(partida, "continuar/")).json()
@@ -76,13 +77,13 @@ def test_los_archivos_de_escenarios_son_validos():
     assert escenarios.validar() == []
 
 
-def test_escenarios_cubren_cada_subtema_con_7_normales_y_5_de_probabilidad():
+def test_escenarios_cubren_cada_subtema_con_8_normales_y_5_de_probabilidad():
     from app.views_personalizar import TEMAS
 
     _, catalogo = escenarios.cargar()
     for subtema in TEMAS:
         tipos = [e["tipo"] for e in catalogo["eventos"].values() if e["subtema"] == subtema]
-        assert tipos.count(escenarios.NORMAL) == 7, subtema
+        assert tipos.count(escenarios.NORMAL) == 8, subtema
         assert tipos.count(escenarios.PROBABILIDAD) == 5, subtema
 
 
@@ -127,7 +128,7 @@ def test_partida_toma_vidas_xp_y_atributos_del_perfil():
 def test_perfiles_equilibrados_y_lobo_solitario():
     for perfil in PERFILES:
         assert perfil["teoria"] + perfil["equipo"] + perfil["inteligencia"] == 9, perfil["id"]
-        assert perfil["vidas"] == 3 and perfil["xp"] == 0
+        assert perfil["vidas"] == 5 and perfil["xp"] == 0
     lobo = next(p for p in PERFILES if p["id"] == "lobo-solitario")
     assert lobo["equipo"] == 1 and lobo["teoria"] > 3 and lobo["inteligencia"] > 3
 
@@ -135,7 +136,7 @@ def test_perfiles_equilibrados_y_lobo_solitario():
 @pytest.mark.django_db
 def test_la_partida_dura_de_80_a_100_eventos_sin_repetir_y_con_los_temas_elegidos_completos():
     config, catalogo = escenarios.cargar()
-    partida = _partida()  # 3 subtemas x 12 eventos = 36: se completa con otros subtemas
+    partida = _partida()  # 3 subtemas x 13 eventos = 39: se completa con otros subtemas
     total = len(partida.secuencia)
     assert config["min_eventos_por_partida"] == 80 and config["max_eventos_por_partida"] == 100
     assert total == 80 and len(set(partida.secuencia)) == total
@@ -176,11 +177,11 @@ def test_cada_bloque_tiene_exactamente_su_parte_de_eventos_de_probabilidad(temas
     assert reales == [esperados[i] for i in range(len(config["bloques"]))]
 
 
-def test_los_4_bloques_suben_de_dificultad_10_25_35_50():
+def test_los_4_bloques_suben_de_dificultad_0_15_25_40():
     config, _ = escenarios.cargar()
-    assert [b["probabilidad_evento"] for b in config["bloques"]] == [0.1, 0.25, 0.35, 0.5]
+    assert [b["probabilidad_evento"] for b in config["bloques"]] == [0.0, 0.15, 0.25, 0.4]
     assert [b["hasta_porcentaje"] for b in config["bloques"]] == [25, 50, 75, 100]
-    assert motor_partida.de_probabilidad_por_bloque(80, config) == {0: 2, 1: 5, 2: 7, 3: 10}
+    assert motor_partida.de_probabilidad_por_bloque(80, config) == {0: 0, 1: 3, 2: 5, 3: 8}
 
 
 @pytest.mark.django_db
@@ -205,7 +206,8 @@ def test_probabilidad_depende_del_atributo_y_se_limita():
     config, _ = escenarios.cargar()
     opcion = {"atributo": "teoria", "probabilidad_base": 30}
     assert motor_partida.probabilidad_opcion(opcion, {"teoria": 0}, config) == 30
-    assert motor_partida.probabilidad_opcion(opcion, {"teoria": 3}, config) == 48
+    assert motor_partida.probabilidad_opcion(opcion, {"teoria": 3}, config) == 42
+    assert motor_partida.probabilidad_opcion(opcion, {"teoria": 16}, config) == 94
     assert motor_partida.probabilidad_opcion(opcion, {"teoria": 50}, config) == 95
     assert motor_partida.probabilidad_opcion({**opcion, "probabilidad_base": 0}, {}, config) == 5
 
@@ -234,7 +236,7 @@ def test_se_pueden_mezclar_materias_y_elegir_mas_de_3_temas(client):
     client.get(respuesta["Location"])
     partida = Partida.objects.get()
     assert partida.temas == temas
-    assert len(partida.secuencia) == 80  # 6 subtemas x 12 = 72, se completa hasta 80
+    assert len(partida.secuencia) == 80  # 6 subtemas x 13 = 78, se completa hasta 80
     _, catalogo = escenarios.cargar()
     assert len({catalogo["eventos"][e]["tema_id"] for e in partida.secuencia}) == 4
 
@@ -243,7 +245,7 @@ def test_se_pueden_mezclar_materias_y_elegir_mas_de_3_temas(client):
 def test_perfiles_de_cu02_muestran_los_atributos_del_juego(client):
     html = client.get("/personalizar/").content.decode()
     assert "📚 Teoría 1" in html and "🤝 Equipo 4" in html and "💡 Inteligencia 4" in html
-    assert "Lobo solitario" in html and 'data-max="10"' in html
+    assert "Lobo solitario" in html and 'data-max="16"' in html
     assert "teoría baja" not in html
 
 
@@ -261,7 +263,7 @@ def test_acertar_sube_xp_puntos_y_progreso(client):
     estado = _post(client, _url(partida, "decision/"), {"opcion_id": _opcion(partida)}).json()
     assert estado["fase"] == "resultado" and estado["resultado"]["acierto"] is True
     assert estado["resultado"]["retroalimentacion"] and estado["resultado"]["desenlace"]
-    assert estado["xp"] == 10 and estado["puntuacion"] == 100 and estado["hp"] == 3
+    assert estado["xp"] == 10 and estado["puntuacion"] == 100 and estado["hp"] == 5
     assert estado["progreso"] == round(100 / len(partida.secuencia))
     assert partida.registros.count() == 1
 
@@ -273,7 +275,7 @@ def test_fallar_resta_vida_y_no_da_xp(client):
         client, _url(partida, "decision/"), {"opcion_id": _opcion(partida, correcta=False)}
     ).json()
     assert estado["resultado"]["acierto"] is False
-    assert estado["hp"] == 2 and estado["xp"] == 0
+    assert estado["hp"] == 4 and estado["xp"] == 0
 
 
 @pytest.mark.django_db
@@ -294,11 +296,11 @@ def test_opcion_inexistente_se_rechaza(client):
 
 
 @pytest.mark.django_db
-def test_cada_5_aciertos_se_sube_de_nivel_y_se_gana_un_punto(client):
+def test_cada_3_aciertos_se_sube_de_nivel_y_se_gana_un_punto(client):
     partida = _partida()
     estado = client.get(_url(partida, "estado/")).json()
-    assert estado["nivel"] == 1 and estado["xp_por_nivel"] == 50
-    partida.xp = 40  # ya lleva 4 aciertos
+    assert estado["nivel"] == 1 and estado["xp_por_nivel"] == 30
+    partida.xp = 20  # ya lleva 2 aciertos
     partida.save()
     _post(client, _url(partida, "decision/"), {"opcion_id": _opcion(partida)})
     estado = _post(client, _url(partida, "continuar/")).json()
@@ -311,12 +313,13 @@ def test_cada_5_aciertos_se_sube_de_nivel_y_se_gana_un_punto(client):
 
 
 @pytest.mark.django_db
-def test_nivel_y_atributos_tienen_maximo_10():
+def test_nivel_maximo_25_y_atributos_hasta_16():
     config, _ = escenarios.cargar()
-    assert motor_partida.nivel_de(10_000, config) == 10
-    assert motor_partida.valor_atributo(99, config) == 10
+    assert motor_partida.nivel_de(10_000, config) == 25
+    assert motor_partida.nivel_de(720, config) == 25  # 72 aciertos
+    assert motor_partida.valor_atributo(99, config) == 16
     partida = _partida()
-    partida.atributos["teoria"] = 10
+    partida.atributos["teoria"] = 16
     partida.puntos_atributo = 1
     partida.save()
     with pytest.raises(motor_partida.ReglaError):

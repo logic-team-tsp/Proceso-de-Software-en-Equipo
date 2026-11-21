@@ -256,6 +256,40 @@
       ]
     },
     {
+      "id": "ip-tipos-n8",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Sensor de Temperatura",
+      "contexto": "La enfermería de la escuela recibe la temperatura de un termómetro digital como texto, por ejemplo «37.8». El código la convierte con int() y la compara contra 37.5 para avisar de fiebre. Hoy no sonó ninguna alerta aunque dos alumnos tenían fiebre.",
+      "tecnicismos": [
+        "punto-flotante",
+        "entero",
+        "conversion-tipos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Convertir explícitamente el texto a float y comparar con 37.5.",
+          "correcta": true,
+          "retroalimentacion": "Una temperatura tiene decimales que importan: un float conserva el 37.8 y la comparación funciona.",
+          "desenlace": "Con la conversión a float, el sistema detecta cada temperatura mayor a 37.5 y avisa a la enfermera. Ese mismo día se envía a casa a un alumno con fiebre. La dirección pide usar el sistema en todos los turnos."
+        },
+        {
+          "id": "b",
+          "texto": "Mantener int() y bajar el umbral a 37 grados.",
+          "correcta": false,
+          "retroalimentacion": "int() corta los decimales: 37.8 se vuelve 37 y 37.4 también; cambiar el umbral solo genera falsas alarmas.",
+          "desenlace": "Ahora todos los alumnos con 37.0 aparecen con fiebre y la enfermería se satura. Los papás reciben llamadas innecesarias. La enfermera deja de confiar en las alertas."
+        },
+        {
+          "id": "c",
+          "texto": "Comparar el texto «37.8» contra el texto «37.5».",
+          "correcta": false,
+          "retroalimentacion": "Comparar cadenas funciona letra por letra; con valores como «100.1» o «9.9» el resultado deja de tener sentido.",
+          "desenlace": "Funciona un tiempo, hasta que un termómetro envía «38» sin decimales y el sistema decide que es menor que «37.5». Un caso de fiebre alta pasa sin aviso. La escuela suspende el sistema."
+        }
+      ]
+    },
+    {
       "id": "ip-control-n",
       "subtema": "intro-programacion:1",
       "titulo": "Las 50 Notificaciones",
@@ -483,6 +517,39 @@
           "correcta": false,
           "retroalimentacion": "Elegir al azar ignora la regla pedida y las condiciones del negocio.",
           "desenlace": "Las familias quedan todavía más separadas y nadie entiende cómo se asignan los lugares. Las reseñas de la app caen en picada. El dueño pide volver al sistema anterior."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n8",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Contador que No Avanza",
+      "contexto": "La app de una biblioteca escolar debe mandar tres recordatorios de devolución. El código usa un ciclo while intentos < 3, pero dentro del ciclo nadie aumenta la variable intentos. Es un ciclo infinito: la primera alumna con un libro atrasado ya recibió 400 correos.",
+      "tecnicismos": [
+        "ciclo-while",
+        "ciclo-infinito"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Aumentar intentos en uno dentro del ciclo while para que llegue a 3 y termine.",
+          "correcta": true,
+          "retroalimentacion": "Un ciclo while termina cuando su condición se vuelve falsa; si la variable de la condición nunca cambia, es un ciclo infinito.",
+          "desenlace": "Con el contador avanzando, cada alumno recibe exactamente tres recordatorios. Pides una disculpa a la alumna afectada. La biblioteca vuelve a usar el sistema esa misma semana."
+        },
+        {
+          "id": "b",
+          "texto": "Apagar el servidor de correo cada vez que pase.",
+          "correcta": false,
+          "retroalimentacion": "Detener el servicio corta el síntoma, pero el ciclo infinito sigue en el código.",
+          "desenlace": "Cada vez que alguien se atrasa vuelve a pasar y alguien tiene que apagar el servidor. Nadie recibe sus recordatorios normales. La biblioteca pierde libros que no se devuelven."
+        },
+        {
+          "id": "c",
+          "texto": "Cambiar la condición a intentos < 3000 para que tarde más en fallar.",
+          "correcta": false,
+          "retroalimentacion": "Subir el límite no corrige que el contador no avanza: el ciclo sigue sin terminar.",
+          "desenlace": "El ciclo sigue siendo infinito y ahora además consume más memoria. El proveedor de correo bloquea la cuenta por spam. La escuela queda sin correos institucionales un día."
         }
       ]
     }
