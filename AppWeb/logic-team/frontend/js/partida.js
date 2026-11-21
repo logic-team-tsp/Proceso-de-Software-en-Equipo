@@ -140,7 +140,11 @@
     for (let i = 0; i < tramos; i++) {
       con(hudSeg, el("i", i < hechos ? "on" : (i === actual ? "actual" : "")));
     }
-    hudEvento.textContent = `Evento ${e.evento_numero} de ${e.evento_total}`;
+    // Texto largo en computadora y corto («1/60») en celular; el CSS elige cuál se ve
+    vaciar(hudEvento);
+    con(hudEvento,
+      el("span", "pt-ev-largo", `Evento ${e.evento_numero} de ${e.evento_total}`),
+      el("span", "pt-ev-corto", `${e.evento_numero}/${e.evento_total}`));
     hudSeg.parentNode.setAttribute("aria-label", `Historia: ${e.progreso}% · evento ${e.evento_numero} de ${e.evento_total}`);
 
     // Vidas: corazones llenos y vacíos
@@ -184,6 +188,90 @@
     // CU06: botón permanente de «Conseguir vidas», siempre a la vista junto a las vidas
     vaciar(hudCv);
     if (vidas && e.vidas) con(hudCv, vidas.boton(e));
+
+    // Celular: atributos resumidos (icono + valor). Al tocarlos se abre la hoja de personaje.
+    estadoHoja = e;
+    vaciar(hudStats);
+    e.atributos.forEach((a) => con(hudStats,
+      con(el("span", "pt-chip"), document.createTextNode(`${a.icono} `), el("b", null, String(a.valor)))));
+    if (e.puntos_atributo > 0) con(hudStats, el("span", "pt-chip pt-chip-oro", `✨ ${e.puntos_atributo}`));
+    hudStats.setAttribute("aria-label",
+      `Ver atributos: ${e.atributos.map((a) => `${a.nombre} ${a.valor}`).join(", ")}`);
+    if (hojaVelo && !hojaVelo.hidden) llenarHoja(e);
+  }
+
+  // ------------------------------------------------------------ hoja de personaje (celular)
+  // Bottom sheet al estilo Life in Adventure: todos los atributos, qué significan, nivel y vidas.
+  const hudStats = document.getElementById("hud-stats");
+  const hojaVelo = document.getElementById("pt-hoja-velo");
+  const hojaCuerpo = document.getElementById("pt-hoja-cuerpo");
+  let estadoHoja = null;
+  let focoAntesHoja = null;
+
+  function llenarHoja(e) {
+    vaciar(hojaCuerpo);
+    const lista = el("ul", "pt-hoja-attrs");
+    e.atributos.forEach((a) => {
+      const pista = el("span", "pt-pista");
+      const relleno = el("i");
+      relleno.style.width = `${porcentaje(a.valor, a.maximo || 1)}%`;
+      con(pista, relleno);
+      con(lista, con(el("li"),
+        con(el("div", "pt-hoja-fila"),
+          el("span", "pt-hoja-nombre", `${a.icono} ${a.nombre}`),
+          el("b", null, `${a.valor}${a.maximo ? ` / ${a.maximo}` : ""}`)),
+        pista,
+        a.descripcion ? el("p", null, a.descripcion) : null));
+    });
+    const bonus = e.atributos[0] && e.atributos[0].bonus_por_punto;
+    con(hojaCuerpo,
+      lista,
+      el("p", "pt-hoja-nota", bonus
+        ? `🎲 Cada punto suma +${bonus} % a la probabilidad de éxito de las opciones que usan ese atributo.`
+        : "🎲 Cada punto sube la probabilidad de éxito de las opciones que usan ese atributo."));
+    if (e.puntos_atributo > 0) {
+      con(hojaCuerpo, el("p", "pt-hoja-nota pt-hoja-oro",
+        `✨ Tienes ${e.puntos_atributo} punto${e.puntos_atributo === 1 ? "" : "s"} por asignar al terminar el evento.`));
+    }
+    const maximo = e.nivel >= e.nivel_maximo;
+    con(hojaCuerpo, con(el("dl", "pt-hoja-resumen"),
+      con(el("div"), el("dt", null, "❤ Vidas"), el("dd", null, `${e.hp} / ${e.hp_max}`)),
+      con(el("div"), el("dt", null, "⭐ Nivel"), el("dd", null,
+        maximo ? `${e.nivel} · máximo` : `${e.nivel} · ${e.xp_en_nivel} / ${e.xp_por_nivel} XP`)),
+      con(el("div"), el("dt", null, "📖 Historia"), el("dd", null,
+        `${e.evento_numero}/${e.evento_total} · ${e.progreso} %`))));
+  }
+
+  function abrirHoja() {
+    if (!estadoHoja || !hojaVelo) return;
+    llenarHoja(estadoHoja);
+    focoAntesHoja = document.activeElement;
+    hojaVelo.hidden = false;
+    hudStats.setAttribute("aria-expanded", "true");
+    document.documentElement.classList.add("pt-hoja-abierta");
+    requestAnimationFrame(() => hojaVelo.classList.add("abierta"));
+    hojaVelo.querySelector(".pt-hoja").focus();
+  }
+
+  function cerrarHoja() {
+    if (!hojaVelo || hojaVelo.hidden) return;
+    hojaVelo.classList.remove("abierta");
+    hudStats.setAttribute("aria-expanded", "false");
+    document.documentElement.classList.remove("pt-hoja-abierta");
+    setTimeout(() => { hojaVelo.hidden = true; }, sinMovimiento() ? 0 : 220);
+    if (focoAntesHoja && focoAntesHoja.focus) focoAntesHoja.focus();
+  }
+
+  if (hudStats && hojaVelo) {
+    hudStats.setAttribute("aria-expanded", "false");
+    hudStats.addEventListener("click", abrirHoja);
+    // En celular, tocar las vidas o el nivel también abre la hoja
+    [hudVidas, hudXp].forEach((n) => n.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 820px)").matches) abrirHoja();
+    }));
+    document.getElementById("pt-hoja-cerrar").addEventListener("click", cerrarHoja);
+    hojaVelo.addEventListener("click", (ev) => { if (ev.target === hojaVelo) cerrarHoja(); });
+    document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") cerrarHoja(); });
   }
 
   // Pie de página del libro: atributos (RF-05) a la izquierda y número de página

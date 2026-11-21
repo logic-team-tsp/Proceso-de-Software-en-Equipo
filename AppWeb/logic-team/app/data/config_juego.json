@@ -52,17 +52,20 @@
     {
       "id": "teoria",
       "nombre": "Teoría",
-      "icono": "📚"
+      "icono": "📚",
+      "descripcion": "Lo que sabes de ingeniería de software: conceptos, modelos y buenas prácticas. Pesa en las decisiones técnicas."
     },
     {
       "id": "equipo",
       "nombre": "Equipo",
-      "icono": "🤝"
+      "icono": "🤝",
+      "descripcion": "Cómo te comunicas y colaboras con tu equipo y con el cliente. Pesa cuando la situación depende de otras personas."
     },
     {
       "id": "inteligencia",
       "nombre": "Inteligencia",
-      "icono": "💡"
+      "icono": "💡",
+      "descripcion": "Tu ingenio para analizar y resolver lo imprevisto. Pesa cuando hay que salir de un apuro o encontrar otro camino."
     }
   ],
   "riesgo": [

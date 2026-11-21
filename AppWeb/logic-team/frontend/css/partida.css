@@ -886,3 +886,129 @@ html[data-movimiento="reducido"] .pt-hud-xp .pt-pista i, html[data-movimiento="r
   .pg-cifras { grid-template-columns: minmax(0, 1fr); }
 }
 .pt-paso.ok, .pt-paso.mal { border-color: rgba(93, 70, 48, 0.2); }
+
+/* ===================================================================== HUD en celular
+   Barra superior fija y compacta (estilo Life in Adventure): todo lo de la partida a la vista
+   aunque se baje por la página. Fila 1: salir · capítulo · 1/60 · (logros y ajustes flotan
+   encima). Fila 2: vidas · conseguir vidas · atributos · nivel. Abajo, el avance como filo. */
+.pt-ev-corto, .pt-hud-stats { display: none; }
+
+@media (max-width: 820px) {
+  body.pagina-partida { padding-top: 0; }
+
+  #pt-hud {
+    position: sticky; top: 0; z-index: 55;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "izq cap ev" "der der der" "seg seg seg";
+    gap: 6px 10px; min-height: 0;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 12px 0;
+    background: rgba(26, 13, 14, 0.94);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+  #pt-hud .pt-hud-centro, #pt-hud .pt-hud-avance { display: contents; }
+
+  #pt-hud .pt-salir { min-height: 36px; width: 36px; padding: 0; justify-content: center; }
+  #pt-hud .pt-salir-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  #pt-hud .pt-hud-cap {
+    grid-area: cap; min-width: 0; text-align: left;
+    font-size: 0.6875rem; letter-spacing: 0.12em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* El espacio de la derecha es para los botones de Logros y Ajustes */
+  #pt-hud .pt-hud-evento {
+    grid-area: ev; margin-right: 84px;
+    font-family: var(--f-titulo); font-weight: 700; font-size: 0.9375rem; color: var(--t-oro-vivo);
+  }
+  .pt-ev-largo { display: none; }
+  .pt-ev-corto { display: inline; }
+
+  /* Avance: filo de oro de lado a lado */
+  #pt-hud .pt-hud-seg { grid-area: seg; width: auto; margin: 0 -12px; gap: 2px; }
+  #pt-hud .pt-hud-seg i { height: 3px; border-radius: 0; }
+
+  #pt-hud .pt-hud-der {
+    grid-area: der; justify-self: stretch; flex-wrap: nowrap;
+    justify-content: space-between; gap: 8px; padding: 0 0 8px;
+  }
+  #pt-hud .pt-hud-vidas, #pt-hud .pt-hud-xp { cursor: pointer; }
+  #pt-hud .pt-hud-corazones { gap: 2px; font-size: 1.0625rem; }
+
+  /* Nivel: solo «Nivel N» y la barrita; el XP exacto está en la hoja */
+  #pt-hud .pt-hud-xp { width: auto; flex: 0 1 84px; min-width: 64px; gap: 4px; }
+  #pt-hud .pt-hud-xp-cab { font-size: 0.75rem; }
+  #pt-hud .pt-hud-xp-cab .v { display: none; }
+
+  /* Conseguir vidas: solo «❤+» (el texto completo sigue para lectores de pantalla) */
+  #pt-hud .pt-hud-cv .cv-boton { min-height: 30px; padding: 0 8px; font-size: 0; gap: 2px; }
+  #pt-hud .pt-hud-cv .cv-boton .ic { font-size: 0.9375rem; }
+  #pt-hud .pt-hud-cv .cv-boton::after { content: "+"; font-size: 0.9375rem; font-weight: 700; }
+  #pt-hud .pt-hud-cv:has(.cv-boton:disabled) { display: none; }
+
+  /* Atributos: chips de icono + número, un solo botón */
+  #pt-hud .pt-hud-stats {
+    display: inline-flex; align-items: center; gap: 4px;
+    min-height: 32px; padding: 0 4px; margin: 0;
+    color: var(--t-pergamino); background: none; border: 0; border-radius: 6px; cursor: pointer;
+    font: inherit;
+  }
+  #pt-hud .pt-hud-stats:focus-visible { outline: 2px solid var(--t-oro); outline-offset: 2px; }
+  .pt-chip {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 7px;
+    font-size: 0.8125rem; border-radius: 999px;
+    background: rgba(201, 161, 58, 0.12); border: 1px solid rgba(201, 161, 58, 0.3);
+  }
+  .pt-chip .ic { color: var(--t-oro); }
+  .pt-chip b { font-weight: 700; }
+  .pt-chip-oro { color: #2e0f0f; background: var(--t-oro-vivo); border-color: var(--t-oro-vivo); }
+  .pt-chip-oro .ic { color: #2e0f0f; }
+
+  /* Logros y Ajustes: iconos de 36 px dentro de la barra (el nivel ya está en la fila 2) */
+  body.pagina-partida .ajustes-btn { top: calc(8px + env(safe-area-inset-top, 0px)); right: 10px; width: 36px; height: 36px; }
+  body.pagina-partida .ajustes-btn.logros-btn { right: 52px; width: 36px; padding: 0; }
+  body.pagina-partida .ajustes-btn.logros-btn .lg-nivel-badge { display: none; }
+  body.pagina-partida .ajustes-panel { top: calc(96px + env(safe-area-inset-top, 0px)); }
+
+  /* Los atributos ya están arriba: fuera del pie de la página */
+  .pt-pie-attr { display: none; }
+  .pt-escena { padding-top: 14px; }
+}
+
+/* ===================================================================== hoja de personaje */
+.pt-hoja-velo {
+  position: fixed; inset: 0; z-index: 66;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(0, 0, 0, 0); transition: background-color 0.2s ease;
+}
+.pt-hoja-velo[hidden] { display: none; }
+.pt-hoja-velo.abierta { background: rgba(0, 0, 0, 0.55); }
+.pt-hoja {
+  width: min(100%, 520px); max-height: 85vh; overflow-y: auto; overscroll-behavior: contain;
+  padding: 8px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  color: var(--t-tinta); background: #f4e8cc;
+  border-top: 2px solid var(--t-oro); border-radius: 14px 14px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.45);
+  transform: translateY(100%); transition: transform 0.22s cubic-bezier(.2, .8, .2, 1);
+  outline: none;
+}
+.pt-hoja-velo.abierta .pt-hoja { transform: none; }
+.pt-hoja-asa { display: block; width: 40px; height: 4px; margin: 0 auto 8px; border-radius: 2px; background: rgba(93, 70, 48, 0.35); }
+.pt-hoja-cab { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pt-hoja-cab h2 { margin: 0; font-family: var(--f-titulo); font-size: 1.125rem; letter-spacing: 0.08em; color: var(--t-carmesi); }
+.pt-hoja-cerrar { width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(93, 70, 48, 0.12); color: var(--t-tinta); font-size: 1rem; cursor: pointer; }
+.pt-hoja-attrs { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 14px; }
+.pt-hoja-fila { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.pt-hoja-nombre { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 1.0625rem; }
+.pt-hoja-nombre .ic { color: var(--t-carmesi); }
+.pt-hoja-attrs .pt-pista { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: rgba(93, 70, 48, 0.18); overflow: hidden; }
+.pt-hoja-attrs .pt-pista i { display: block; height: 100%; background: var(--t-carmesi); }
+.pt-hoja-attrs p { margin: 6px 0 0; font-size: 0.9375rem; line-height: 1.4; color: var(--t-tinta-suave); }
+.pt-hoja-nota { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 0.9375rem; line-height: 1.4; background: rgba(93, 70, 48, 0.08); }
+.pt-hoja-oro { background: rgba(201, 161, 58, 0.22); }
+.pt-hoja-resumen { margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.pt-hoja-resumen > div { padding: 8px; border-radius: 8px; background: #f9f1dd; border: 1px solid #cdb685; text-align: center; }
+.pt-hoja-resumen dt { font-size: 0.8125rem; color: var(--t-tinta-suave); }
+.pt-hoja-resumen dd { margin: 2px 0 0; font-weight: 700; font-size: 0.9375rem; }
+html[data-movimiento="reducido"] .pt-hoja, html[data-movimiento="reducido"] .pt-hoja-velo { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pt-hoja, .pt-hoja-velo { transition: none; } }
