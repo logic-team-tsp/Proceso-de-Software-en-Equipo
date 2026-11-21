@@ -41,7 +41,7 @@
       <div class="pt-hud-xp" id="hud-xp"></div>
       <div class="pt-hud-cv" id="hud-cv"></div>
       {# Celular: atributos resumidos; al tocarlos se abre la hoja con el detalle (estilo Life in Adventure) #}
-      <button type="button" class="pt-hud-stats" id="hud-stats" aria-haspopup="dialog" aria-controls="pt-hoja-velo"></button>
+      <button type="button" class="pt-hud-stats" id="hud-stats" aria-haspopup="dialog" aria-controls="pt-ficha-velo"></button>
     </div>
   </header>
 
@@ -68,14 +68,14 @@
   </div>
 
   {# Hoja de personaje (celular): atributos, qué significan, nivel y vidas #}
-  <div class="pt-hoja-velo" id="pt-hoja-velo" hidden>
-    <div class="pt-hoja" role="dialog" aria-modal="true" aria-labelledby="pt-hoja-titulo" tabindex="-1">
-      <span class="pt-hoja-asa" aria-hidden="true"></span>
-      <div class="pt-hoja-cab">
-        <h2 id="pt-hoja-titulo">Tu personaje</h2>
-        <button type="button" class="pt-hoja-cerrar" id="pt-hoja-cerrar" aria-label="Cerrar">✕</button>
+  <div class="pt-ficha-velo" id="pt-ficha-velo" hidden>
+    <div class="pt-ficha" role="dialog" aria-modal="true" aria-labelledby="pt-ficha-titulo" tabindex="-1">
+      <span class="pt-ficha-asa" aria-hidden="true"></span>
+      <div class="pt-ficha-cab">
+        <h2 id="pt-ficha-titulo">Tu personaje</h2>
+        <button type="button" class="pt-ficha-cerrar" id="pt-ficha-cerrar" aria-label="Cerrar">✕</button>
       </div>
-      <div class="pt-hoja-cuerpo" id="pt-hoja-cuerpo"></div>
+      <div class="pt-ficha-cuerpo" id="pt-ficha-cuerpo"></div>
     </div>
   </div>
 {% endblock %}
