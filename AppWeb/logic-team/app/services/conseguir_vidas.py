@@ -3,8 +3,9 @@
 Diseño: SDS (WP.12) secciones 1.3.6 y 3.3.1, y Figura 9 (diagrama de secuencia).
 
 Con al menos 1 vida y menos del maximo (de 1 a 4 con 5 vidas) el usuario abre el minijuego,
-responde una ronda de afirmaciones de verdadero o falso y, si acierta el minimo (CU06-RN01), gana 1 vida sin pasar del maximo. Mientras le falten
-vidas, cada cinco eventos completados el libro le sugiere el minijuego (FA1).
+responde una ronda de afirmaciones de verdadero o falso y, si acierta el minimo (CU06-RN01),
+gana 1 vida sin pasar del maximo. Mientras le falten vidas, cada cinco eventos completados el
+libro le sugiere el minijuego (FA1).
 
 Todo el estado vive en Partida.vidas_extra (JSON):
     eventos      eventos completados con vidas faltantes desde la ultima sugerencia (FA1)
