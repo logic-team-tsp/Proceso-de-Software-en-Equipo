@@ -211,7 +211,8 @@ def personalizar_modulo(request):
             }
             return redirect("partida_inicio")
 
-    config = escenarios.cargar()[0]
+    config, catalogo = escenarios.cargar()
+    duracion = config.get("minutos_por_evento", {"minimo": 1, "maximo": 1.5})
     return render(
         request,
         "personalizar_modulo.html",
@@ -221,8 +222,12 @@ def personalizar_modulo(request):
             "marcados": marcados,
             "tematicas": opciones_tematica,
             "tematica_elegida": tematica_elegida,
-            "min_eventos": config.get("min_eventos_por_partida", 1),
             "max_eventos": config["max_eventos_por_partida"],
+            # La hoja «Tu partida» calcula en vivo el largo según los temas marcados
+            "largo_partida": {
+                **motor_partida.largos_posibles(config, catalogo),
+                "minutos": [duracion["minimo"], duracion["maximo"]],
+            },
             "error": error,
         },
     )

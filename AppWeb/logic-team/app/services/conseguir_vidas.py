@@ -2,7 +2,7 @@
 
 Diseño: SDS (WP.12) secciones 1.3.6 y 3.3.1, y Figura 9 (diagrama de secuencia).
 
-Con 1 o 2 vidas el usuario abre el minijuego, responde una ronda de afirmaciones de verdadero o
+Con al menos 1 vida y menos del maximo (de 1 a 4 con 5 vidas) el usuario abre el minijuego, responde una ronda de afirmaciones de verdadero o
 falso y, si acierta el minimo (CU06-RN01), gana 1 vida sin pasar del maximo. Mientras le falten
 vidas, cada cinco eventos completados el libro le sugiere el minijuego (FA1).
 
@@ -172,7 +172,7 @@ def _extra(partida):
 
 
 def puede_conseguir(partida):
-    """CU06-RN02: partida en curso y 1 o 2 vidas (al menos 1 y menos del maximo)."""
+    """CU06-RN02: partida en curso con al menos 1 vida y menos del maximo."""
     return partida.estado == Partida.EN_CURSO and 1 <= partida.hp < partida.hp_max
 
 

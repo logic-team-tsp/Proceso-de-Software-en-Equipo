@@ -1,7 +1,7 @@
 {
-  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (30/10 = 3). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje hasta 25, cada atributo hasta 16). Balance: se empieza con 9 puntos y se ganan como mucho 24, así que solo alcanza para llevar 2 atributos al máximo; con +4 % por punto, una opción de base 30-35 % llega a 94-95 % con el atributo al máximo. Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_evento sea >= eventos jugados. Largo: la partida dura entre min_eventos_por_partida y max_eventos_por_partida eventos sin repetir; si los subtemas elegidos no alcanzan, se completa con subtemas de las mismas materias y luego del resto. bloques: cada uno llega hasta su hasta_porcentaje de la partida y probabilidad_evento es la parte exacta de sus eventos que son de probabilidad.",
-  "min_eventos_por_partida": 80,
-  "max_eventos_por_partida": 100,
+  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (30/10 = 3). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje hasta 20, cada atributo hasta 16). Balance: se empieza con 9 puntos y se ganan como mucho 19 (en una partida de 60 casi perfecta), así que solo alcanza para llevar 1 o 2 atributos al máximo; con +4 % por punto, una opción de base 30-35 % llega a 94-95 % con el atributo al máximo. Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_porcentaje sea >= la parte de la partida jugada (cuartos de la partida, sea corta o larga). Largo: la partida solo usa los eventos de los subtemas elegidos, sin relleno ni repetir, hasta max_eventos_por_partida; con 8 normales y 5 de probabilidad por subtema da unos 10 eventos por tema (1 tema = 10, 6 o más = 60). minutos_por_evento es lo que se muestra como duración aproximada en la pantalla de temas. bloques: cada uno llega hasta su hasta_porcentaje de la partida y probabilidad_evento es la parte exacta de sus eventos que son de probabilidad.",
+  "max_eventos_por_partida": 60,
+  "minutos_por_evento": { "minimo": 1, "maximo": 1.5 },
   "bloques": [
     {
       "capitulo": "II",
@@ -36,7 +36,7 @@
     "por_nivel": 30
   },
   "niveles": {
-    "maximo_personaje": 25,
+    "maximo_personaje": 20,
     "maximo_atributo": 16
   },
   "puntos": {
@@ -190,22 +190,22 @@
     },
     "derrota": [
       {
-        "hasta_evento": 25,
+        "hasta_porcentaje": 25,
         "titulo": "El Primer Commit",
         "texto": "Apenas llevabas unos días en el equipo y los errores se acumularon antes de que pudieras agarrar ritmo. Tu líder técnica te reasigna a tareas de soporte mientras repasas los fundamentos. No es el fin: casi todos los grandes desarrolladores tuvieron un primer sprint desastroso."
       },
       {
-        "hasta_evento": 50,
+        "hasta_porcentaje": 50,
         "titulo": "Atorado a Medio Sprint",
         "texto": "Superaste las primeras pruebas y empezabas a sentirte parte del equipo, pero a mitad del sprint las malas decisiones te alcanzaron. El proyecto se entrega tarde y te toca presentar el post mortem frente a todos. Al menos ahora sabes exactamente qué harías distinto."
       },
       {
-        "hasta_evento": 75,
+        "hasta_porcentaje": 75,
         "titulo": "Tan Cerca del Release",
         "texto": "Llegaste más lejos que la mayoría: tus decisiones sostuvieron el proyecto durante semanas. Pero en la recta final una cadena de errores tumbó el release y el cliente pidió posponer la entrega. El equipo reconoce tu avance; solo te faltó cuidar los detalles al final."
       },
       {
-        "hasta_evento": 100,
+        "hasta_porcentaje": 100,
         "titulo": "A Un Paso de la Meta",
         "texto": "Estuviste a nada de cerrar el proyecto. Dominaste casi todo, pero en el último tramo una decisión te costó la energía que te quedaba. La clienta lamenta el retraso, aunque ya te pidió para su siguiente proyecto: sabe de lo que eres capaz."
       }

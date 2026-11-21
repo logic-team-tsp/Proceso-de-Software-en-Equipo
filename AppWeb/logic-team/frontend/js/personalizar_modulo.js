@@ -2,6 +2,8 @@
 //  - Paso 4: se marcan los temas que se quieran, de cualquier materia (mínimo 1).
 //  - Special Requirement: la hoja de personaje se actualiza en tiempo real.
 //  - RN02: no se puede comenzar sin al menos un tema; se muestra un mensaje.
+//  - La hoja dice cuántos eventos y cuántos minutos durará la partida con los temas marcados
+//    (solo se juegan eventos de esos temas; el servidor manda la tabla de largos).
 (function () {
   const form = document.getElementById("form-modulo");
   if (!form) return;
@@ -15,6 +17,31 @@
   const todos = document.getElementById("todos-temas");
 
   const marcados = () => temas.filter((t) => t.checked);
+  const prevLargo = document.getElementById("prev-largo");
+  const datosLargo = document.getElementById("largo-partida");
+  const largos = datosLargo ? JSON.parse(datosLargo.textContent) : null;
+
+  // Eventos que durará la partida: la tabla del servidor para la suma de eventos de los temas
+  function eventosDe(sel) {
+    let normales = 0;
+    let probabilidad = 0;
+    sel.forEach((t) => {
+      const [n, p] = largos.subtemas[t.value] || [0, 0];
+      normales += n;
+      probabilidad += p;
+    });
+    return largos.largos[normales + "," + probabilidad] || 0;
+  }
+
+  function textoLargo(sel) {
+    if (!largos || !sel.length) return "Elige al menos un tema";
+    const eventos = eventosDe(sel);
+    const [min, max] = largos.minutos;
+    const desde = Math.max(1, Math.round(eventos * min));
+    const hasta = Math.max(desde, Math.round(eventos * max));
+    const tipo = eventos <= 20 ? "corta" : eventos <= 40 ? "media" : "larga";
+    return "≈ " + eventos + " eventos · unos " + desde + "–" + hasta + " min (partida " + tipo + ")";
+  }
 
   function ocultarError() {
     error.hidden = true;
@@ -36,6 +63,7 @@
       ? sel.map((t) => t.dataset.titulo).join("\n")
       : "Aún no has elegido ninguno";
     cuenta.textContent = String(sel.length);
+    if (prevLargo) prevLargo.textContent = textoLargo(sel);
     // Botón "Seleccionar todos": si ya están todos marcados, sirve para quitarlos
     if (todos) {
       const completos = sel.length === temas.length;

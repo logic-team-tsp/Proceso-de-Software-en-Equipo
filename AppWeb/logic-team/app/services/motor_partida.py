@@ -6,11 +6,11 @@ decision y muestra el desenlace -> el usuario pasa la pagina (RN-01).
 
 La historia se divide en bloques por porcentaje de avance (config_juego.json). Cada bloque
 dice que parte de sus eventos son de probabilidad (prueba de atributos); el resto son normales
-(analizar y decidir). Con los bloques de config_juego.json la dificultad sube 10 / 25 / 35 / 50 %.
+(analizar y decidir). Con los bloques de config_juego.json la dificultad sube 0 / 15 / 25 / 40 %.
 
-Una partida dura entre min_eventos_por_partida y max_eventos_por_partida eventos, sin repetir.
-Si los subtemas elegidos en CU-02 no alcanzan, se completa con subtemas de las mismas materias
-y despues con los de las demas; los eventos de los temas elegidos entran completos si caben.
+Una partida solo usa los eventos de los subtemas elegidos en CU-02, sin relleno ni repetir: dura
+lo mas que permita la mezcla de tipos de sus bloques, hasta max_eventos_por_partida. Con los
+escenarios actuales cada subtema da unos 10 eventos (1 tema = 10, 6 o mas = 60).
 """
 
 import random
@@ -66,36 +66,41 @@ def _largo_posible(normales, probabilidad, config):
     return 0
 
 
-def subtemas_de_la_partida(subtemas, config, catalogo, rng):
-    """Los subtemas de los que salen los eventos y el largo de la partida.
-
-    Entran primero los elegidos; si no alcanzan para min_eventos_por_partida, se agregan al
-    azar subtemas de las mismas materias y luego del resto, hasta llegar al minimo.
-    """
+def _conteo_por_subtema(catalogo):
     conteo = {}
     for evento in catalogo["eventos"].values():
         conteo.setdefault(evento["subtema"], Counter())[evento["tipo"]] += 1
-    elegidos = [s for s in subtemas if s in conteo]
-    materias = {s.split(":")[0] for s in elegidos}
-    resto = [s for s in conteo if s not in elegidos]
-    rng.shuffle(resto)
-    resto.sort(key=lambda s: s.split(":")[0] not in materias)  # estable: el azar se conserva
+    return conteo
 
-    def largo(lista):
-        normales = sum(conteo[s][escenarios.NORMAL] for s in lista)
-        probabilidad = sum(conteo[s][escenarios.PROBABILIDAD] for s in lista)
-        return _largo_posible(normales, probabilidad, config)
 
-    minimo = config.get("min_eventos_por_partida", 1)
-    lista = list(elegidos)
-    while resto and largo(lista) < minimo:
-        lista.append(resto.pop(0))
-    return lista, largo(lista)
+def largo_de(subtemas, config, catalogo):
+    """Cuantos eventos dura una partida con estos subtemas (solo sus eventos, sin relleno)."""
+    conteo = _conteo_por_subtema(catalogo)
+    elegidos = [s for s in dict.fromkeys(subtemas) if s in conteo]
+    normales = sum(conteo[s][escenarios.NORMAL] for s in elegidos)
+    probabilidad = sum(conteo[s][escenarios.PROBABILIDAD] for s in elegidos)
+    return _largo_posible(normales, probabilidad, config)
+
+
+def largos_posibles(config, catalogo):
+    """Para la pantalla de temas (CU-02): los eventos normales y de probabilidad de cada subtema
+    y el largo de la partida para cada suma posible, con la llave "normales,probabilidad"."""
+    conteo = _conteo_por_subtema(catalogo)
+    sumas = {(0, 0)}
+    for tipos in conteo.values():
+        n, p = tipos[escenarios.NORMAL], tipos[escenarios.PROBABILIDAD]
+        sumas |= {(a + n, b + p) for a, b in sumas}
+    return {
+        "subtemas": {
+            s: [t[escenarios.NORMAL], t[escenarios.PROBABILIDAD]] for s, t in conteo.items()
+        },
+        "largos": {f"{n},{p}": _largo_posible(n, p, config) for n, p in sorted(sumas)},
+    }
 
 
 def _eventos_de_la_partida(elegidos, subtemas, total, tipos, catalogo, rng):
-    """Los eventos que se juegan: los de los subtemas elegidos completos (si caben) y el
-    resto, de cada tipo, al azar entre los subtemas de relleno."""
+    """Los eventos que se juegan: de cada tipo, los que hagan falta al azar entre los de los
+    subtemas elegidos."""
     por_tipo = {escenarios.NORMAL: ([], []), escenarios.PROBABILIDAD: ([], [])}
     for evento_id, evento in catalogo["eventos"].items():
         if evento["subtema"] in subtemas:
@@ -118,7 +123,7 @@ def construir_secuencia(subtemas, config, catalogo, rng):
     bloque. Si un tipo se acabara se usa el otro, para que la partida no se quede corta.
     """
     elegidos = set(subtemas)
-    subtemas, total = subtemas_de_la_partida(subtemas, config, catalogo, rng)
+    total = largo_de(subtemas, config, catalogo)
 
     tipos = [escenarios.NORMAL] * total
     lugares = {}
@@ -175,7 +180,7 @@ def crear_partida(perfil, subtemas, usuario=None, semilla=None, tematica=tematic
     """Crea una partida lista para jugarse. La llama CU-02 al pulsar "Comenzar Aventura".
 
     perfil: dict de CU-02 (id, titulo, descripcion, vidas, xp y los atributos
-            teoria/equipo/inteligencia como enteros de 1 a 10).
+            teoria/equipo/inteligencia como enteros de 0 al maximo_atributo).
     subtemas: ids de subtema de CU-02, por ejemplo ["intro-programacion:0"]. Minimo uno (RF-24).
     tematica: CU-07, id de la temática ya validada con tematicas.para_partida() (RN06).
     """
@@ -496,14 +501,23 @@ def estado_publico(partida):
     return tematicas.tematizar_estado(datos, partida.tematica)
 
 
+def numero_de_derrota(partida, config):
+    """Tramo del final de derrota: el primero cuyo hasta_porcentaje alcanza la parte de la
+    partida que se jugó (así una partida corta y una larga usan los mismos cuartos)."""
+    derrotas = config["finales"]["derrota"]
+    total = len(partida.secuencia) or 1
+    avance = partida.decisiones / total * 100
+    return next(
+        (i for i, f in enumerate(derrotas) if avance <= f["hasta_porcentaje"]), len(derrotas) - 1
+    )
+
+
 def final_de(partida, config):
     """Final de la partida. En derrota depende de hasta dónde llegó: un final por tramo."""
     if partida.estado == Partida.COMPLETADA:
         return config["finales"]["completada"], "Final completado"
     derrotas = config["finales"]["derrota"]
-    jugados = partida.decisiones
-    numero = next((i for i, f in enumerate(derrotas) if jugados <= f["hasta_evento"]), None)
-    numero = len(derrotas) - 1 if numero is None else numero
+    numero = numero_de_derrota(partida, config)
     return derrotas[numero], f"Final {numero + 1} de {len(derrotas)}"
 
 

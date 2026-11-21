@@ -101,16 +101,19 @@ def test_desenlaces_cuentan_la_consecuencia():
     "jugados, titulo, etiqueta",
     [
         (1, "El Primer Commit", "Final 1 de 4"),
-        (25, "El Primer Commit", "Final 1 de 4"),
-        (26, "Atorado a Medio Sprint", "Final 2 de 4"),
-        (60, "Tan Cerca del Release", "Final 3 de 4"),
-        (95, "A Un Paso de la Meta", "Final 4 de 4"),
-        (200, "A Un Paso de la Meta", "Final 4 de 4"),
+        (7, "El Primer Commit", "Final 1 de 4"),  # 23 % de 30 eventos
+        (8, "Atorado a Medio Sprint", "Final 2 de 4"),
+        (15, "Atorado a Medio Sprint", "Final 2 de 4"),  # justo la mitad
+        (16, "Tan Cerca del Release", "Final 3 de 4"),
+        (23, "A Un Paso de la Meta", "Final 4 de 4"),
+        (30, "A Un Paso de la Meta", "Final 4 de 4"),
     ],
 )
 def test_final_de_derrota_depende_de_hasta_donde_llego(jugados, titulo, etiqueta):
+    """Los finales van por cuartos de la partida, sea corta o larga."""
     config, _ = escenarios.cargar()
-    partida = _partida()
+    partida = _partida()  # 3 temas: 30 eventos
+    assert len(partida.secuencia) == 30
     partida.estado, partida.decisiones = Partida.DERROTA, jugados
     final, texto = motor_partida.final_de(partida, config)
     assert final["titulo"] == titulo and texto == etiqueta
@@ -134,31 +137,33 @@ def test_perfiles_equilibrados_y_lobo_solitario():
 
 
 @pytest.mark.django_db
-def test_la_partida_dura_de_80_a_100_eventos_sin_repetir_y_con_los_temas_elegidos_completos():
-    config, catalogo = escenarios.cargar()
-    partida = _partida()  # 3 subtemas x 13 eventos = 39: se completa con otros subtemas
-    total = len(partida.secuencia)
-    assert config["min_eventos_por_partida"] == 80 and config["max_eventos_por_partida"] == 100
-    assert total == 80 and len(set(partida.secuencia)) == total
-    elegidos = {e for e, ev in catalogo["eventos"].items() if ev["subtema"] in TRES}
-    assert elegidos <= set(partida.secuencia)
-
-
-@pytest.mark.django_db
-def test_con_un_subtema_se_completa_primero_con_su_misma_materia():
+@pytest.mark.parametrize("cuantos, largo", [(1, 10), (2, 20), (3, 30)])
+def test_la_partida_solo_usa_los_temas_elegidos_sin_relleno_ni_repetir(cuantos, largo):
     _, catalogo = escenarios.cargar()
-    partida = _partida(temas=TRES[:1])
+    partida = _partida(temas=TRES[:cuantos])
     subtemas = {catalogo["eventos"][e]["subtema"] for e in partida.secuencia}
-    misma_materia = {f"ingenieria-requerimientos:{i}" for i in range(4)}
-    assert len(partida.secuencia) == 80 and misma_materia <= subtemas
-    assert partida.temas == TRES[:1]  # la historia sigue siendo la de los temas elegidos
+    assert len(partida.secuencia) == largo and len(set(partida.secuencia)) == largo
+    assert subtemas == set(TRES[:cuantos])
 
 
 @pytest.mark.django_db
-def test_con_todos_los_subtemas_la_partida_llega_al_maximo():
-    _, catalogo = escenarios.cargar()
+def test_con_todos_los_subtemas_la_partida_llega_al_maximo_de_60():
+    config, catalogo = escenarios.cargar()
     todos = [s["id"] for tema in catalogo["temas"].values() for s in tema["subtemas"]]
-    assert len(_partida(temas=todos).secuencia) == 100
+    assert config["max_eventos_por_partida"] == 60
+    assert len(_partida(temas=todos).secuencia) == 60
+
+
+def test_largo_segun_cuantos_temas_y_tabla_para_la_pantalla_de_temas():
+    config, catalogo = escenarios.cargar()
+    todos = [s["id"] for tema in catalogo["temas"].values() for s in tema["subtemas"]]
+    largos = [motor_partida.largo_de(todos[:k], config, catalogo) for k in range(1, 11)]
+    assert largos == [10, 20, 30, 41, 50, 60, 60, 60, 60, 60]
+    tabla = motor_partida.largos_posibles(config, catalogo)
+    assert tabla["subtemas"][todos[0]] == [8, 5]
+    assert tabla["largos"]["8,5"] == 10 and tabla["largos"]["80,50"] == 60
+    for k in range(1, 11):  # la tabla da lo mismo que crear la partida
+        assert tabla["largos"][f"{8 * k},{5 * k}"] == largos[k - 1]
 
 
 @pytest.mark.django_db
@@ -182,13 +187,13 @@ def test_los_4_bloques_suben_de_dificultad_0_15_25_40():
     assert [b["probabilidad_evento"] for b in config["bloques"]] == [0.0, 0.15, 0.25, 0.4]
     assert [b["hasta_porcentaje"] for b in config["bloques"]] == [25, 50, 75, 100]
     assert motor_partida.de_probabilidad_por_bloque(80, config) == {0: 0, 1: 3, 2: 5, 3: 8}
+    assert motor_partida.de_probabilidad_por_bloque(60, config) == {0: 0, 1: 2, 2: 4, 3: 6}
 
 
 @pytest.mark.django_db
 def test_maximo_de_eventos_por_partida(monkeypatch):
     config, _ = escenarios.cargar()
     monkeypatch.setitem(config, "max_eventos_por_partida", 3)
-    monkeypatch.setitem(config, "min_eventos_por_partida", 1)
     assert len(_partida().secuencia) == 3
 
 
@@ -220,7 +225,7 @@ def test_comenzar_aventura_crea_la_partida_y_abre_el_libro(client):
     partida = Partida.objects.get()
     assert respuesta.redirect_chain[-1][0] == f"/partida/{partida.id}/"
     assert partida.perfil_nombre == "Carrera afín, sin software"
-    assert partida.temas == TRES[:2] and partida.xp == 0 and len(partida.secuencia) == 80
+    assert partida.temas == TRES[:2] and partida.xp == 0 and len(partida.secuencia) == 20
     assert "pt-estado" in respuesta.content.decode()
     # Refrescar /personalizar/comenzar/ no crea otra partida
     client.get("/personalizar/comenzar/")
@@ -236,7 +241,7 @@ def test_se_pueden_mezclar_materias_y_elegir_mas_de_3_temas(client):
     client.get(respuesta["Location"])
     partida = Partida.objects.get()
     assert partida.temas == temas
-    assert len(partida.secuencia) == 80  # 6 subtemas x 13 = 78, se completa hasta 80
+    assert len(partida.secuencia) == 60  # 6 subtemas: el máximo, sin relleno
     _, catalogo = escenarios.cargar()
     assert len({catalogo["eventos"][e]["tema_id"] for e in partida.secuencia}) == 4
 
@@ -313,10 +318,11 @@ def test_cada_3_aciertos_se_sube_de_nivel_y_se_gana_un_punto(client):
 
 
 @pytest.mark.django_db
-def test_nivel_maximo_25_y_atributos_hasta_16():
+def test_nivel_maximo_20_y_atributos_hasta_16():
     config, _ = escenarios.cargar()
-    assert motor_partida.nivel_de(10_000, config) == 25
-    assert motor_partida.nivel_de(720, config) == 25  # 72 aciertos
+    assert motor_partida.nivel_de(10_000, config) == 20
+    assert motor_partida.nivel_de(570, config) == 20  # 57 aciertos de 60
+    assert motor_partida.nivel_de(560, config) == 19
     assert motor_partida.valor_atributo(99, config) == 16
     partida = _partida()
     partida.atributos["teoria"] = 16
@@ -376,3 +382,11 @@ def test_paginas_responden(client):
     html = client.get(_url(partida)).content.decode()
     assert "css/partida.css" in html and "js/partida.js" in html and 'id="ajustes-btn"' in html
     assert client.get("/partida/00000000-0000-0000-0000-000000000000/").status_code == 404
+
+
+@pytest.mark.django_db
+def test_pantalla_de_temas_muestra_la_duracion_segun_los_temas(client):
+    client.post("/personalizar/", {"perfil": "abierto"})
+    html = client.get("/personalizar/modulo/").content.decode()
+    assert 'id="prev-largo"' in html and 'id="largo-partida"' in html
+    assert "hasta 60 eventos" in html and '"8,5": 10' in html

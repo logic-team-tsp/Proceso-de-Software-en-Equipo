@@ -111,12 +111,6 @@ def _validar_config(config, errores):
     maximo = config["max_eventos_por_partida"]
     if not isinstance(maximo, int) or maximo < 1:
         errores.append(f"{donde}: max_eventos_por_partida debe ser un entero mayor a 0")
-    minimo = config.get("min_eventos_por_partida", 1)
-    valido = isinstance(minimo, int) and not isinstance(minimo, bool)
-    if isinstance(maximo, int) and not (valido and 1 <= minimo <= maximo):
-        errores.append(
-            f"{donde}: min_eventos_por_partida debe ser un entero de 1 a max_eventos_por_partida"
-        )
     _validar_bloques(config["bloques"], donde, errores)
 
     ids = [a.get("id") for a in config["atributos"]]
@@ -138,7 +132,7 @@ def _validar_config(config, errores):
 
 
 def _validar_finales(finales, donde, errores):
-    """Un final de partida completada y varios de derrota, uno por tramo de eventos."""
+    """Un final de partida completada y varios de derrota, uno por tramo de la partida (en %)."""
     completada = finales.get("completada", {})
     if not _texto_ok(completada.get("titulo")) or not _texto_ok(completada.get("texto")):
         errores.append(f"{donde}: finales.completada necesita titulo y texto")
@@ -148,9 +142,11 @@ def _validar_finales(finales, donde, errores):
         return
     anterior = 0
     for final in derrotas:
-        tope = final.get("hasta_evento")
-        if not isinstance(tope, int) or tope <= anterior:
-            errores.append(f"{donde}: 'hasta_evento' de finales.derrota debe ir en orden")
+        tope = final.get("hasta_porcentaje")
+        if not isinstance(tope, int) or not anterior < tope <= 100:
+            errores.append(
+                f"{donde}: 'hasta_porcentaje' de finales.derrota debe ir en orden, hasta 100"
+            )
         else:
             anterior = tope
         if not _texto_ok(final.get("titulo")) or not _texto_ok(final.get("texto")):
