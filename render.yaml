@@ -5,6 +5,7 @@ services:
     name: techtale
     runtime: python
     plan: free
+    region: ohio  # la misma región que la base en Neon (AWS us-east-2)
     rootDir: AppWeb/logic-team
     branch: main
     autoDeploy: true
