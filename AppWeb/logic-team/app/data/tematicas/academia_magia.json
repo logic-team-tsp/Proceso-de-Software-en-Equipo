@@ -13,7 +13,8 @@
   "capitulos": {
     "II": "Primeros Hechizos",
     "III": "El Grimorio Prohibido",
-    "IV": "La Torre de los Magos"
+    "IV": "La Torre de los Magos",
+    "V": "El Hechizo Supremo"
   },
   "glosario": {
     "cliente": {
@@ -66,6 +67,18 @@
       "la clienta": "la directora",
       "de la clienta": "de la directora",
       "a la clienta": "a la directora"
+    },
+    "practicante": {
+      "el practicante": "el iniciado",
+      "la practicante": "la iniciada",
+      "un practicante": "un iniciado",
+      "una practicante": "una iniciada"
+    },
+    "jefe": {
+      "tu jefe": "tu decano",
+      "tu jefa": "tu decana",
+      "el jefe": "el decano",
+      "la jefa": "la decana"
     }
   }
 }

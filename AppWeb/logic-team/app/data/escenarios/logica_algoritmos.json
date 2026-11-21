@@ -51,6 +51,236 @@
       ]
     },
     {
+      "id": "la-repr-n2",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "La Devolución «Si Se Ve Dañado»",
+      "contexto": "La gerente de una tienda de electrónica te pasa el proceso de devoluciones para automatizarlo: «si el producto se ve dañado, decide según el caso; si no, más o menos igual». Debes convertirlo en un algoritmo que la caja pueda seguir sin dudas.",
+      "tecnicismos": [
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Programar tal cual lo dijo la gerente y que cada cajero interprete.",
+          "correcta": false,
+          "retroalimentacion": "Un algoritmo debe ser preciso y finito: «según el caso» o «más o menos» no se pueden ejecutar igual dos veces.",
+          "desenlace": "Cada cajero decide distinto y dos clientes con el mismo problema reciben respuestas opuestas. Uno de ellos lo publica en redes con fotos de sus tickets. La gerente pide quitar la automatización."
+        },
+        {
+          "id": "b",
+          "texto": "Reescribir el proceso con pasos precisos y finitos: revisar ticket, plazo y estado, y una salida para cada caso.",
+          "correcta": true,
+          "retroalimentacion": "Un algoritmo es una secuencia finita de pasos precisos; definir cada condición y cada salida hace que el proceso dé siempre el mismo resultado.",
+          "desenlace": "Con pasos claros, la caja resuelve devoluciones en la mitad del tiempo y sin discusiones. La gerente revisa el algoritmo y agrega un caso que faltaba. El proceso se vuelve el estándar de todas las sucursales."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir que cada devolución la autorice la gerente por teléfono.",
+          "correcta": false,
+          "retroalimentacion": "Delegar todo en una persona no define el algoritmo; solo traslada la ambigüedad a otro lugar y crea un cuello de botella.",
+          "desenlace": "La gerente recibe treinta llamadas al día y la fila de devoluciones se vuelve eterna. Los fines de semana nadie contesta. La tienda pierde clientes que ya no regresan."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n3",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "Un Algoritmo para Dos Lenguajes",
+      "contexto": "La regla para asignar turnos en una clínica debe implementarse en la app móvil, escrita en Kotlin, y en el sistema de la recepción, escrito en Python. Tu equipo necesita una sola descripción que ambos programadores entiendan antes de escribir código fuente.",
+      "tecnicismos": [
+        "pseudocodigo",
+        "codigo-fuente",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Escribir el algoritmo en pseudocódigo con pasos numerados y revisarlo con ambos.",
+          "correcta": true,
+          "retroalimentacion": "El pseudocódigo describe la lógica en lenguaje natural estructurado, sin depender de un lenguaje; así todos implementan la misma regla.",
+          "desenlace": "Con el pseudocódigo en la mano, los dos programadores implementan la regla igual y las pruebas coinciden a la primera. La recepción y la app asignan los mismos turnos. Tu líder lo guarda como plantilla."
+        },
+        {
+          "id": "b",
+          "texto": "Escribirlo directamente en Python y que el de Kotlin lo traduzca.",
+          "correcta": false,
+          "retroalimentacion": "El código fuente de un lenguaje mezcla la lógica con detalles propios de ese lenguaje; traducirlo a otro invita a errores.",
+          "desenlace": "El de Kotlin traduce una función de Python que no existe en su lenguaje y la reemplaza a su manera. Los turnos de la app y de la recepción dejan de coincidir. Dos pacientes llegan a la misma hora con el mismo médico."
+        },
+        {
+          "id": "c",
+          "texto": "Explicarlo de palabra en una reunión y confiar en la memoria de todos.",
+          "correcta": false,
+          "retroalimentacion": "Una explicación oral no deja registro; cada persona recuerda una versión distinta del algoritmo.",
+          "desenlace": "Cada programador recuerda la regla de forma diferente. En la primera semana se duplican citas y la recepción tiene que reacomodar pacientes a mano. Nadie sabe cuál versión era la correcta."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n4",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "La Cuenta Dividida",
+      "contexto": "Te piden una calculadora para dividir la cuenta en restaurantes. Tu compañero ya empezó a programar pantallas sin saber qué datos de entrada recibe ni qué datos de salida debe entregar: ¿se reparte la propina igual?, ¿hay quien no tomó postre? Debes definir el algoritmo antes de seguir.",
+      "tecnicismos": [
+        "entrada-salida",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Definir primero los datos de entrada y de salida con ejemplos de cuentas reales.",
+          "correcta": true,
+          "retroalimentacion": "Un algoritmo se define por lo que recibe y lo que entrega: identificar entradas y salidas evita construir algo que no responde la pregunta.",
+          "desenlace": "Con las entradas y salidas definidas, la calculadora resuelve cuentas con propina y consumos distintos sin errores. Tus ejemplos se vuelven las primeras pruebas. La app sale a tiempo y recibe buenas reseñas."
+        },
+        {
+          "id": "b",
+          "texto": "Seguir con las pantallas y definir los cálculos al final.",
+          "correcta": false,
+          "retroalimentacion": "Diseñar la interfaz sin saber qué procesa el algoritmo obliga a rehacerla cuando aparecen los datos que faltaban.",
+          "desenlace": "Al final descubren que se necesita registrar quién consumió qué, y las pantallas no tienen dónde capturarlo. Hay que rediseñar la mitad de la app. La entrega se retrasa dos semanas."
+        },
+        {
+          "id": "c",
+          "texto": "Dividir siempre entre el número de personas, porque es lo más común.",
+          "correcta": false,
+          "retroalimentacion": "Simplificar el problema sin preguntar ignora entradas reales del caso; el algoritmo debe responder a la necesidad que se planteó.",
+          "desenlace": "Los usuarios reclaman que pagan postres que no comieron. La app recibe calificaciones de una estrella. El dueño del restaurante socio pide retirar la función."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n5",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Aguinaldo Proporcional",
+      "contexto": "Debes automatizar el cálculo del aguinaldo: 15 días de salario por año completo y la parte proporcional si la persona entró a mitad de año. El algoritmo ya está escrito y se libera mañana a toda la nómina. ¿Cómo lo revisas antes?",
+      "tecnicismos": [
+        "prueba-escritorio",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Probarlo con un solo caso: un empleado que trabajó todo el año.",
+          "correcta": false,
+          "retroalimentacion": "Un solo caso típico no prueba los extremos; los errores suelen estar en los casos raros, como quien entró en diciembre.",
+          "desenlace": "Con el caso típico todo sale bien, pero quienes entraron a mitad de año reciben aguinaldo completo. Recursos humanos tiene que descontarlo en enero. Los trabajadores se molestan con la empresa."
+        },
+        {
+          "id": "b",
+          "texto": "Hacer una prueba de escritorio con casos de ejemplo: año completo, ingreso en julio, ingreso en diciembre y baja anticipada.",
+          "correcta": true,
+          "retroalimentacion": "La prueba de escritorio sigue el algoritmo a mano con casos de ejemplo variados, incluidos los extremos, antes de ejecutarlo con datos reales.",
+          "desenlace": "En la prueba de escritorio descubres que el caso de diciembre da un número negativo. Lo corriges y todos los casos cuadran. La nómina sale correcta y recursos humanos no recibe ni una queja."
+        },
+        {
+          "id": "c",
+          "texto": "Liberarlo y corregir lo que reporten los empleados.",
+          "correcta": false,
+          "retroalimentacion": "Usar a los empleados como probadores convierte cada error en un problema laboral; hay que revisar antes de liberar.",
+          "desenlace": "Decenas de trabajadores reportan montos equivocados el día de pago. El sindicato pide una reunión urgente. Se pierde una semana entera recalculando y explicando."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n6",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "Repetir Hasta que Funcione",
+      "contexto": "El manual de soporte técnico de la escuela dice: «si la impresora falla, reinicia y repite hasta que funcione». Te piden automatizarlo como un algoritmo para la mesa de ayuda.",
+      "tecnicismos": [
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Programarlo tal cual: reintentar hasta que la impresora responda.",
+          "correcta": false,
+          "retroalimentacion": "Un algoritmo debe terminar en un número finito de pasos; «hasta que funcione» puede no cumplirse nunca.",
+          "desenlace": "Una impresora descompuesta deja al programa reintentando toda la noche. La mesa de ayuda amanece con miles de reinicios registrados. La impresora sigue igual de descompuesta."
+        },
+        {
+          "id": "b",
+          "texto": "Limitar los reintentos a tres y, si sigue fallando, levantar un reporte a soporte.",
+          "correcta": true,
+          "retroalimentacion": "Un algoritmo bien definido es finito: con un límite de intentos y una salida alterna siempre termina, aunque el problema no se resuelva.",
+          "desenlace": "Con tres reintentos y un reporte automático, las fallas leves se resuelven solas y las graves llegan a soporte en minutos. Nadie vuelve a pasar una noche reiniciando. El manual se actualiza con tu algoritmo."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el paso de reiniciar y mandar siempre un reporte.",
+          "correcta": false,
+          "retroalimentacion": "Eliminar el paso que resuelve la mayoría de los casos satura a soporte; el algoritmo debe conservar los pasos útiles y solo ser finito.",
+          "desenlace": "Soporte recibe cien reportes al día por fallas que se arreglaban con un reinicio. Los técnicos ya no se dan abasto. Las fallas importantes tardan días en atenderse."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n7",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Rombo con una Sola Salida",
+      "contexto": "En el diagrama de flujo que describe el algoritmo del trámite de credenciales, el rombo «¿Trae comprobante?» solo tiene la flecha «Sí». Tu compañero dice que así se entiende y que el caso «No» es obvio.",
+      "tecnicismos": [
+        "diagrama-flujo",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dejarlo así, porque todos saben qué hacer si no trae comprobante.",
+          "correcta": false,
+          "retroalimentacion": "En un diagrama de flujo cada decisión necesita una salida para cada respuesta; lo «obvio» cambia de persona a persona.",
+          "desenlace": "Cada ventanilla hace algo distinto con quien no trae comprobante: unas lo rechazan y otras le dan la credencial. Los alumnos se quejan de trato desigual. La dirección pide rehacer el procedimiento."
+        },
+        {
+          "id": "b",
+          "texto": "Agregar la salida «No» con su camino: pedir el comprobante y regresar al inicio del trámite.",
+          "correcta": true,
+          "retroalimentacion": "Un rombo de decisión debe tener todas sus salidas; así el algoritmo describe qué pasa en cada caso y no deja huecos.",
+          "desenlace": "Con la salida «No» dibujada, todas las ventanillas siguen el mismo procedimiento. Los alumnos saben qué llevar desde la primera vez. El diagrama se publica en la página de la escuela."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el rombo y poner una nota al pie del diagrama.",
+          "correcta": false,
+          "retroalimentacion": "Una nota al pie saca la decisión del flujo y hace más fácil saltársela.",
+          "desenlace": "Nadie lee la nota y se entregan credenciales sin revisar el comprobante. La auditoría encuentra cientos de trámites incompletos. Hay que volver a citar a esos alumnos."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n8",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Orden de los Pasos del Cajero",
+      "contexto": "Tu compañero escribió el pseudocódigo de un cajero de la caja de ahorro: «mostrar saldo, pedir tarjeta, validar NIP, entregar dinero». En la revisión alguien nota que el orden no tiene sentido. Debes corregir el algoritmo antes de programar.",
+      "tecnicismos": [
+        "pseudocodigo",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Reordenar el pseudocódigo: pedir tarjeta, validar NIP, mostrar saldo y entregar dinero solo si alcanza.",
+          "correcta": true,
+          "retroalimentacion": "En un algoritmo el orden importa: cada paso debe usar solo datos que ya se tienen y validar antes de actuar.",
+          "desenlace": "Con los pasos en orden, el cajero solo muestra información a quien ya se identificó. La revisión de seguridad aprueba el diseño. El equipo programa a partir de un pseudocódigo correcto."
+        },
+        {
+          "id": "b",
+          "texto": "Dejarlo así, porque en el código se puede acomodar.",
+          "correcta": false,
+          "retroalimentacion": "Si el algoritmo está mal ordenado, el código lo copiará igual; el pseudocódigo existe para encontrar estos errores antes.",
+          "desenlace": "El programa se escribe tal cual y en las pruebas muestra el saldo antes de pedir el NIP. Hay que rehacerlo una semana antes de la entrega. El equipo pierde tiempo valioso."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el paso de validar NIP para simplificar.",
+          "correcta": false,
+          "retroalimentacion": "Simplificar quitando un paso esencial cambia el problema; un algoritmo debe resolver lo que se pidió.",
+          "desenlace": "El cajero entrega dinero sin validar a nadie. La caja de ahorro cancela el proyecto en la primera revisión. El equipo pierde la confianza del cliente."
+        }
+      ]
+    },
+    {
       "id": "la-busq-n",
       "subtema": "logica-algoritmos:1",
       "titulo": "El Millón de Usuarios",
@@ -81,6 +311,239 @@
           "correcta": true,
           "retroalimentacion": "Con datos ordenados, la búsqueda binaria reduce el problema a la mitad en cada paso: unas 20 comparaciones bastan para un millón de elementos.",
           "desenlace": "Con búsqueda binaria descartas la mitad de la lista en cada paso y encuentras al usuario en unas 20 comparaciones. La búsqueda responde al instante aunque la base siga creciendo. El equipo adopta tu función para el buscador de canciones y la app se siente mucho más rápida."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n2",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "Factura10 Antes que Factura2",
+      "contexto": "El sistema de cobranza muestra las facturas ordenadas así: factura1, factura10, factura11, factura2. El dueño del despacho cree que se perdieron facturas. Debes corregir el orden.",
+      "tecnicismos": [
+        "orden-lexicografico",
+        "algoritmo-ordenamiento"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar un algoritmo de ordenamiento con el número de la factura convertido a entero como clave.",
+          "correcta": true,
+          "retroalimentacion": "Los textos se ordenan en orden lexicográfico, letra por letra; para ordenar por cantidad hay que usar el número como clave del algoritmo de ordenamiento.",
+          "desenlace": "Al ordenar por el número convertido, las facturas aparecen como se espera: 1, 2, 3 y hasta la 120. El dueño ya no cree que falten documentos. Aplicas la misma idea a los recibos y a las notas de crédito."
+        },
+        {
+          "id": "b",
+          "texto": "Ordenar en orden alfabético inverso para que se vea distinto.",
+          "correcta": false,
+          "retroalimentacion": "Invertir el orden lexicográfico sigue comparando letra por letra; el problema de los números no se resuelve.",
+          "desenlace": "Ahora la lista empieza con factura9 y termina con factura1, igual de revuelta. El dueño pierde la paciencia. La contadora exporta todo a una hoja de cálculo para ordenarlo ella."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir que se capturen las facturas con nombres en palabras, como «factura-diez».",
+          "correcta": false,
+          "retroalimentacion": "Cambiar los datos para acomodarse al ordenamiento no resuelve el problema y complica la captura.",
+          "desenlace": "Nadie quiere escribir «factura-ciento-veinte» y la captura se vuelve un caos. Además, en orden alfabético «diez» queda antes que «dos». El despacho vuelve al sistema anterior."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n3",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "La Búsqueda Binaria en el Desorden",
+      "contexto": "Tu compañero quiere encontrar un producto en el inventario de una papelería usando búsqueda binaria, porque «es la más rápida». El inventario es una lista de 300 productos en el orden en que se fueron dando de alta y solo hay que buscar uno una vez al día.",
+      "tecnicismos": [
+        "busqueda-binaria",
+        "busqueda-lineal"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar búsqueda binaria directamente sobre la lista tal como está.",
+          "correcta": false,
+          "retroalimentacion": "La búsqueda binaria solo funciona sobre datos ordenados: al descartar la mitad equivocada puede decir que el producto no existe aunque sí esté.",
+          "desenlace": "La búsqueda dice que el cuaderno profesional no existe aunque hay veinte en el estante. La dueña cree que se los robaron y revisa las cámaras. Al final descubren que el problema era el código."
+        },
+        {
+          "id": "b",
+          "texto": "Usar búsqueda lineal, revisando los productos uno por uno.",
+          "correcta": true,
+          "retroalimentacion": "Con una lista desordenada y pocas búsquedas, la búsqueda lineal es correcta y suficiente; ordenar primero solo vale la pena si se buscará muchas veces.",
+          "desenlace": "La búsqueda lineal encuentra el producto en milisegundos, porque 300 productos son pocos. El código queda simple y fácil de mantener. Tu compañero aprende que la más rápida en teoría no siempre es la indicada."
+        },
+        {
+          "id": "c",
+          "texto": "Ordenar la lista completa antes de cada búsqueda para poder usar la binaria.",
+          "correcta": false,
+          "retroalimentacion": "Ordenar cuesta más que una búsqueda lineal; hacerlo antes de cada búsqueda gasta más trabajo del que ahorra.",
+          "desenlace": "La búsqueda funciona, pero tarda más que antes porque cada vez ordena todo el inventario. Con la temporada de regreso a clases la app se vuelve lenta. Hay que reescribir la función."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n4",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "El Torneo con Empates",
+      "contexto": "La tabla del torneo escolar de videojuegos se ordena por puntos. Las bases dicen que, si hay empate, queda arriba la escuadra que se inscribió primero. Después de ordenar, dos escuadras empatadas aparecen en el orden contrario y una reclama el pase a la final.",
+      "tecnicismos": [
+        "ordenamiento-estable",
+        "algoritmo-ordenamiento"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar un ordenamiento estable sobre la lista ya acomodada por fecha de inscripción.",
+          "correcta": true,
+          "retroalimentacion": "Un ordenamiento estable conserva el orden original de los elementos empatados; así el criterio de desempate se respeta solo.",
+          "desenlace": "Con un ordenamiento estable, los empates quedan en el orden de inscripción, como dicen las bases. El comité revisa la tabla y la aprueba. La final se juega sin reclamos."
+        },
+        {
+          "id": "b",
+          "texto": "Ordenar con cualquier algoritmo de ordenamiento y acomodar los empates a mano.",
+          "correcta": false,
+          "retroalimentacion": "Corregir a mano un resultado depende de que alguien note cada empate; el algoritmo de ordenamiento debe cumplir la regla por sí solo.",
+          "desenlace": "En la siguiente jornada hay cinco empates y nadie los acomoda. Dos escuadras más reclaman. El comité organizador pierde credibilidad con los participantes."
+        },
+        {
+          "id": "c",
+          "texto": "Desempatar al azar para que sea justo.",
+          "correcta": false,
+          "retroalimentacion": "El azar ignora la regla escrita en las bases; el ordenamiento debe reflejar los criterios acordados.",
+          "desenlace": "La escuadra que se inscribió primero queda fuera por un volado digital. Sus papás se quejan con la dirección. La final se pospone hasta resolver el conflicto."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n5",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "La Consulta de 30 Segundos",
+      "contexto": "La pantalla de inicio de sesión de una app de recargas tarda 30 segundos en buscar a cada persona por su correo entre dos millones de clientes. La base de datos revisa los registros uno por uno cada vez. Debes resolverlo antes de la campaña de la próxima semana.",
+      "tecnicismos": [
+        "indice",
+        "base-datos",
+        "busqueda-lineal"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Crear un índice en la columna del correo.",
+          "correcta": true,
+          "retroalimentacion": "Un índice mantiene la columna ordenada en una estructura aparte, así la base de datos encuentra el registro sin revisarlos uno por uno.",
+          "desenlace": "Con el índice, la búsqueda pasa de 30 segundos a unos milisegundos. La campaña arranca y el inicio de sesión aguanta miles de personas a la vez. El equipo revisa qué otras columnas necesitan índice."
+        },
+        {
+          "id": "b",
+          "texto": "Contratar un servidor tres veces más grande.",
+          "correcta": false,
+          "retroalimentacion": "Más potencia hace la búsqueda lineal un poco más rápida, pero sigue revisando dos millones de registros cada vez; el costo sube y el problema crece con los usuarios.",
+          "desenlace": "La búsqueda baja a diez segundos y la factura del servidor se triplica. Con la campaña, los usuarios se cansan de esperar. El gerente pregunta por qué se gastó tanto para tan poco."
+        },
+        {
+          "id": "c",
+          "texto": "Descargar todos los registros a la app y buscar ahí.",
+          "correcta": false,
+          "retroalimentacion": "Traer millones de registros al celular es lento, inseguro y expone datos de otras personas.",
+          "desenlace": "La app tarda minutos en abrir y consume los datos móviles de los usuarios. Además, cualquiera podría ver correos ajenos. El área de seguridad detiene la versión antes de publicarla."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n6",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "Apellido y Después Nombre",
+      "contexto": "La lista de asistencia debe ordenarse por apellido y, cuando dos alumnos se apellidan igual, por nombre. Hoy el reporte ordena solo por apellido y los tres «Hernández» salen en un orden distinto cada vez, aunque la regla pide orden alfabético.",
+      "tecnicismos": [
+        "algoritmo-ordenamiento",
+        "orden-lexicografico"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar un algoritmo de ordenamiento con clave compuesta: primero apellido y luego nombre.",
+          "correcta": true,
+          "retroalimentacion": "Una clave compuesta resuelve los empates del primer criterio con el segundo, siempre en el mismo orden alfabético.",
+          "desenlace": "Con la clave compuesta, la lista sale siempre igual y los «Hernández» quedan ordenados por nombre. Los maestros encuentran a sus alumnos al instante. La lista se usa en toda la escuela."
+        },
+        {
+          "id": "b",
+          "texto": "Ordenar dos veces por apellido para que quede bien.",
+          "correcta": false,
+          "retroalimentacion": "Repetir el mismo criterio no agrega información para desempatar; el orden de los empates sigue sin definirse.",
+          "desenlace": "La lista sigue cambiando de un día a otro y los maestros se confunden al pasar lista. Un alumno aparece con falta por error. Su mamá reclama en la dirección."
+        },
+        {
+          "id": "c",
+          "texto": "Ordenar solo por nombre para evitar los empates de apellido.",
+          "correcta": false,
+          "retroalimentacion": "Cambiar el criterio rompe la regla pedida y solo traslada los empates a otros nombres repetidos.",
+          "desenlace": "Ahora la lista no sirve para nada porque nadie busca a los alumnos por nombre. Además, los «José» siguen empatados. La coordinación pide revertir el cambio."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n7",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "¿Cuántos Pasos para un Millón?",
+      "contexto": "En una junta, el gerente pregunta cuántas comparaciones necesita como máximo la búsqueda binaria para encontrar un registro entre un millón ordenado. Quiere entender su complejidad para saber si vale la pena ordenar la lista antes de buscar.",
+      "tecnicismos": [
+        "busqueda-binaria",
+        "complejidad"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Un millón, porque hay que revisar todos.",
+          "correcta": false,
+          "retroalimentacion": "Eso es el peor caso de la búsqueda lineal; la binaria descarta la mitad en cada paso.",
+          "desenlace": "El gerente concluye que ordenar no sirve de nada y se queda con la búsqueda lineal. El sistema sigue lento. Meses después otra área hace el cambio y se lleva el crédito."
+        },
+        {
+          "id": "b",
+          "texto": "Unas 20, porque cada comparación descarta la mitad de los registros.",
+          "correcta": true,
+          "retroalimentacion": "La complejidad de la búsqueda binaria crece con el logaritmo de los datos: 2 elevado a 20 es más de un millón, así que bastan unas 20 comparaciones.",
+          "desenlace": "Con ese dato, el gerente aprueba ordenar la lista una vez y buscar con búsqueda binaria. Las consultas pasan de segundos a milisegundos. Tu explicación se vuelve la diapositiva favorita de la junta."
+        },
+        {
+          "id": "c",
+          "texto": "500,000, porque en promedio se encuentra a la mitad.",
+          "correcta": false,
+          "retroalimentacion": "Ese es el promedio de la búsqueda lineal; la binaria no revisa los datos uno por uno.",
+          "desenlace": "El gerente cree que la mejora será de apenas la mitad y no autoriza el cambio. El sistema sigue igual de lento en temporada alta. Los clientes se quejan de esperar."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n8",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "El Expediente que Tarda",
+      "contexto": "En la clínica, la recepción busca expedientes por CURP entre 300,000 registros sin ningún orden. Cada búsqueda revisa los registros uno por uno y se hacen miles al día. Las filas en recepción ya salen a la calle.",
+      "tecnicismos": [
+        "busqueda-lineal",
+        "indice",
+        "base-datos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Seguir con búsqueda lineal, porque siempre encuentra el expediente.",
+          "correcta": false,
+          "retroalimentacion": "La búsqueda lineal es correcta, pero con miles de búsquedas diarias sobre 300,000 registros el tiempo total se vuelve enorme.",
+          "desenlace": "Las búsquedas siguen tardando y la recepción sigue saturada. Los pacientes pierden sus citas por la espera. La dirección de la clínica pide soluciones urgentes."
+        },
+        {
+          "id": "b",
+          "texto": "Crear un índice por CURP en la base de datos.",
+          "correcta": true,
+          "retroalimentacion": "Cuando se busca muchas veces por la misma columna, un índice evita revisar los registros uno por uno.",
+          "desenlace": "Con el índice, cada búsqueda tarda milisegundos y la fila desaparece. La recepción atiende el doble de pacientes por hora. Otras clínicas de la red piden el mismo cambio."
+        },
+        {
+          "id": "c",
+          "texto": "Imprimir los expedientes en orden alfabético para buscarlos en papel.",
+          "correcta": false,
+          "retroalimentacion": "Volver al papel no aprovecha la base de datos y se desactualiza al instante.",
+          "desenlace": "El listado impreso queda viejo en una semana y nadie encuentra los expedientes nuevos. La recepción mezcla papel y sistema. El caos aumenta."
         }
       ]
     }
@@ -126,6 +589,165 @@
       ]
     },
     {
+      "id": "la-repr-p2",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Diagrama de Ochenta Cajas",
+      "contexto": "El proceso de becas de la universidad está dibujado en un diagrama de flujo de ochenta cajas que nadie entiende. Mañana llega la auditoría y te piden explicarlo en diez minutos.",
+      "tecnicismos": [
+        "diagrama-flujo",
+        "descomposicion",
+        "pseudocodigo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Descomponer el proceso en subprocesos con un diagrama corto para cada uno.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La descomposición divide un problema grande en partes que se entienden y revisan por separado.",
+          "desenlace_exito": "Separas el proceso en solicitud, revisión, dictamen y pago, cada uno en una página. La auditoría lo entiende en minutos. El área de becas usa tus diagramas para capacitar al personal nuevo.",
+          "desenlace_fallo": "Al descomponerlo descubres pasos que no encajan en ningún subproceso y la noche no alcanza. Llegas a la auditoría con el diagrama a medias. Te piden regresar en una semana."
+        },
+        {
+          "id": "b",
+          "texto": "Reescribir todo el proceso en pseudocódigo de una página.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 25,
+          "retroalimentacion": "El pseudocódigo resume la lógica, aunque un proceso con muchos responsables a veces se entiende mejor en diagramas.",
+          "desenlace_exito": "Tu página de pseudocódigo muestra la lógica completa y los auditores la siguen sin problema. Además encuentras dos pasos repetidos que se eliminan. El área de becas te pide mantener el documento.",
+          "desenlace_fallo": "El pseudocódigo queda demasiado técnico y la auditora no lo entiende. Termina pidiendo el diagrama original. La revisión se alarga toda la mañana."
+        },
+        {
+          "id": "c",
+          "texto": "Sentarte con el personal de becas para que te expliquen cada caja.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Quien opera el proceso conoce los atajos y excepciones que el diagrama no dice.",
+          "desenlace_exito": "La encargada te explica el proceso en una hora y juntos tachan veinte cajas que ya no se usan. El diagrama queda de la mitad. La auditoría lo revisa sin observaciones.",
+          "desenlace_fallo": "El personal de becas está en periodo de entrega de resultados y no tiene tiempo. Te quedas con dudas sobre la mitad del diagrama. En la auditoría no sabes responder varias preguntas."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-p3",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Riego del Invernadero",
+      "contexto": "Una cooperativa de productores de jitomate quiere un algoritmo de riego automático: debe recibir la humedad del suelo, la hora y si llovió, y decidir cuántos minutos regar. La primera prueba en el invernadero es pasado mañana.",
+      "tecnicismos": [
+        "diagrama-flujo",
+        "entrada-salida",
+        "prueba-escritorio"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dibujar un diagrama de flujo con cada decisión y sus salidas.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un diagrama de flujo deja ver todas las decisiones del algoritmo y qué pasa en cada camino.",
+          "desenlace_exito": "El diagrama muestra que no habías pensado qué hacer si el sensor falla. Agregas esa salida y la prueba sale perfecta. Los productores pegan el diagrama junto al tablero de control.",
+          "desenlace_fallo": "El diagrama se vuelve tan grande que no terminas a tiempo. En la prueba el sistema riega de noche porque faltó una decisión. Las plantas aguantan, pero hay que repetir la prueba."
+        },
+        {
+          "id": "b",
+          "texto": "Seguir el algoritmo a mano con casos de ejemplo: suelo seco, mojado, de noche y después de lluvia.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La prueba de escritorio con casos de ejemplo descubre errores antes de tocar el invernadero.",
+          "desenlace_exito": "En el caso de «después de lluvia» el algoritmo regaba igual. Lo corriges antes de la prueba y todo funciona. La cooperativa ahorra agua desde la primera semana.",
+          "desenlace_fallo": "Pruebas los casos fáciles, pero no el de un sensor que marca valores imposibles. En la prueba el sensor falla y el algoritmo riega sin parar. Se inunda una parte del invernadero."
+        },
+        {
+          "id": "c",
+          "texto": "Validar con los productores qué datos de entrada usan ellos para decidir el riego.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Los datos de entrada correctos salen de quien conoce el cultivo; un algoritmo puede ser impecable y aun así usar los datos equivocados.",
+          "desenlace_exito": "Los productores te cuentan que también miden la temperatura, y la agregas como entrada. La prueba es un éxito. Te invitan a comer en la cosecha.",
+          "desenlace_fallo": "La reunión se cancela porque es temporada de cosecha. Programas con tus suposiciones y en la prueba el riego no coincide con lo que ellos harían. Desconfían del sistema."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-p4",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "Las Inscripciones del Lunes",
+      "contexto": "La escuela quiere automatizar las inscripciones: revisar el pago, revisar el cupo de cada materia, checar choques de horario y asignar grupo. El sistema debe estar listo el lunes y todo está escrito en un solo correo largo de la dirección.",
+      "tecnicismos": [
+        "descomposicion",
+        "pseudocodigo",
+        "codigo-fuente"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Descomponer el problema en partes y escribir pseudocódigo de cada una.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Descomponer en partes y describir cada una en pseudocódigo permite construir y probar por separado.",
+          "desenlace_exito": "Separas el problema en cuatro partes y cada una queda clara en pseudocódigo. El equipo las programa en paralelo y las pruebas pasan. El lunes las inscripciones corren sin filas.",
+          "desenlace_fallo": "La descomposición deja un hueco: nadie se encarga de los alumnos que reprobaron una materia previa. El lunes hay que atender esos casos a mano. Se forman filas en servicios escolares."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar el pseudocódigo en pareja antes de programar.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Otra persona encuentra pasos ambiguos o faltantes en el pseudocódigo antes de que se vuelvan errores de código.",
+          "desenlace_exito": "Una compañera detecta que el choque de horarios se revisaba después de asignar el grupo. Lo reacomodan y el sistema sale bien. Servicios escolares agradece el lunes tranquilo.",
+          "desenlace_fallo": "La revisión se queda en detalles de redacción y nadie revisa el orden de los pasos. El lunes, decenas de alumnos quedan inscritos en dos materias a la misma hora. Hay que reasignarlos uno por uno."
+        },
+        {
+          "id": "c",
+          "texto": "Pasar directo al código fuente para ganar tiempo.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 20,
+          "retroalimentacion": "Programar sin representar antes el algoritmo puede funcionar en problemas pequeños, pero en uno grande se pierde la vista de conjunto.",
+          "desenlace_exito": "Tienes un buen día y el código sale casi perfecto a la primera. Solo corriges un detalle el domingo. Las inscripciones funcionan, aunque nadie más entiende bien el código.",
+          "desenlace_fallo": "El código crece sin orden y el domingo en la noche ya nadie sabe qué hace cada parte. El lunes el sistema asigna grupos llenos. La escuela vuelve a inscribir en papel."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-p5",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "Entregar Primero lo Cercano",
+      "contexto": "La instrucción para la app de repartidores dice «entrega primero los pedidos cercanos». Los repartidores reciben rutas absurdas: van y vienen por la misma avenida. El algoritmo no define cercano a qué ni sus datos de entrada. El lunes empieza la temporada navideña.",
+      "tecnicismos": [
+        "algoritmo",
+        "entrada-salida"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Precisar el criterio: distancia desde la ubicación actual del repartidor, recalculada tras cada entrega.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un algoritmo necesita criterios precisos; definir la entrada exacta (la ubicación actual) cambia por completo el resultado.",
+          "desenlace_exito": "Con el criterio preciso, las rutas se acortan casi a la mitad. Los repartidores terminan antes y los clientes reciben sus pedidos más rápido. La temporada navideña arranca sin quejas.",
+          "desenlace_fallo": "Recalcular tras cada entrega hace que la app se trabe con tantos pedidos. Los repartidores esperan minutos entre entrega y entrega. Hay que regresar a la versión anterior en plena temporada."
+        },
+        {
+          "id": "b",
+          "texto": "Redactar el algoritmo en pasos numerados y revisarlo contra casos de ejemplo.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Escribir los pasos y probarlos con casos concretos revela qué parte de la instrucción era ambigua.",
+          "desenlace_exito": "Al escribir los pasos notas que «cercano» tenía tres significados posibles. Eliges uno, lo pruebas con rutas reales y funciona. El documento queda como especificación del algoritmo.",
+          "desenlace_fallo": "Los pasos quedan claros, pero los casos de prueba no incluyen calles de un solo sentido. Las rutas siguen dando vueltas en el centro. Los repartidores siguen quejándose."
+        },
+        {
+          "id": "c",
+          "texto": "Preguntar a los repartidores cómo arman ellos sus rutas.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Quien hace el trabajo conoce reglas no escritas que el algoritmo debería tomar en cuenta.",
+          "desenlace_exito": "Los repartidores te explican que agrupan por colonia y evitan ciertas avenidas en hora pico. Conviertes eso en reglas y las rutas mejoran notablemente. Te ganas su confianza.",
+          "desenlace_fallo": "Cada repartidor te da una regla distinta y no logras un criterio común. El algoritmo queda igual para la temporada. Los pedidos navideños llegan tarde."
+        }
+      ]
+    },
+    {
       "id": "la-busq-p",
       "subtema": "logica-algoritmos:1",
       "titulo": "Los Mil Pedidos Revueltos",
@@ -162,6 +784,164 @@
           "retroalimentacion": "Planificar una clasificación en etapas (por mes, luego por día) simplifica un problema grande en subproblemas manejables.",
           "desenlace_exito": "Agrupas los pedidos por mes y luego cada grupo por día; el resto es sencillo. Los pedidos salen ordenados a tiempo y el método resulta fácil de explicar al equipo. La tienda lo adopta para sus reportes mensuales.",
           "desenlace_fallo": "La planeación se lleva tanto tiempo que quedan minutos para ejecutarla. Ordenas la mitad de los pedidos y el resto sale al día siguiente. La lección queda clara: planear sirve, pero también hay que medir el tiempo disponible."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-p2",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "La Burbuja del Cierre de Mes",
+      "contexto": "El reporte de cierre de mes ordena 500,000 movimientos con ordenamiento burbuja, cuya complejidad es O(n²). Con pocos datos funcionaba, pero ahora tarda más de seis horas y el consejo lo necesita hoy a las 6 de la tarde.",
+      "tecnicismos": [
+        "ordenamiento-burbuja",
+        "complejidad",
+        "ordenamiento-mezcla"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cambiar a un algoritmo O(n log n), como el ordenamiento por mezcla.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La complejidad dice cómo crece el tiempo: un algoritmo O(n log n) ordena medio millón de datos en segundos, mientras uno O(n²) tarda horas.",
+          "desenlace_exito": "Con el ordenamiento por mezcla, el reporte termina en segundos. Lo comparas con el de la burbuja de un mes pasado y coinciden. El consejo recibe el reporte con tiempo de sobra.",
+          "desenlace_fallo": "Tu implementación del ordenamiento por mezcla tiene un error al combinar las mitades y pierde algunos movimientos. El reporte sale rápido, pero no cuadra. Hay que volver a la burbuja y entregar tarde."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que la base de datos ordene los movimientos en la consulta.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Las bases de datos ya incluyen algoritmos de ordenamiento eficientes y probados; usarlos evita reinventar.",
+          "desenlace_exito": "Mueves el ordenamiento a la consulta y el reporte tarda menos de un minuto. El código queda más corto. El consejo recibe su reporte y nadie se entera del susto.",
+          "desenlace_fallo": "La consulta ordena por fecha como texto y los movimientos de diciembre quedan antes que los de febrero. El reporte sale rápido, pero desordenado. Hay que revisar la consulta contrarreloj."
+        },
+        {
+          "id": "c",
+          "texto": "Repartir los movimientos entre varias computadoras del equipo y juntar los resultados.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Repartir ayuda, pero con un algoritmo O(n²) cada parte sigue siendo lenta y juntar resultados ordenados requiere cuidado.",
+          "desenlace_exito": "Entre cuatro computadoras, cada parte termina en una hora y juntan los resultados ordenados. El reporte llega justo a las 6. Acuerdan cambiar el algoritmo el próximo mes.",
+          "desenlace_fallo": "Las partes terminan, pero al juntarlas simplemente las pegan una tras otra sin ordenar. El reporte llega a tiempo y completamente desordenado. El consejo lo devuelve."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-p3",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "Diez Millones de Líneas de Bitácora",
+      "contexto": "La app de transporte empezó a fallar en algún momento de la madrugada y el registro del servidor tiene diez millones de líneas ordenadas por hora. Necesitas encontrar la primera línea con error antes de la junta de las 10.",
+      "tecnicismos": [
+        "busqueda-binaria",
+        "busqueda-lineal"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Aplicar búsqueda binaria por la hora: revisar la mitad y descartar la parte sin errores.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Como el registro está ordenado por hora, la búsqueda binaria encuentra el primer error en unas veinte revisiones.",
+          "desenlace_exito": "En veinte saltos encuentras la línea exacta: a las 3:42 cambió un certificado. Lo explicas en la junta con evidencia. El equipo agrega una alerta para ese certificado.",
+          "desenlace_fallo": "El registro tiene horas en dos zonas horarias mezcladas y tu búsqueda salta al lugar equivocado. Llegas a la junta con una causa incorrecta. Hay que repetir la investigación."
+        },
+        {
+          "id": "b",
+          "texto": "Leer el registro con búsqueda lineal desde el principio hasta encontrar el error.",
+          "atributo": "teoria",
+          "probabilidad_base": 20,
+          "retroalimentacion": "La búsqueda lineal siempre encuentra el resultado, pero con diez millones de líneas puede tardar demasiado.",
+          "desenlace_exito": "Con un buen filtro, la búsqueda lineal termina en media hora y encuentra el error. Llegas a la junta justo a tiempo. Propones guardar los registros con índices por hora.",
+          "desenlace_fallo": "La lectura avanza lentísimo y a las 10 vas en la línea cuatro millones. Llegas a la junta sin respuesta. El gerente pide que lo resuelvas ese mismo día."
+        },
+        {
+          "id": "c",
+          "texto": "Repartir el registro en partes y que cada compañero revise una.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Dividir el trabajo acelera la búsqueda, pero hay que coordinar quién revisa qué.",
+          "desenlace_exito": "Cada quien revisa un bloque de horas y una compañera encuentra el error a los veinte minutos. Llegan a la junta con la causa y la solución. El equipo sale reforzado.",
+          "desenlace_fallo": "Dos personas revisan el mismo bloque y nadie revisa el de las 3 a las 4. No aparece el error. La junta termina sin conclusiones."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-p4",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "García Sin Acento",
+      "contexto": "En el buscador de la biblioteca municipal, quien escribe «Garcia» no encuentra los libros de «García», y en el orden alfabético la «Ñ» aparece al final de todo. La feria del libro empieza mañana y el catálogo se mostrará en una pantalla en la entrada.",
+      "tecnicismos": [
+        "orden-lexicografico",
+        "base-datos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Normalizar los textos sin acentos para comparar, pero mostrarlos como se escribieron.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Comparar una versión normalizada del texto permite encontrar «García» aunque se escriba sin acento, sin alterar el dato original.",
+          "desenlace_exito": "Con la búsqueda normalizada, cualquier forma de escribir el nombre encuentra el libro. Los visitantes de la feria encuentran todo al primer intento. La bibliotecaria te pide hacer lo mismo con los títulos.",
+          "desenlace_fallo": "Normalizas también la «ñ» y ahora «año» y «ano» aparecen juntos en la búsqueda. Algunos visitantes se ríen y otros se quejan. Hay que ajustar la regla antes del segundo día."
+        },
+        {
+          "id": "b",
+          "texto": "Configurar la base de datos con las reglas de orden del español.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Las bases de datos permiten elegir reglas de comparación por idioma, que respetan acentos y la «ñ» en el orden alfabético.",
+          "desenlace_exito": "Con la configuración del español, la «Ñ» queda después de la «N» y las búsquedas ignoran acentos. El catálogo se ve impecable en la entrada de la feria. La biblioteca lo presume en redes.",
+          "desenlace_fallo": "Cambiar la configuración obliga a reconstruir la tabla y el proceso tarda toda la noche. En la mañana el catálogo sigue fuera de línea. La feria empieza con listas impresas."
+        },
+        {
+          "id": "c",
+          "texto": "Probar el buscador con las bibliotecarias para encontrar todos los casos raros.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Quienes atienden al público conocen los errores de escritura más comunes de los usuarios.",
+          "desenlace_exito": "Las bibliotecarias prueban veinte nombres difíciles y descubren otros problemas, como los apellidos con «Mc». Corriges todo en la tarde. La feria abre con un buscador que encuentra todo.",
+          "desenlace_fallo": "Las bibliotecarias están armando los stands y no alcanzan a probar. Descubres los casos raros hasta que los visitantes se quejan. El buscador queda a medias toda la feria."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-p5",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "Las Veinte Mejores Ofertas",
+      "contexto": "La portada de la tienda en línea muestra las veinte ofertas con mayor descuento y las recalcula cada cinco minutos ordenando los 50,000 productos con un algoritmo de ordenamiento de complejidad O(n log n). En el Buen Fin la página tarda en cargar y las ventas empiezan a caer.",
+      "tecnicismos": [
+        "algoritmo-ordenamiento",
+        "complejidad",
+        "indice"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Buscar solo los veinte mayores sin ordenar toda la lista.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Si solo importan los primeros veinte, se pueden obtener sin ordenar todo; elegir el algoritmo según lo que se necesita reduce la complejidad.",
+          "desenlace_exito": "Con un algoritmo que solo mantiene los veinte mejores, el cálculo pasa de segundos a milisegundos. La portada carga al instante. Las ventas del Buen Fin se recuperan esa misma tarde.",
+          "desenlace_fallo": "Tu algoritmo olvida actualizar la lista cuando un producto se agota. La portada muestra ofertas sin existencias. Los clientes se frustran y abandonan la tienda."
+        },
+        {
+          "id": "b",
+          "texto": "Crear un índice por porcentaje de descuento en la base de datos.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un índice mantiene los descuentos ordenados y permite leer los primeros veinte directamente.",
+          "desenlace_exito": "Con el índice, la consulta regresa las veinte ofertas en milisegundos. La portada vuela incluso con el tráfico del Buen Fin. Tu líder agrega el índice a la lista de buenas prácticas.",
+          "desenlace_fallo": "El índice se crea en pleno Buen Fin y bloquea la tabla de productos varios minutos. La tienda deja de vender un rato. Para cuando termina, ya hubo muchas quejas."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar la lista en memoria y que otro compañero la refresque cada hora a mano.",
+          "atributo": "equipo",
+          "probabilidad_base": 20,
+          "retroalimentacion": "Guardar un resultado temporal ayuda al rendimiento, pero depender de una persona para actualizarlo es frágil.",
+          "desenlace_exito": "Tu compañero refresca la lista puntualmente y la portada carga rápido todo el día. Funciona como parche mientras arreglan el algoritmo. El dueño ni se entera del problema.",
+          "desenlace_fallo": "Tu compañero se va a comer y la lista no se actualiza en tres horas. La portada muestra ofertas que ya terminaron. Los clientes reclaman precios que ya no existen."
         }
       ]
     }

@@ -87,8 +87,10 @@
           {% endif %}
           <div><dt>Inicias con</dt><dd>{{ perfil.vidas }} vidas · {{ perfil.xp }} XP</dd></div>
           <div class="tm-elegidos"><dt>Temas elegidos (<span id="prev-cuenta">0</span>)</dt><dd id="prev-modulo">Aún no has elegido ninguno</dd></div>
+          <div class="tm-largo"><dt>Duración</dt><dd id="prev-largo">Elige al menos un tema</dd></div>
         </dl>
-        <p class="tm-nota">La partida dura hasta {{ max_eventos }} eventos.</p>
+        <p class="tm-nota">Solo se juegan eventos de tus temas: entre más temas elijas, más larga es la partida (hasta {{ max_eventos }} eventos).</p>
+        {{ largo_partida|json_script:"largo-partida" }}
 
         <!-- RN02: al menos un tema obligatorio -->
         <p class="pc-error" id="error-modulo" role="alert" {% if not error %}hidden{% endif %}>{{ error|default:"Debes seleccionar al menos un tema para continuar." }}</p>

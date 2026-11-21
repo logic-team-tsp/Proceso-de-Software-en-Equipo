@@ -1,24 +1,31 @@
 {
-  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (50/10 = 5). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje y atributos, 1 a 10). Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_evento sea >= eventos jugados.",
-  "max_eventos_por_partida": 20,
+  "_ayuda": "Reglas del juego (CU-01). Edita numeros y textos y refresca el navegador; no hace falta reiniciar. xp.por_nivel / xp.por_acierto = aciertos para subir de nivel (30/10 = 3). Cada nivel da 1 punto de atributo; niveles marca los topes (personaje hasta 20, cada atributo hasta 16). Balance: se empieza con 9 puntos y se ganan como mucho 19 (en una partida de 60 casi perfecta), así que solo alcanza para llevar 1 o 2 atributos al máximo; con +4 % por punto, una opción de base 30-35 % llega a 94-95 % con el atributo al máximo. Valida con: python manage.py validar_escenarios. finales.derrota: un final por tramo; se elige el primero cuyo hasta_porcentaje sea >= la parte de la partida jugada (cuartos de la partida, sea corta o larga). Largo: la partida solo usa los eventos de los subtemas elegidos, sin relleno ni repetir, hasta max_eventos_por_partida; con 8 normales y 5 de probabilidad por subtema da unos 10 eventos por tema (1 tema = 10, 6 o más = 60). minutos_por_evento es lo que se muestra como duración aproximada en la pantalla de temas. bloques: cada uno llega hasta su hasta_porcentaje de la partida y probabilidad_evento es la parte exacta de sus eventos que son de probabilidad.",
+  "max_eventos_por_partida": 60,
+  "minutos_por_evento": { "minimo": 1, "maximo": 1.5 },
   "bloques": [
     {
       "capitulo": "II",
       "nombre": "Los Cimientos",
-      "hasta_porcentaje": 33,
+      "hasta_porcentaje": 25,
       "probabilidad_evento": 0.0
     },
     {
       "capitulo": "III",
       "nombre": "¿Esto es Difícil?",
-      "hasta_porcentaje": 66,
-      "probabilidad_evento": 0.5
+      "hasta_porcentaje": 50,
+      "probabilidad_evento": 0.15
     },
     {
       "capitulo": "IV",
       "nombre": "El Mundo Real",
+      "hasta_porcentaje": 75,
+      "probabilidad_evento": 0.25
+    },
+    {
+      "capitulo": "V",
+      "nombre": "El Gran Lanzamiento",
       "hasta_porcentaje": 100,
-      "probabilidad_evento": 0.8
+      "probabilidad_evento": 0.4
     }
   ],
   "hp": {
@@ -26,11 +33,11 @@
   },
   "xp": {
     "por_acierto": 10,
-    "por_nivel": 50
+    "por_nivel": 30
   },
   "niveles": {
-    "maximo_personaje": 10,
-    "maximo_atributo": 10
+    "maximo_personaje": 20,
+    "maximo_atributo": 16
   },
   "puntos": {
     "por_acierto": 100,
@@ -39,7 +46,7 @@
   "probabilidad": {
     "minima": 5,
     "maxima": 95,
-    "bonus_por_punto_atributo": 6
+    "bonus_por_punto_atributo": 4
   },
   "atributos": [
     {
@@ -183,22 +190,22 @@
     },
     "derrota": [
       {
-        "hasta_evento": 5,
+        "hasta_porcentaje": 25,
         "titulo": "El Primer Commit",
         "texto": "Apenas llevabas unos días en el equipo y los errores se acumularon antes de que pudieras agarrar ritmo. Tu líder técnica te reasigna a tareas de soporte mientras repasas los fundamentos. No es el fin: casi todos los grandes desarrolladores tuvieron un primer sprint desastroso."
       },
       {
-        "hasta_evento": 10,
+        "hasta_porcentaje": 50,
         "titulo": "Atorado a Medio Sprint",
         "texto": "Superaste las primeras pruebas y empezabas a sentirte parte del equipo, pero a mitad del sprint las malas decisiones te alcanzaron. El proyecto se entrega tarde y te toca presentar el post mortem frente a todos. Al menos ahora sabes exactamente qué harías distinto."
       },
       {
-        "hasta_evento": 15,
+        "hasta_porcentaje": 75,
         "titulo": "Tan Cerca del Release",
         "texto": "Llegaste más lejos que la mayoría: tus decisiones sostuvieron el proyecto durante semanas. Pero en la recta final una cadena de errores tumbó el release y el cliente pidió posponer la entrega. El equipo reconoce tu avance; solo te faltó cuidar los detalles al final."
       },
       {
-        "hasta_evento": 20,
+        "hasta_porcentaje": 100,
         "titulo": "A Un Paso de la Meta",
         "texto": "Estuviste a nada de cerrar el proyecto. Dominaste casi todo, pero en el último tramo una decisión te costó la energía que te quedaba. La clienta lamenta el retraso, aunque ya te pidió para su siguiente proyecto: sabe de lo que eres capaz."
       }

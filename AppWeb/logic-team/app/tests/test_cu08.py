@@ -23,6 +23,7 @@ from app.models import (
 )
 from app.services import escenarios, logros, motor_partida
 from app.services.tecnicismos import Jugador
+from app.tests.test_cu01 import tiradas
 from app.views_personalizar import PERFILES
 
 PERFIL = PERFILES[0]
@@ -56,16 +57,22 @@ def _decidir(client, partida, correcta=True):
 
 
 def _jugar_hasta_el_final(client, partida, correcta=True):
-    """Juega la partida completa y regresa todos los logros nuevos que se notificaron."""
+    """Juega la partida completa y regresa todos los logros nuevos que se notificaron.
+
+    Las tiradas de los eventos de probabilidad se fijan (éxito si correcta, fallo si no) para
+    que el resultado no dependa de la suerte ni de cuántos eventos tenga la historia.
+    """
     nuevos = []
     estado = client.get(f"/partida/{partida.id}/estado/").json()
-    while estado["fase"] != "fin":
-        if estado["fase"] == "mejora":
-            estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": "teoria"})
-            estado = estado.json()
-            continue
-        nuevos += (_decidir(client, partida, correcta).get("cu08") or {}).get("nuevos", [])
-        estado = _post(client, f"/partida/{partida.id}/continuar/").json()
+    with tiradas(exito=correcta):
+        while estado["fase"] != "fin":
+            if estado["fase"] == "mejora":
+                bajo = min(estado["atributos"], key=lambda a: a["valor"])["id"]
+                estado = _post(client, f"/partida/{partida.id}/mejorar/", {"atributo": bajo})
+                estado = estado.json()
+                continue
+            nuevos += (_decidir(client, partida, correcta).get("cu08") or {}).get("nuevos", [])
+            estado = _post(client, f"/partida/{partida.id}/continuar/").json()
     return nuevos
 
 
@@ -510,7 +517,9 @@ def test_el_nivel_se_ve_en_el_panel_y_en_el_post_game(client):
     _jugar_hasta_el_final(client, partida)
     partida.refresh_from_db()
     datos = client.get("/api/logros/nivel/").json()
-    assert datos["xp_total"] == partida.aciertos * 10 and datos["titulo"] == "Becario"
+    reglas = logros.cargar()["nivel"]
+    titulo = logros.titulo_de(logros.nivel_de_xp(partida.aciertos * 10, reglas), reglas)
+    assert datos["xp_total"] == partida.aciertos * 10 and datos["titulo"] == titulo
     assert client.get("/api/logros/").json()["nivel"]["xp_total"] == datos["xp_total"]
     html = client.get(f"/partida/{partida.id}/fin/").content.decode()
     assert "Nivel de jugador" in html and f"+{partida.aciertos * 10} XP" in html

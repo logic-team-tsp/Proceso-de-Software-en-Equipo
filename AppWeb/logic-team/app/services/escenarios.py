@@ -132,7 +132,7 @@ def _validar_config(config, errores):
 
 
 def _validar_finales(finales, donde, errores):
-    """Un final de partida completada y varios de derrota, uno por tramo de eventos."""
+    """Un final de partida completada y varios de derrota, uno por tramo de la partida (en %)."""
     completada = finales.get("completada", {})
     if not _texto_ok(completada.get("titulo")) or not _texto_ok(completada.get("texto")):
         errores.append(f"{donde}: finales.completada necesita titulo y texto")
@@ -142,9 +142,11 @@ def _validar_finales(finales, donde, errores):
         return
     anterior = 0
     for final in derrotas:
-        tope = final.get("hasta_evento")
-        if not isinstance(tope, int) or tope <= anterior:
-            errores.append(f"{donde}: 'hasta_evento' de finales.derrota debe ir en orden")
+        tope = final.get("hasta_porcentaje")
+        if not isinstance(tope, int) or not anterior < tope <= 100:
+            errores.append(
+                f"{donde}: 'hasta_porcentaje' de finales.derrota debe ir en orden, hasta 100"
+            )
         else:
             anterior = tope
         if not _texto_ok(final.get("titulo")) or not _texto_ok(final.get("texto")):

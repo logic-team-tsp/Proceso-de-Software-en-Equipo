@@ -13,11 +13,23 @@ PERFIL = PERFILES[0]
 TRES = ["ingenieria-requerimientos:0", "ingenieria-requerimientos:1", "ingenieria-requerimientos:2"]
 
 
-def _partida(hp=2, temas=None):
+def _partida(hp=2, temas=None, hp_max=3):
+    """Las reglas de CU06 se prueban con un máximo de 3 vidas: no dependen de cuántas vidas
+    da el perfil (5 desde la Iteración 3; ver test_el_maximo_es_el_del_perfil)."""
     partida = motor_partida.crear_partida(PERFIL, temas or TRES, semilla=1)
-    partida.hp = hp
+    partida.hp, partida.hp_max = hp, hp_max
     partida.save()
     return partida
+
+
+@pytest.mark.django_db
+def test_el_maximo_es_el_del_perfil(client):
+    partida = motor_partida.crear_partida(PERFIL, TRES, semilla=1)
+    assert partida.hp == partida.hp_max == PERFIL["vidas"] == 5
+    partida.hp = 4
+    partida.save()
+    assert conseguir_vidas.puede_conseguir(partida) is True
+    assert _jugar_ronda(client, partida, aciertos=5)["hp"] == 5
 
 
 def _url(partida, accion=""):

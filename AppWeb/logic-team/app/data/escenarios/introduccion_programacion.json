@@ -52,6 +52,244 @@
       ]
     },
     {
+      "id": "ip-tipos-n2",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Teléfono sin Cero",
+      "contexto": "La empresa lanza un registro de clientes para una cadena de farmacias. En las pruebas, los números que empiezan con cero aparecen recortados y las claves con guiones provocan error al guardar. Tu compañero propone dejar la columna teléfono como número entero «porque son puros dígitos». Debes elegir el tipo de dato correcto.",
+      "tecnicismos": [
+        "tipo-dato",
+        "entero",
+        "cadena-texto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Guardar el teléfono como entero (int) para ahorrar espacio.",
+          "correcta": false,
+          "retroalimentacion": "Un entero elimina los ceros a la izquierda y no admite guiones ni el signo +. Un teléfono no se suma ni se multiplica: es un identificador, no una cantidad.",
+          "desenlace": "Los teléfonos con lada que empieza en cero pierden su primer dígito y los mensajes de confirmación llegan a números que no existen. La farmacia recibe quejas de quienes nunca recibieron su receta digital. Hay que migrar toda la columna un domingo por la noche."
+        },
+        {
+          "id": "b",
+          "texto": "Guardar el teléfono como cadena de texto y validar su formato.",
+          "correcta": true,
+          "retroalimentacion": "El tipo de dato depende de las operaciones que se harán con el valor: un teléfono se compara y se muestra, nunca se opera, así que una cadena conserva todos sus caracteres.",
+          "desenlace": "La cadena conserva ceros, guiones y el +52 de quienes se registran desde el extranjero. Agregas una validación sencilla de formato y los mensajes llegan a todos. Tu líder técnica usa tu tabla como ejemplo en la siguiente capacitación."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar el teléfono como decimal (float) por si alguien escribe extensiones.",
+          "correcta": false,
+          "retroalimentacion": "Un float no representa texto y además redondea números largos. Elegir un tipo numérico para un dato que no se opera solo trae problemas.",
+          "desenlace": "Los números de diez dígitos se muestran en notación científica y algunos pierden los últimos dígitos por redondeo. Nadie puede llamar a los clientes que ganaron el sorteo de fin de mes. El área de soporte pasa una semana corrigiendo registros a mano."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n3",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Contador que Se Volvió Negativo",
+      "contexto": "La plataforma de videos de la escuela guarda las reproducciones en un entero de 32 bits, cuyo máximo es 2,147,483,647. Un video del festival se vuelve viral y el equipo de datos avisa que el contador está por llegar al límite: si se desborda, se volverá negativo. Algo parecido le pasó a una plataforma de videos muy famosa en 2014.",
+      "tecnicismos": [
+        "entero",
+        "desbordamiento",
+        "tipo-dato"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Reiniciar el contador a cero cada vez que llegue al máximo.",
+          "correcta": false,
+          "retroalimentacion": "Reiniciar esconde el problema y falsea el dato. El desbordamiento se resuelve eligiendo un tipo de dato con el rango que el valor realmente necesita.",
+          "desenlace": "El video del festival aparece con menos vistas que el de la junta de padres y nadie entiende por qué. El área de comunicación publica cifras equivocadas en redes. Cuando se descubre el reinicio, hay que reconstruir el historial desde los registros del servidor."
+        },
+        {
+          "id": "b",
+          "texto": "Cambiar el tipo de dato del contador a un entero de 64 bits.",
+          "correcta": true,
+          "retroalimentacion": "Un entero de 64 bits llega a más de nueve trillones: elegir el tipo de dato con el rango adecuado evita el desbordamiento sin perder exactitud.",
+          "desenlace": "Migras la columna a 64 bits en una ventana de mantenimiento y el contador sigue subiendo sin problema. El equipo de datos agrega una alerta para revisar otros contadores cercanos a su límite. El video del festival rompe récord y la escuela presume la cifra exacta."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar las reproducciones como decimal (float) para que quepan números grandes.",
+          "correcta": false,
+          "retroalimentacion": "Un float sí llega a números enormes, pero pierde precisión en las unidades: dejaría de contar exactamente cada reproducción.",
+          "desenlace": "El contador acepta números grandes, pero empieza a saltar de diez en diez y a veces se queda congelado. Los creadores reclaman que sus vistas no coinciden con las estadísticas. Al final hay que volver a un tipo entero y explicar el error en un comunicado."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n4",
+      "subtema": "intro-programacion:0",
+      "titulo": "Los Centavos que No Cuadran",
+      "contexto": "La caja de una cooperativa escolar suma los cobros del día con números decimales. Al hacer el corte, el sistema dice que faltan unos centavos aunque el dinero en efectivo está completo: 0.1 + 0.2 no da exactamente 0.3. La gerente quiere que el corte cuadre al centavo.",
+      "tecnicismos": [
+        "punto-flotante",
+        "entero",
+        "variable"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Redondear el total al final del día para que se vea bien.",
+          "correcta": false,
+          "retroalimentacion": "Redondear al final oculta la imprecisión, pero los errores se acumulan en cada operación. El dinero necesita un tipo exacto.",
+          "desenlace": "El corte diario cuadra, pero al cerrar el mes la diferencia ya es de varios pesos y nadie sabe de dónde salió. La auditoría de la cooperativa lo marca como faltante. Te toca revisar miles de cobros uno por uno."
+        },
+        {
+          "id": "b",
+          "texto": "Seguir con float, porque la diferencia es muy pequeña.",
+          "correcta": false,
+          "retroalimentacion": "El punto flotante representa muchos decimales de forma aproximada; en contabilidad, una diferencia mínima repetida miles de veces se vuelve un problema real.",
+          "desenlace": "Durante semanas nadie dice nada, hasta que la tesorera nota que los reportes nunca cuadran con el banco. La cooperativa pierde la confianza en el sistema y vuelve a la libreta. Tu módulo queda en pausa indefinida."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar cada monto en centavos en una variable de tipo entero y convertir a pesos solo al mostrarlo.",
+          "correcta": true,
+          "retroalimentacion": "Los enteros son exactos: guardar centavos en una variable entera elimina el error de precisión del float y solo se da formato al mostrar el dato.",
+          "desenlace": "Con los montos en centavos, cada suma es exacta y el corte cuadra al centavo durante todo el mes. La tesorera por fin confía en el reporte. La gerente pide aplicar la misma idea en la tienda en línea."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n5",
+      "subtema": "intro-programacion:0",
+      "titulo": "La Suscripción del Sí, Si y SI",
+      "contexto": "En la app de un gimnasio, el campo «activo» de cada membresía se guarda como cadena de texto: a veces dice «sí», otras «Si», «SI» o «true». El código revisa si activo == 'sí' y deja fuera a la mitad de los socios. Debes decidir cómo representar ese dato.",
+      "tecnicismos": [
+        "booleano",
+        "cadena-texto",
+        "tipo-dato"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cambiar el tipo de dato del campo a booleano (True o False).",
+          "correcta": true,
+          "retroalimentacion": "Un dato que solo puede ser sí o no se representa con un booleano: el tipo de dato impide variantes y las comparaciones son directas.",
+          "desenlace": "Conviertes los valores viejos con un script y desde entonces cada membresía es True o False. La recepción deja de rechazar a socios al corriente. Los reportes de asistencia por fin coinciden con los pagos."
+        },
+        {
+          "id": "b",
+          "texto": "Agregar más comparaciones: 'sí', 'Si', 'SI', 'si', 'true'...",
+          "correcta": false,
+          "retroalimentacion": "Comparar contra todas las variantes de una cadena es frágil: siempre aparece una nueva, como «Sí » con espacio.",
+          "desenlace": "La lista de variantes crece cada semana y un día alguien escribe «yes». Ese socio no puede entrar y publica su queja en redes. Tu compañero bromea con que el if ya parece poema."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar 1 y 0 como texto para que sea más corto.",
+          "correcta": false,
+          "retroalimentacion": "«1» y «0» como texto siguen siendo cadenas: se pueden mezclar con otros valores y se comparan como caracteres, no como verdadero o falso.",
+          "desenlace": "En una importación llegan valores «01» y «1.0» que el código no reconoce. Decenas de socios aparecen como inactivos a fin de mes. La dueña del gimnasio pide una explicación por escrito."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n6",
+      "subtema": "intro-programacion:0",
+      "titulo": "El 5.95 que Se Volvió 5",
+      "contexto": "El sistema de calificaciones calcula el promedio final como float y lo convierte con int() para guardarlo. Un alumno con 5.95 aparece reprobado con 5, aunque el reglamento dice que se redondea a la décima y que 6.0 aprueba. Su mamá ya pidió cita con la dirección.",
+      "tecnicismos": [
+        "entero",
+        "punto-flotante",
+        "conversion-tipos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Seguir usando int(), porque así se ha hecho siempre.",
+          "correcta": false,
+          "retroalimentacion": "int() no redondea: trunca, es decir, corta la parte decimal. Convertir de float a entero sin pensarlo cambia el dato.",
+          "desenlace": "El alumno sigue reprobado y la dirección le da la razón a la familia. Hay que revisar a mano a todos los alumnos con promedio entre 5.5 y 5.99. La coordinación pierde una semana entera en recálculos."
+        },
+        {
+          "id": "b",
+          "texto": "Hacer una conversión explícita que siga el reglamento: round(promedio, 1) y después comparar con 6.0.",
+          "correcta": true,
+          "retroalimentacion": "Una conversión explícita debe seguir la regla del negocio: redondear a la décima antes de comparar respeta el reglamento y evita el truncamiento de int().",
+          "desenlace": "Con el redondeo del reglamento, el 5.95 queda en 6.0 y el alumno aprueba. Revisas a los demás casos parecidos y se corrigen tres boletas más. La dirección agradece que el sistema por fin cuadre con el reglamento."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar el promedio como cadena de texto para no perder decimales.",
+          "correcta": false,
+          "retroalimentacion": "Guardar un número como texto impide comparar y operar correctamente; el problema era cómo se convertía, no el tipo de origen.",
+          "desenlace": "Los promedios quedan como texto y el reporte de aprobados compara «10.0» contra «6.0» letra por letra. Ahora aparecen reprobados alumnos con diez. La dirección pide regresar al sistema anterior."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n7",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Año de Dos Dígitos",
+      "contexto": "El padrón de una casa de cultura guarda el año de nacimiento con un tipo de dato de texto de dos dígitos: «05» puede ser 1905 o 2005. Una señora de 99 años aparece como niña de primaria y el sistema la inscribe en el taller infantil. Es el viejo problema del año 2000 en pequeño.",
+      "tecnicismos": [
+        "tipo-dato",
+        "entero",
+        "variable"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Suponer que todo año menor a 30 es del siglo XXI.",
+          "correcta": false,
+          "retroalimentacion": "Una regla para adivinar el siglo sigue siendo una suposición: el dato guardado no tiene la información suficiente.",
+          "desenlace": "La regla funciona unos años, hasta que se inscribe alguien nacido en 1928 y el sistema lo vuelve bebé. Los errores regresan cada vez que alguien cae del otro lado del corte. Nadie confía en las estadísticas de edad."
+        },
+        {
+          "id": "b",
+          "texto": "Guardar el año completo de cuatro dígitos en una variable de tipo entero y corregir los registros viejos.",
+          "correcta": true,
+          "retroalimentacion": "El tipo de dato y su formato deben guardar toda la información necesaria: un año completo como entero no deja dudas y se puede comparar y restar.",
+          "desenlace": "Con el año completo, cada persona queda en el taller que le corresponde. Corriges los registros viejos con ayuda de las credenciales. La casa de cultura por fin tiene estadísticas de edad confiables."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir que cada persona escriba su edad en lugar del año.",
+          "correcta": false,
+          "retroalimentacion": "La edad cambia cada año; guardarla obliga a actualizar el dato siempre y deja de ser correcta al poco tiempo.",
+          "desenlace": "Al año siguiente todas las edades están desfasadas y nadie las actualiza. Los talleres vuelven a mezclar edades. Hay que repetir la captura completa."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n8",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Sensor de Temperatura",
+      "contexto": "La enfermería de la escuela recibe la temperatura de un termómetro digital como texto, por ejemplo «37.8». El código la convierte con int() y la compara contra 37.5 para avisar de fiebre. Hoy no sonó ninguna alerta aunque dos alumnos tenían fiebre.",
+      "tecnicismos": [
+        "punto-flotante",
+        "entero",
+        "conversion-tipos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Convertir explícitamente el texto a float y comparar con 37.5.",
+          "correcta": true,
+          "retroalimentacion": "Una temperatura tiene decimales que importan: un float conserva el 37.8 y la comparación funciona.",
+          "desenlace": "Con la conversión a float, el sistema detecta cada temperatura mayor a 37.5 y avisa a la enfermera. Ese mismo día se envía a casa a un alumno con fiebre. La dirección pide usar el sistema en todos los turnos."
+        },
+        {
+          "id": "b",
+          "texto": "Mantener int() y bajar el umbral a 37 grados.",
+          "correcta": false,
+          "retroalimentacion": "int() corta los decimales: 37.8 se vuelve 37 y 37.4 también; cambiar el umbral solo genera falsas alarmas.",
+          "desenlace": "Ahora todos los alumnos con 37.0 aparecen con fiebre y la enfermería se satura. Los papás reciben llamadas innecesarias. La enfermera deja de confiar en las alertas."
+        },
+        {
+          "id": "c",
+          "texto": "Comparar el texto «37.8» contra el texto «37.5».",
+          "correcta": false,
+          "retroalimentacion": "Comparar cadenas funciona letra por letra; con valores como «100.1» o «9.9» el resultado deja de tener sentido.",
+          "desenlace": "Funciona un tiempo, hasta que un termómetro envía «38» sin decimales y el sistema decide que es menor que «37.5». Un caso de fiebre alta pasa sin aviso. La escuela suspende el sistema."
+        }
+      ]
+    },
+    {
       "id": "ip-control-n",
       "subtema": "intro-programacion:1",
       "titulo": "Las 50 Notificaciones",
@@ -81,6 +319,237 @@
           "correcta": true,
           "retroalimentacion": "Un ciclo for sobre la colección repite la acción para cada elemento sin duplicar código y se adapta si la lista cambia de tamaño.",
           "desenlace": "El ciclo recorre la lista y cada alumno recibe exactamente un recordatorio, sin importar si el grupo tiene 50 o 500. Las entregas tardías bajan notablemente y el profesor deja de recibir la excusa de «no me avisaron». La coordinación pide usar tu módulo para todos los grupos de la escuela."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n2",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Último Día del Año Bisiesto",
+      "contexto": "El reloj checador de una fábrica se congela el 31 de diciembre de un año bisiesto. El código convierte días en años con un ciclo while: mientras queden más de 365 días resta un año, pero si el año es bisiesto solo resta cuando quedan más de 366. En el día 366 no se cumple ninguna de las dos condiciones y da vueltas para siempre: un ciclo infinito. A un reproductor de música famoso le pasó lo mismo en 2008.",
+      "tecnicismos": [
+        "ciclo-while",
+        "ciclo-infinito",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar un contador que rompa el ciclo después de mil vueltas.",
+          "correcta": false,
+          "retroalimentacion": "Un límite arbitrario evita que se congele, pero deja el resultado mal: el problema es que hay un caso en el que la condición nunca cambia.",
+          "desenlace": "El reloj ya no se congela, pero el último día del año registra las entradas con fecha del año siguiente. Recursos humanos paga horas extra que no existían. En enero hay que corregir la nómina a mano."
+        },
+        {
+          "id": "b",
+          "texto": "Esperar al 1 de enero, porque el problema se arregla solo.",
+          "correcta": false,
+          "retroalimentacion": "Un ciclo infinito no desaparece: vuelve a aparecer en el siguiente año bisiesto. Ignorarlo solo pospone la falla.",
+          "desenlace": "Ese día nadie puede checar y los supervisores anotan las entradas en papel. Cuatro años después la falla vuelve a ocurrir y ya nadie recuerda la causa. La empresa decide cambiar de proveedor."
+        },
+        {
+          "id": "c",
+          "texto": "Reescribir el ciclo para que cada vuelta reste los días del año correspondiente o termine.",
+          "correcta": true,
+          "retroalimentacion": "Todo ciclo while debe avanzar hacia su condición de salida en cada vuelta: restar siempre los días del año actual garantiza que el ciclo termine en todos los casos.",
+          "desenlace": "Pruebas el ciclo con el día 365, 366 y 367 de un año bisiesto y en todos termina con la fecha correcta. La corrección se instala antes de fin de año. El 31 de diciembre los trabajadores checan sin enterarse de nada."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n3",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Alumno Número 50",
+      "contexto": "La plataforma de calificaciones recorre la lista de un grupo para enviar boletas. Cada bimestre, el último alumno de la lista nunca recibe la suya. Revisas el código y encuentras for i in range(1, len(alumnos) - 1).",
+      "tecnicismos": [
+        "error-por-uno",
+        "ciclo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar a mano el envío para el último alumno después del ciclo.",
+          "correcta": false,
+          "retroalimentacion": "Parchar el caso que falla no corrige el ciclo: el primero también se está saltando y cualquier cambio en la lista rompe el parche.",
+          "desenlace": "El último alumno ya recibe su boleta, pero ahora alguien nota que la primera de la lista tampoco la recibía. Cada bimestre aparece un caso nuevo. Las mamás del grupo crean un chat solo para reclamar."
+        },
+        {
+          "id": "b",
+          "texto": "Corregir el error por uno en los límites y recorrer toda la lista: for alumno in alumnos.",
+          "correcta": true,
+          "retroalimentacion": "Es un error por uno: los límites dejan fuera al primero y al último. Recorrer directamente la colección elimina los índices y el riesgo de equivocarse en los extremos.",
+          "desenlace": "Con el ciclo recorriendo la lista completa, los 50 alumnos reciben su boleta el mismo día. Pruebas con un grupo de 1, de 2 y de 50 y todo funciona. La coordinación deja de recibir llamadas de mamás preocupadas."
+        },
+        {
+          "id": "c",
+          "texto": "Enviar las boletas dos veces para asegurar que lleguen.",
+          "correcta": false,
+          "retroalimentacion": "Repetir el ciclo no cambia sus límites: los mismos alumnos se siguen quedando fuera y los demás reciben boletas duplicadas.",
+          "desenlace": "Casi todos reciben dos boletas y los mismos dos alumnos ninguna. La escuela parece desorganizada y el director pide revisar todo el sistema. Te toca explicar por qué el problema empeoró."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n4",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Martes de Descuento",
+      "contexto": "Una tienda en línea quiere dar 15 % de descuento solo los martes y solo en compras mayores a 300 pesos. El código dice: if es_martes or total > 300. El viernes por la tarde el reporte muestra que casi todas las ventas de la semana tuvieron descuento.",
+      "tecnicismos": [
+        "operador-logico",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cambiar el operador lógico or por and para que se cumplan las dos condiciones.",
+          "correcta": true,
+          "retroalimentacion": "Los operadores lógicos definen cómo se combinan las condiciones: and exige ambas, or basta con una. La regla del negocio pedía las dos.",
+          "desenlace": "Con and, el descuento solo aparece los martes en compras mayores a 300 pesos. Pruebas los cuatro casos posibles y todos dan lo esperado. El área de finanzas respira y el dueño agradece que lo detectaras antes del Buen Fin."
+        },
+        {
+          "id": "b",
+          "texto": "Subir el monto mínimo a 1,000 pesos para que menos ventas califiquen.",
+          "correcta": false,
+          "retroalimentacion": "Cambiar el número no corrige la lógica: con or, cualquier martes sigue teniendo descuento y las compras grandes de cualquier día también.",
+          "desenlace": "Las compras chicas de los martes siguen con descuento y las grandes de cualquier día también. Las ventas bajan porque nadie entiende la promoción. Marketing tiene que pedir disculpas en redes."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar la condición del martes para simplificar.",
+          "correcta": false,
+          "retroalimentacion": "Eliminar una condición cambia la regla del negocio en lugar de cumplirla; las condiciones deben reflejar exactamente lo que se pidió.",
+          "desenlace": "Ahora todas las compras mayores a 300 pesos tienen descuento cualquier día. El margen de la tienda se desploma en una semana. El dueño pide revertir el cambio y revisar cada promoción a mano."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n5",
+      "subtema": "intro-programacion:1",
+      "titulo": "La Tarifa del Adulto Mayor",
+      "contexto": "El museo de la ciudad cobra 30 pesos a niños, 80 a adultos y 40 a adultos mayores. El código evalúa primero if edad >= 18 y después elif edad >= 60. Una señora de 72 años reclama en taquilla que le cobraron tarifa completa. Debes ordenar las condiciones.",
+      "tecnicismos": [
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Revisar primero si edad >= 60, después si edad >= 18 y al final los niños.",
+          "correcta": true,
+          "retroalimentacion": "En un if / elif / else gana la primera condición verdadera: los casos más específicos deben ir antes que los generales.",
+          "desenlace": "Con las condiciones en orden, cada visitante paga su tarifa correcta. Pruebas con 17, 18, 59, 60 y 72 años y todo cuadra. El museo devuelve la diferencia a quienes pagaron de más y te agradece en su boletín."
+        },
+        {
+          "id": "b",
+          "texto": "Agregar un if aparte al final que vuelva a cobrar a los adultos mayores.",
+          "correcta": false,
+          "retroalimentacion": "Un if suelto después de la cadena hace que el cobro se calcule dos veces; el problema está en el orden de las condiciones, no en que falte una.",
+          "desenlace": "A los adultos mayores ahora se les cobra dos veces: primero como adultos y luego con su tarifa. La taquilla se llena de reclamos el domingo. El museo suspende la venta en línea mientras se corrige."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir a taquilla que aplique el descuento a mano cuando alguien reclame.",
+          "correcta": false,
+          "retroalimentacion": "Depender de que el usuario reclame no corrige el programa; las condiciones mal ordenadas seguirán cobrando mal a quien no se queje.",
+          "desenlace": "Solo los visitantes que reclaman reciben su descuento y los demás pagan de más sin saberlo. Un periódico local publica la nota. La dirección del museo exige una corrección inmediata."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n6",
+      "subtema": "intro-programacion:1",
+      "titulo": "La Opción 7 del Cajero",
+      "contexto": "El kiosco de la cafetería muestra un menú del 1 al 5. Si alguien escribe 7, el programa sigue de largo con una opción inválida y cobra cero pesos. Debes asegurarte de que el kiosco siga preguntando hasta que se cumplan las condiciones de una opción válida.",
+      "tecnicismos": [
+        "ciclo-while",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Revisar la opción con un solo if y mostrar «opción inválida».",
+          "correcta": false,
+          "retroalimentacion": "Un if revisa una sola vez: avisa del error, pero el programa sigue de largo sin volver a preguntar.",
+          "desenlace": "El kiosco muestra el aviso, pero igual continúa y vuelve a cobrar cero. Los alumnos descubren el truco y la cafetería pierde dinero toda la semana. La gerente desconecta el kiosco."
+        },
+        {
+          "id": "b",
+          "texto": "Usar un ciclo while que vuelva a pedir la opción mientras no esté entre 1 y 5.",
+          "correcta": true,
+          "retroalimentacion": "Un ciclo while repite mientras la condición sea verdadera; aquí se repite hasta que la opción sea válida, y entonces termina.",
+          "desenlace": "El kiosco sigue preguntando hasta recibir una opción del 1 al 5. Nadie vuelve a pedir comida gratis. La gerente vuelve a confiar en el sistema y abre un segundo kiosco."
+        },
+        {
+          "id": "c",
+          "texto": "Elegir la opción 1 automáticamente cuando la opción sea inválida.",
+          "correcta": false,
+          "retroalimentacion": "Decidir por el usuario sin avisar produce pedidos equivocados; las condiciones deben manejar el error, no esconderlo.",
+          "desenlace": "Quien se equivoca de tecla recibe una torta que no pidió. La fila se llena de reclamos y devoluciones. La cocina tira comida todos los días."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n7",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Último Asiento Libre",
+      "contexto": "La app de una línea de autobuses debe asignar el primer asiento libre. El ciclo for recorre los 40 asientos y guarda cada asiento libre que encuentra, así que siempre asigna el último. Las familias quedan separadas aunque haya lugares juntos al frente: el ciclo nunca se detiene al cumplirse las condiciones.",
+      "tecnicismos": [
+        "ciclo",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Salir del ciclo for con break en cuanto se encuentra el primer asiento libre.",
+          "correcta": true,
+          "retroalimentacion": "Cuando un ciclo busca el primer elemento que cumple una condición, debe terminar al encontrarlo; si sigue, sobrescribe el resultado.",
+          "desenlace": "Con el break, cada pasajero recibe el primer asiento libre y las familias quedan juntas. El ciclo además termina antes y la app responde más rápido. La línea de autobuses deja de recibir quejas."
+        },
+        {
+          "id": "b",
+          "texto": "Recorrer la lista al revés para que el último sea el primero.",
+          "correcta": false,
+          "retroalimentacion": "Invertir el recorrido cambia qué asiento queda al final, pero el ciclo sigue sobrescribiendo; el problema es que no se detiene.",
+          "desenlace": "Ahora todos reciben el asiento 1 aunque ya esté ocupado, porque la lógica quedó revuelta. Dos pasajeros llegan con el mismo boleto. La terminal tiene que reacomodar a mano."
+        },
+        {
+          "id": "c",
+          "texto": "Asignar los asientos al azar.",
+          "correcta": false,
+          "retroalimentacion": "Elegir al azar ignora la regla pedida y las condiciones del negocio.",
+          "desenlace": "Las familias quedan todavía más separadas y nadie entiende cómo se asignan los lugares. Las reseñas de la app caen en picada. El dueño pide volver al sistema anterior."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n8",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Contador que No Avanza",
+      "contexto": "La app de una biblioteca escolar debe mandar tres recordatorios de devolución. El código usa un ciclo while intentos < 3, pero dentro del ciclo nadie aumenta la variable intentos. Es un ciclo infinito: la primera alumna con un libro atrasado ya recibió 400 correos.",
+      "tecnicismos": [
+        "ciclo-while",
+        "ciclo-infinito"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Aumentar intentos en uno dentro del ciclo while para que llegue a 3 y termine.",
+          "correcta": true,
+          "retroalimentacion": "Un ciclo while termina cuando su condición se vuelve falsa; si la variable de la condición nunca cambia, es un ciclo infinito.",
+          "desenlace": "Con el contador avanzando, cada alumno recibe exactamente tres recordatorios. Pides una disculpa a la alumna afectada. La biblioteca vuelve a usar el sistema esa misma semana."
+        },
+        {
+          "id": "b",
+          "texto": "Apagar el servidor de correo cada vez que pase.",
+          "correcta": false,
+          "retroalimentacion": "Detener el servicio corta el síntoma, pero el ciclo infinito sigue en el código.",
+          "desenlace": "Cada vez que alguien se atrasa vuelve a pasar y alguien tiene que apagar el servidor. Nadie recibe sus recordatorios normales. La biblioteca pierde libros que no se devuelven."
+        },
+        {
+          "id": "c",
+          "texto": "Cambiar la condición a intentos < 3000 para que tarde más en fallar.",
+          "correcta": false,
+          "retroalimentacion": "Subir el límite no corrige que el contador no avanza: el ciclo sigue sin terminar.",
+          "desenlace": "El ciclo sigue siendo infinito y ahora además consume más memoria. El proveedor de correo bloquea la cuenta por spam. La escuela queda sin correos institucionales un día."
         }
       ]
     }
@@ -127,6 +596,165 @@
       ]
     },
     {
+      "id": "ip-tipos-p2",
+      "subtema": "intro-programacion:0",
+      "titulo": "Las Claves que Se Volvieron Fechas",
+      "contexto": "El laboratorio de la facultad captura sus muestras en una hoja de cálculo antes de subirlas al sistema. Las claves «MAR1» y «SEPT2» llegan convertidas en «1-mar» y «2-sep» por la conversión automática de la hoja. Así le pasó durante años a la investigación genética, hasta que se renombraron genes. Mañana se entrega el reporte al comité.",
+      "tecnicismos": [
+        "conversion-implicita",
+        "conversion-tipos",
+        "tipo-dato"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Importar el archivo indicando el tipo de dato de cada columna (texto), con conversión explícita.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Declarar el tipo de dato de cada columna al importar evita la conversión implícita: el programa ya no adivina, sigue lo que se le indica.",
+          "desenlace_exito": "Con las columnas declaradas como texto, todas las claves llegan intactas al sistema. Documentas el procedimiento de importación para el laboratorio. El comité recibe el reporte completo y a tiempo.",
+          "desenlace_fallo": "Configuras la importación, pero el archivo ya venía dañado desde la hoja de cálculo. Las fechas siguen ahí y no hay forma de saber qué clave era cada una. El reporte se pospone una semana."
+        },
+        {
+          "id": "b",
+          "texto": "Escribir un script que detecte fechas sospechosas y las regrese a su clave original.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Detectar y revertir los datos dañados ayuda, pero la conversión puede ser ambigua: «1-mar» podría venir de varias claves distintas.",
+          "desenlace_exito": "Tu script detecta los patrones y recupera casi todas las claves comparándolas con el inventario físico. Las pocas dudosas se revisan a mano esa misma tarde. El reporte sale completo y el laboratorio adopta tu script.",
+          "desenlace_fallo": "El script confunde dos claves que se convirtieron en la misma fecha y mezcla resultados de muestras distintas. Un investigador detecta la inconsistencia en la junta. Hay que repetir parte del análisis."
+        },
+        {
+          "id": "c",
+          "texto": "Acordar con el laboratorio un formato de clave que la hoja no pueda confundir con fechas.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Cambiar el formato de origen ataca la causa, aunque depende de que todos lo adopten.",
+          "desenlace_exito": "El laboratorio acepta usar claves como «MUE-0001» y corrige las del lote actual en una hora. Desde entonces ninguna clave se vuelve fecha. La investigadora principal pide que se agregue la regla al manual.",
+          "desenlace_fallo": "Nadie se pone de acuerdo en el formato nuevo y cada técnico sigue usando el suyo. Las claves del lote actual siguen dañadas. El comité recibe el reporte con una nota de datos incompletos."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-p3",
+      "subtema": "intro-programacion:0",
+      "titulo": "Millas contra Kilómetros",
+      "contexto": "Dos grupos de trabajo construyen la app de un servicio de drones para entregar medicinas en comunidades rurales. Un módulo envía la distancia en millas y el otro la recibe creyendo que son kilómetros: el identificador de la variable es solo d. En 1999 una sonda espacial se perdió en Marte por mezclar unidades. La prueba de vuelo es el lunes.",
+      "tecnicismos": [
+        "variable",
+        "identificador"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Renombrar cada variable con su unidad, como distancia_km, y convertir en un solo lugar.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un identificador que dice qué guarda y en qué unidad evita malentendidos; concentrar la conversión en un solo punto evita duplicarla.",
+          "desenlace_exito": "Con nombres como distancia_km y distancia_mi, el error salta a la vista en la revisión. Conviertes en un solo módulo y el dron aterriza justo en la marca. El equipo adopta la regla para todas las medidas.",
+          "desenlace_fallo": "Renombras las variables, pero se te pasa una conversión en el módulo de altitud. En la prueba el dron sube más de lo permitido y se aborta el vuelo. Hay que repetir la prueba la semana siguiente."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar la especificación de la interfaz y exigir que diga la unidad de cada dato.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una especificación de interfaz con unidades evita que cada equipo suponga algo distinto.",
+          "desenlace_exito": "La especificación queda clara y los dos grupos ajustan su código a kilómetros. La prueba sale perfecta y el documento se vuelve referencia del proyecto. Nadie vuelve a adivinar unidades.",
+          "desenlace_fallo": "Mientras se discute el documento llega el lunes sin la corrección. La prueba se cancela y el municipio pospone la entrega de medicinas. El documento queda bonito, pero tarde."
+        },
+        {
+          "id": "c",
+          "texto": "Juntar a los dos grupos a revisar en pantalla cada dato que se envían.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Revisar juntos la integración descubre suposiciones distintas, aunque toma tiempo coordinar a todos.",
+          "desenlace_exito": "En la reunión alguien pregunta «¿y esto en qué unidad está?» y aparece el problema. Lo corrigen ahí mismo y la prueba del lunes sale bien. El equipo instala una revisión de integración cada semana.",
+          "desenlace_fallo": "La reunión se pierde en otros temas y nadie revisa la distancia. El dron se desvía varios kilómetros en la prueba. Por suerte llevaba una caja vacía."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-p4",
+      "subtema": "intro-programacion:0",
+      "titulo": "La Señora Null",
+      "contexto": "Una usuaria apellidada Null no puede registrarse en la app del banco de alimentos: el sistema compara el apellido con la cadena «null» y cree que el campo está vacío. Hay historias reales de personas con ese apellido que no podían comprar boletos de avión. Ella necesita su registro hoy para recoger su despensa.",
+      "tecnicismos": [
+        "valor-nulo",
+        "cadena-texto",
+        "depuracion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar el valor nulo real (None) para los datos vacíos y no el texto «null».",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El valor nulo representa la ausencia de un dato; usar la cadena «null» como marca confunde un dato vacío con un apellido real.",
+          "desenlace_exito": "Cambias las validaciones para que revisen None y no el texto «null». La señora Null se registra en minutos y recoge su despensa. Encuentras y corriges otros tres lugares con el mismo error.",
+          "desenlace_fallo": "Corriges el formulario, pero la base de datos vieja tiene miles de registros con «null» escrito como texto. La señora sigue sin aparecer en las listas. El banco de alimentos le entrega la despensa con un registro en papel."
+        },
+        {
+          "id": "b",
+          "texto": "Depurar el registro paso a paso para encontrar dónde se pierde el apellido.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La depuración revela en qué línea un dato válido se trata como vacío, pero hay que revisar todo el camino del dato.",
+          "desenlace_exito": "Siguiendo el apellido línea por línea descubres que una librería lo convierte en vacío al guardarlo. Lo corriges y la señora se registra ese mismo día. Dejas una prueba automática con el apellido Null para siempre.",
+          "desenlace_fallo": "Te pierdes entre capas de código y el día se termina sin respuesta. La señora tiene que regresar al día siguiente. Tu líder te sugiere empezar por las validaciones la próxima vez."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir al equipo de la base de datos que revise cómo se guardan los campos vacíos.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Quien diseñó la base de datos conoce sus convenciones, pero puede no tener tiempo para atender el caso hoy.",
+          "desenlace_exito": "Una compañera reconoce el problema al instante porque ya lo había visto en otro proyecto. Juntos lo corrigen en una hora. La señora Null recoge su despensa y te manda una nota de agradecimiento.",
+          "desenlace_fallo": "El equipo de la base de datos está ocupado con una migración y promete revisarlo la otra semana. La señora no puede registrarse a tiempo. El caso termina en la sección de quejas del municipio."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-p5",
+      "subtema": "intro-programacion:0",
+      "titulo": "Los Carritos Revueltos",
+      "contexto": "En la noche de ofertas, dos compradores de la tienda en línea ven productos ajenos en su carrito. Descubres que el carrito vive en una variable global del servidor, compartida por todas las personas conectadas. Las ofertas terminan a medianoche.",
+      "tecnicismos": [
+        "alcance",
+        "variable",
+        "depuracion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Mover el carrito a una variable local de cada sesión.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "El alcance de una variable define quién la ve: el carrito debe vivir en la sesión de cada comprador, no en una variable global.",
+          "desenlace_exito": "Con el carrito guardado en la sesión, cada persona ve solo sus productos. Las ventas siguen hasta medianoche sin otro incidente. Tu líder agrega una regla en la revisión de código: nada de variables globales para datos de usuarios.",
+          "desenlace_fallo": "Mueves el carrito, pero olvidas otra variable global con los cupones de descuento. Ahora los cupones se aplican a quien no los ganó. La noche de ofertas termina con muchas devoluciones."
+        },
+        {
+          "id": "b",
+          "texto": "Reproducir el error con dos navegadores a la vez y depurar qué se comparte.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Reproducir el fallo con dos sesiones simultáneas permite ver exactamente qué datos se comparten entre usuarios.",
+          "desenlace_exito": "Con dos navegadores abiertos ves cómo un producto salta de un carrito al otro y encuentras todas las variables compartidas. Las corriges de un jalón. La tienda cierra la noche con récord de ventas.",
+          "desenlace_fallo": "Con dos navegadores no logras reproducir el error, porque solo aparece con mucho tráfico. Mientras investigas, cientos de carritos se mezclan. La tienda suspende las ofertas una hora antes."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir una revisión urgente de código a dos compañeros.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Otra mirada encuentra rápido los problemas de alcance, porque las variables globales destacan al leer el código con calma.",
+          "desenlace_exito": "Dos compañeros revisan contigo y en diez minutos señalan la variable global. Entre los tres la corrigen y la prueban. La tienda sigue vendiendo sin que los compradores noten nada.",
+          "desenlace_fallo": "La revisión se alarga discutiendo el estilo del código en lugar del error. Pasa una hora antes de tocar la variable. Para entonces las redes ya están llenas de capturas de carritos ajenos."
+        }
+      ]
+    },
+    {
       "id": "ip-control-p",
       "subtema": "intro-programacion:1",
       "titulo": "El Descuento Equivocado",
@@ -162,6 +790,162 @@
           "retroalimentacion": "Aclarar la intención con quien escribió el código reduce suposiciones, aunque depende de que esa persona esté disponible.",
           "desenlace_exito": "El desarrollador original te responde por Slack con todas las reglas de tarifas y hasta te comparte documentación vieja. Con eso corriges el error y entiendes por qué estaban así las condiciones. Ganas un contacto que te ayuda en futuros problemas del sistema.",
           "desenlace_fallo": "El desarrollador original ya no trabaja en la empresa y nunca contesta tu mensaje. Pierdes un día esperando y tienes que descifrar el código por tu cuenta. La corrección sale tarde y varios usuarios ya pidieron reembolso."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-p2",
+      "subtema": "intro-programacion:1",
+      "titulo": "La Factura de la Nube",
+      "contexto": "Es viernes en la noche y la alerta de costos de la nube no deja de sonar. Una función se activa cada vez que se sube una imagen a una carpeta, la reduce de tamaño y guarda el resultado en la misma carpeta, lo que vuelve a activarla. Es un ciclo infinito que cobra por cada vuelta, como en historias reales de programadores que amanecieron con facturas de miles de dólares.",
+      "tecnicismos": [
+        "ciclo-infinito",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Agregar condiciones para que la función ignore las imágenes que ella misma generó.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una condición de salida rompe el ciclo: la función debe distinguir su propio resultado de una imagen nueva.",
+          "desenlace_exito": "Agregas la condición, guardas los resultados en otra carpeta y el ciclo se detiene en minutos. La factura se queda en unos cuantos pesos. El lunes presentas el caso y se vuelve lectura obligatoria del equipo.",
+          "desenlace_fallo": "Tu condición revisa el nombre del archivo, pero algunas imágenes nuevas tienen nombres parecidos y siguen activando la función. El ciclo baja, pero no se detiene. La factura del mes sale diez veces más alta."
+        },
+        {
+          "id": "b",
+          "texto": "Detener la función de inmediato y después diagramar el flujo antes de corregirla.",
+          "atributo": "teoria",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Cortar primero el gasto y después entender el flujo con calma es lo prudente, aunque la app deja de reducir imágenes mientras tanto.",
+          "desenlace_exito": "Apagas la función y el gasto se detiene al instante. Con el diagrama ves el ciclo con claridad y la corrección sale limpia el sábado. El jefe de infraestructura agradece que no hubo sorpresas.",
+          "desenlace_fallo": "No encuentras dónde apagar la función porque la configuración está en otra cuenta. Mientras buscas, el ciclo corre toda la noche. La factura llega al límite de la tarjeta corporativa."
+        },
+        {
+          "id": "c",
+          "texto": "Llamar a la persona de guardia de infraestructura para que corte el servicio.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La persona de guardia tiene los permisos para cortar rápido, aunque dependes de que conteste.",
+          "desenlace_exito": "La persona de guardia contesta a la primera, corta el servicio y te ayuda a encontrar la causa. En media hora todo queda bajo control. Acuerdan poner un límite de gasto a todas las funciones.",
+          "desenlace_fallo": "La llamada se va a buzón y el mensaje se pierde en el chat. Pasan horas antes de que alguien con permisos lo vea. El lunes hay una junta muy incómoda con dirección."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-p3",
+      "subtema": "intro-programacion:1",
+      "titulo": "Veinte Mil por Veinte Mil",
+      "contexto": "El reporte de becas compara cada uno de los 20,000 alumnos contra cada uno de los 20,000 pagos con dos ciclos anidados: son 400 millones de comparaciones. Tarda toda la noche y la coordinación lo necesita a las 9 de la mañana.",
+      "tecnicismos": [
+        "ciclo-anidado",
+        "ciclo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Guardar los pagos en un diccionario por matrícula y recorrer a los alumnos una sola vez.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Un diccionario permite encontrar un pago al instante; así se reemplazan los ciclos anidados por un solo ciclo.",
+          "desenlace_exito": "El reporte pasa de ocho horas a unos segundos. Lo corres tres veces para comprobar que da lo mismo que antes. La coordinación lo recibe a las 8 y te pide automatizar otros reportes.",
+          "desenlace_fallo": "Cambias a diccionario, pero algunas matrículas vienen con espacios y no coinciden. El reporte sale rápido, pero con cientos de alumnos marcados sin pago. Hay que revisarlo a mano antes de entregarlo."
+        },
+        {
+          "id": "b",
+          "texto": "Ordenar ambas listas por matrícula y recorrerlas juntas.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Recorrer dos listas ordenadas al mismo tiempo evita comparar todos contra todos; la idea viene de los algoritmos de mezcla.",
+          "desenlace_exito": "Con las dos listas ordenadas avanzas por ambas a la vez y el reporte termina en un minuto. La técnica queda documentada. La coordinación recibe el reporte a tiempo.",
+          "desenlace_fallo": "Un detalle en el orden de las matrículas con letras hace que el recorrido se desfase. El reporte termina rápido, pero con errores. Lo vuelves a correr con los ciclos viejos y llega tarde."
+        },
+        {
+          "id": "c",
+          "texto": "Dividir la lista de alumnos entre las computadoras de tres compañeros.",
+          "atributo": "equipo",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Repartir el trabajo reduce el tiempo, pero no cambia que el algoritmo sigue comparando todos contra todos.",
+          "desenlace_exito": "Entre los tres reparten los alumnos y cada computadora termina en un par de horas. Juntan los resultados y el reporte sale a tiempo. Acuerdan corregir el algoritmo la semana siguiente.",
+          "desenlace_fallo": "Una de las computadoras se reinicia por una actualización a las 4 de la mañana. Esa parte del reporte se pierde. La coordinación recibe un reporte incompleto."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-p4",
+      "subtema": "intro-programacion:1",
+      "titulo": "La Línea Fuera de Lugar",
+      "contexto": "Esta mañana, todos los clientes de una app de pagos recibieron un correo de «pago rechazado», aunque sus pagos sí pasaron. En Python, la línea que envía el correo quedó con menos sangría y salió del bloque de código del if: ya no depende de sus condiciones y se ejecuta siempre. Las quejas siguen llegando.",
+      "tecnicismos": [
+        "bloque-codigo",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Corregir la sangría y probar los dos caminos: pago aprobado y pago rechazado.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "La sangría define qué líneas pertenecen a un bloque; probar ambos caminos de la condición confirma que cada correo sale solo cuando debe.",
+          "desenlace_exito": "Regresas la línea a su lugar y pruebas ambos casos. Los correos vuelven a salir solo cuando un pago se rechaza. Mandas un aviso de disculpa y las quejas se calman antes del mediodía.",
+          "desenlace_fallo": "Corriges la sangría, pero con las prisas mueves también la línea que registra el pago. Ahora los pagos aprobados no se guardan. Hay que revertir el cambio y empezar de nuevo."
+        },
+        {
+          "id": "b",
+          "texto": "Configurar una herramienta que revise el formato del código antes de cada despliegue.",
+          "atributo": "teoria",
+          "probabilidad_base": 25,
+          "retroalimentacion": "Un revisor automático de estilo detecta sangrías sospechosas, aunque no siempre sabe qué quería el programador.",
+          "desenlace_exito": "La herramienta marca la línea y otras dos con el mismo problema. Corriges las tres y queda una protección para el futuro. Tu líder técnica la vuelve obligatoria para todo el equipo.",
+          "desenlace_fallo": "Instalar y configurar la herramienta te toma toda la mañana. Mientras tanto siguen saliendo correos falsos. Cuando por fin corriges, el daño a la reputación ya está hecho."
+        },
+        {
+          "id": "c",
+          "texto": "Revisar el cambio con otro compañero en una sesión de programación en pareja.",
+          "atributo": "equipo",
+          "probabilidad_base": 35,
+          "retroalimentacion": "Programar en pareja ayuda a ver errores de estructura que el autor ya no nota.",
+          "desenlace_exito": "Tu compañero ve la sangría mal puesta en cuanto abre el archivo. Lo corrigen juntos y agregan una prueba para ese caso. Los correos falsos se detienen en minutos.",
+          "desenlace_fallo": "Tu compañero está en otra emergencia y la sesión se pospone. Intentas solo y no encuentras el error. Los correos falsos siguen saliendo hasta la tarde."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-p5",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Semáforo del Estacionamiento",
+      "contexto": "El sistema del estacionamiento de la plaza decide si abre la pluma con siete if anidados: revisa boleto, hora, pensión, saldo, placas, horario nocturno y eventos especiales. Hoy hay concierto y la pluma no abre para quienes tienen pensión. Se está formando una fila hasta la avenida.",
+      "tecnicismos": [
+        "if-anidado",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Aplanar la lógica con condiciones que salen en cuanto se cumple un caso.",
+          "atributo": "inteligencia",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Revisar cada caso por separado y salir en cuanto se resuelve reduce los if anidados y hace visible qué regla falla.",
+          "desenlace_exito": "Reescribes la lógica con salidas tempranas y el caso de pensión con evento especial aparece claro. La pluma vuelve a abrir en veinte minutos. La administración de la plaza pide que ese sea el código oficial.",
+          "desenlace_fallo": "Al aplanar la lógica cambias el orden de una regla y ahora la pluma abre sin cobrar a nadie. La fila desaparece, pero la plaza pierde el ingreso del concierto. Hay que ajustarlo de nuevo esa noche."
+        },
+        {
+          "id": "b",
+          "texto": "Armar una tabla de decisión con todas las combinaciones antes de tocar el código.",
+          "atributo": "teoria",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una tabla de decisión muestra todas las combinaciones de condiciones y revela los casos que nadie contempló.",
+          "desenlace_exito": "La tabla muestra que nadie había pensado en pensión más evento especial. Agregas ese caso y la pluma abre. La tabla queda como documentación para el siguiente cambio.",
+          "desenlace_fallo": "La tabla tiene tantas combinaciones que no la terminas antes de que empiece el concierto. La plaza abre la pluma a mano y cobra en efectivo. El reporte del día no cuadra."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir a la caseta que deje pasar a los pensionados mientras lo revisas con el equipo.",
+          "atributo": "equipo",
+          "probabilidad_base": 30,
+          "retroalimentacion": "Una medida temporal atiende a la gente mientras se corrige, aunque requiere coordinarse con quien opera.",
+          "desenlace_exito": "La caseta deja pasar a los pensionados con su credencial y la fila se disuelve. Con calma, tu equipo encuentra el caso faltante y lo corrige antes del siguiente evento. Nadie se pierde el concierto.",
+          "desenlace_fallo": "En la caseta no hay quien autorice la medida y la fila sigue creciendo. Tránsito llega a ordenar la avenida. La plaza recibe una multa y muchas quejas."
         }
       ]
     }

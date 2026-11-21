@@ -4,13 +4,17 @@ Flujo (SRS, CU01): se muestra un evento -> el usuario elige una opcion -> el sis
 el resultado, da la retroalimentacion tecnica, actualiza vidas/XP/progreso, registra la
 decision y muestra el desenlace -> el usuario pasa la pagina (RN-01).
 
-La historia se divide en bloques por porcentaje de avance (config_juego.json):
-  bloque 1 -> solo eventos normales (analizar y decidir)
-  bloque 2 -> mezcla de normales y de probabilidad
-  bloque 3 -> probabilidad con mas frecuencia
+La historia se divide en bloques por porcentaje de avance (config_juego.json). Cada bloque
+dice que parte de sus eventos son de probabilidad (prueba de atributos); el resto son normales
+(analizar y decidir). Con los bloques de config_juego.json la dificultad sube 0 / 15 / 25 / 40 %.
+
+Una partida solo usa los eventos de los subtemas elegidos en CU-02, sin relleno ni repetir: dura
+lo mas que permita la mezcla de tipos de sus bloques, hasta max_eventos_por_partida. Con los
+escenarios actuales cada subtema da unos 10 eventos (1 tema = 10, 6 o mas = 60).
 """
 
 import random
+from collections import Counter
 
 from django.db import transaction
 from django.urls import reverse
@@ -43,42 +47,113 @@ def _primer_libre(grupos, orden, tipo, usados, rng):
     return None
 
 
-def construir_secuencia(subtemas, config, catalogo, rng):
-    """Arma la lista de eventos de la partida (maximo N), repartiendo los subtemas.
+def de_probabilidad_por_bloque(total, config):
+    """Cuantos eventos de probabilidad lleva cada bloque en una partida de 'total' eventos:
+    la parte 'probabilidad_evento' de las posiciones del bloque, redondeada."""
+    tamanos = Counter(bloque_de(p, total, config)[0] for p in range(total))
+    return {
+        numero: int(config["bloques"][numero]["probabilidad_evento"] * tamano + 0.5)
+        for numero, tamano in tamanos.items()
+    }
 
-    En el primer bloque solo entran eventos normales. En los demas, cada posicion es de
-    probabilidad con la frecuencia 'probabilidad_evento' de su bloque; si ya no quedan del
-    tipo buscado se usa el otro, para que la partida no se quede corta.
-    """
-    grupos = {}
+
+def _largo_posible(normales, probabilidad, config):
+    """La partida mas larga (hasta el maximo) cuya mezcla de tipos alcanza con los eventos."""
+    for total in range(min(config["max_eventos_por_partida"], normales + probabilidad), 0, -1):
+        prob = sum(de_probabilidad_por_bloque(total, config).values())
+        if prob <= probabilidad and total - prob <= normales:
+            return total
+    return 0
+
+
+def _conteo_por_subtema(catalogo):
+    conteo = {}
+    for evento in catalogo["eventos"].values():
+        conteo.setdefault(evento["subtema"], Counter())[evento["tipo"]] += 1
+    return conteo
+
+
+def largo_de(subtemas, config, catalogo):
+    """Cuantos eventos dura una partida con estos subtemas (solo sus eventos, sin relleno)."""
+    conteo = _conteo_por_subtema(catalogo)
+    elegidos = [s for s in dict.fromkeys(subtemas) if s in conteo]
+    normales = sum(conteo[s][escenarios.NORMAL] for s in elegidos)
+    probabilidad = sum(conteo[s][escenarios.PROBABILIDAD] for s in elegidos)
+    return _largo_posible(normales, probabilidad, config)
+
+
+def largos_posibles(config, catalogo):
+    """Para la pantalla de temas (CU-02): los eventos normales y de probabilidad de cada subtema
+    y el largo de la partida para cada suma posible, con la llave "normales,probabilidad"."""
+    conteo = _conteo_por_subtema(catalogo)
+    sumas = {(0, 0)}
+    for tipos in conteo.values():
+        n, p = tipos[escenarios.NORMAL], tipos[escenarios.PROBABILIDAD]
+        sumas |= {(a + n, b + p) for a, b in sumas}
+    return {
+        "subtemas": {
+            s: [t[escenarios.NORMAL], t[escenarios.PROBABILIDAD]] for s, t in conteo.items()
+        },
+        "largos": {f"{n},{p}": _largo_posible(n, p, config) for n, p in sorted(sumas)},
+    }
+
+
+def _eventos_de_la_partida(elegidos, subtemas, total, tipos, catalogo, rng):
+    """Los eventos que se juegan: de cada tipo, los que hagan falta al azar entre los de los
+    subtemas elegidos."""
+    por_tipo = {escenarios.NORMAL: ([], []), escenarios.PROBABILIDAD: ([], [])}
     for evento_id, evento in catalogo["eventos"].items():
         if evento["subtema"] in subtemas:
-            grupo = grupos.setdefault(
-                evento["subtema"], {escenarios.NORMAL: [], escenarios.PROBABILIDAD: []}
-            )
-            grupo[evento["tipo"]].append(evento_id)
+            propios, relleno = por_tipo[evento["tipo"]]
+            (propios if evento["subtema"] in elegidos else relleno).append(evento_id)
+    necesarios = Counter(tipos)
+    seleccion = []
+    for tipo, (propios, relleno) in por_tipo.items():
+        rng.shuffle(propios)
+        rng.shuffle(relleno)
+        seleccion += (propios + relleno)[: necesarios[tipo]]
+    return set(seleccion)
 
-    llaves = list(grupos)
-    rng.shuffle(llaves)
-    disponibles = sum(len(lista) for grupo in grupos.values() for lista in grupo.values())
-    total = min(config["max_eventos_por_partida"], disponibles)
 
-    usados, secuencia = set(), []
+def construir_secuencia(subtemas, config, catalogo, rng):
+    """Arma la lista de eventos de la partida, repartiendo los subtemas.
+
+    En cada bloque, la parte 'probabilidad_evento' de sus posiciones (elegidas al azar) es de
+    probabilidad y el resto normal, asi cada partida tiene exactamente la dificultad del
+    bloque. Si un tipo se acabara se usa el otro, para que la partida no se quede corta.
+    """
+    elegidos = set(subtemas)
+    total = largo_de(subtemas, config, catalogo)
+
+    tipos = [escenarios.NORMAL] * total
+    lugares = {}
     for posicion in range(total):
-        numero, bloque = bloque_de(posicion, total, config)
+        lugares.setdefault(bloque_de(posicion, total, config)[0], []).append(posicion)
+    for numero, cuantos in de_probabilidad_por_bloque(total, config).items():
+        for posicion in rng.sample(lugares[numero], cuantos):
+            tipos[posicion] = escenarios.PROBABILIDAD
+
+    jugables = _eventos_de_la_partida(elegidos, subtemas, total, tipos, catalogo, rng)
+    grupos = {}
+    for evento_id in sorted(jugables):
+        evento = catalogo["eventos"][evento_id]
+        grupo = grupos.setdefault(
+            evento["subtema"], {escenarios.NORMAL: [], escenarios.PROBABILIDAD: []}
+        )
+        grupo[evento["tipo"]].append(evento_id)
+    if not grupos:
+        return []
+
+    llaves = sorted(grupos)
+    rng.shuffle(llaves)
+    otro = {escenarios.NORMAL: escenarios.PROBABILIDAD, escenarios.PROBABILIDAD: escenarios.NORMAL}
+    usados, secuencia = set(), []
+    for posicion, tipo in enumerate(tipos):
         giro = posicion % len(llaves)
         orden = llaves[giro:] + llaves[:giro]
-        if numero == 0:
-            tipos = [escenarios.NORMAL]
-        elif rng.random() < bloque["probabilidad_evento"]:
-            tipos = [escenarios.PROBABILIDAD, escenarios.NORMAL]
-        else:
-            tipos = [escenarios.NORMAL, escenarios.PROBABILIDAD]
-        elegido = None
-        for tipo in tipos:
-            elegido = _primer_libre(grupos, orden, tipo, usados, rng)
-            if elegido:
-                break
+        elegido = _primer_libre(grupos, orden, tipo, usados, rng) or _primer_libre(
+            grupos, orden, otro[tipo], usados, rng
+        )
         if elegido is None:
             break
         usados.add(elegido)
@@ -105,7 +180,7 @@ def crear_partida(perfil, subtemas, usuario=None, semilla=None, tematica=tematic
     """Crea una partida lista para jugarse. La llama CU-02 al pulsar "Comenzar Aventura".
 
     perfil: dict de CU-02 (id, titulo, descripcion, vidas, xp y los atributos
-            teoria/equipo/inteligencia como enteros de 1 a 10).
+            teoria/equipo/inteligencia como enteros de 0 al maximo_atributo).
     subtemas: ids de subtema de CU-02, por ejemplo ["intro-programacion:0"]. Minimo uno (RF-24).
     tematica: CU-07, id de la temática ya validada con tematicas.para_partida() (RN06).
     """
@@ -426,14 +501,23 @@ def estado_publico(partida):
     return tematicas.tematizar_estado(datos, partida.tematica)
 
 
+def numero_de_derrota(partida, config):
+    """Tramo del final de derrota: el primero cuyo hasta_porcentaje alcanza la parte de la
+    partida que se jugó (así una partida corta y una larga usan los mismos cuartos)."""
+    derrotas = config["finales"]["derrota"]
+    total = len(partida.secuencia) or 1
+    avance = partida.decisiones / total * 100
+    return next(
+        (i for i, f in enumerate(derrotas) if avance <= f["hasta_porcentaje"]), len(derrotas) - 1
+    )
+
+
 def final_de(partida, config):
     """Final de la partida. En derrota depende de hasta dónde llegó: un final por tramo."""
     if partida.estado == Partida.COMPLETADA:
         return config["finales"]["completada"], "Final completado"
     derrotas = config["finales"]["derrota"]
-    jugados = partida.decisiones
-    numero = next((i for i, f in enumerate(derrotas) if jugados <= f["hasta_evento"]), None)
-    numero = len(derrotas) - 1 if numero is None else numero
+    numero = numero_de_derrota(partida, config)
     return derrotas[numero], f"Final {numero + 1} de {len(derrotas)}"
 
 

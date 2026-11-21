@@ -432,12 +432,9 @@ def final_id(partida, config):
     """'completada' o 'derrota-N', igual que motor_partida.final_de()."""
     if partida.estado == Partida.COMPLETADA:
         return "completada"
-    derrotas = config["finales"]["derrota"]
-    numero = next(
-        (i for i, f in enumerate(derrotas) if partida.decisiones <= f["hasta_evento"]),
-        len(derrotas) - 1,
-    )
-    return f"derrota-{numero + 1}"
+    from . import motor_partida  # aquí para no crear un ciclo de imports
+
+    return f"derrota-{motor_partida.numero_de_derrota(partida, config) + 1}"
 
 
 def desglose_de(partida, cat):

@@ -58,6 +58,18 @@
       "la clienta",
       "de la clienta",
       "a la clienta"
+    ],
+    "practicante": [
+      "el practicante",
+      "la practicante",
+      "un practicante",
+      "una practicante"
+    ],
+    "jefe": [
+      "tu jefe",
+      "tu jefa",
+      "el jefe",
+      "la jefa"
     ]
   }
 }
