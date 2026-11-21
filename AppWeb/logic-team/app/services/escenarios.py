@@ -111,6 +111,12 @@ def _validar_config(config, errores):
     maximo = config["max_eventos_por_partida"]
     if not isinstance(maximo, int) or maximo < 1:
         errores.append(f"{donde}: max_eventos_por_partida debe ser un entero mayor a 0")
+    minimo = config.get("min_eventos_por_partida", 1)
+    valido = isinstance(minimo, int) and not isinstance(minimo, bool)
+    if isinstance(maximo, int) and not (valido and 1 <= minimo <= maximo):
+        errores.append(
+            f"{donde}: min_eventos_por_partida debe ser un entero de 1 a max_eventos_por_partida"
+        )
     _validar_bloques(config["bloques"], donde, errores)
 
     ids = [a.get("id") for a in config["atributos"]]

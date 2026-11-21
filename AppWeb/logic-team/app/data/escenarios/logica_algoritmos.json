@@ -183,6 +183,71 @@
       ]
     },
     {
+      "id": "la-repr-n6",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "Repetir Hasta que Funcione",
+      "contexto": "El manual de soporte técnico de la escuela dice: «si la impresora falla, reinicia y repite hasta que funcione». Te piden automatizarlo como un algoritmo para la mesa de ayuda.",
+      "tecnicismos": [
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Programarlo tal cual: reintentar hasta que la impresora responda.",
+          "correcta": false,
+          "retroalimentacion": "Un algoritmo debe terminar en un número finito de pasos; «hasta que funcione» puede no cumplirse nunca.",
+          "desenlace": "Una impresora descompuesta deja al programa reintentando toda la noche. La mesa de ayuda amanece con miles de reinicios registrados. La impresora sigue igual de descompuesta."
+        },
+        {
+          "id": "b",
+          "texto": "Limitar los reintentos a tres y, si sigue fallando, levantar un reporte a soporte.",
+          "correcta": true,
+          "retroalimentacion": "Un algoritmo bien definido es finito: con un límite de intentos y una salida alterna siempre termina, aunque el problema no se resuelva.",
+          "desenlace": "Con tres reintentos y un reporte automático, las fallas leves se resuelven solas y las graves llegan a soporte en minutos. Nadie vuelve a pasar una noche reiniciando. El manual se actualiza con tu algoritmo."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el paso de reiniciar y mandar siempre un reporte.",
+          "correcta": false,
+          "retroalimentacion": "Eliminar el paso que resuelve la mayoría de los casos satura a soporte; el algoritmo debe conservar los pasos útiles y solo ser finito.",
+          "desenlace": "Soporte recibe cien reportes al día por fallas que se arreglaban con un reinicio. Los técnicos ya no se dan abasto. Las fallas importantes tardan días en atenderse."
+        }
+      ]
+    },
+    {
+      "id": "la-repr-n7",
+      "subtema": "logica-algoritmos:0",
+      "titulo": "El Rombo con una Sola Salida",
+      "contexto": "En el diagrama de flujo que describe el algoritmo del trámite de credenciales, el rombo «¿Trae comprobante?» solo tiene la flecha «Sí». Tu compañero dice que así se entiende y que el caso «No» es obvio.",
+      "tecnicismos": [
+        "diagrama-flujo",
+        "algoritmo"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dejarlo así, porque todos saben qué hacer si no trae comprobante.",
+          "correcta": false,
+          "retroalimentacion": "En un diagrama de flujo cada decisión necesita una salida para cada respuesta; lo «obvio» cambia de persona a persona.",
+          "desenlace": "Cada ventanilla hace algo distinto con quien no trae comprobante: unas lo rechazan y otras le dan la credencial. Los alumnos se quejan de trato desigual. La dirección pide rehacer el procedimiento."
+        },
+        {
+          "id": "b",
+          "texto": "Agregar la salida «No» con su camino: pedir el comprobante y regresar al inicio del trámite.",
+          "correcta": true,
+          "retroalimentacion": "Un rombo de decisión debe tener todas sus salidas; así el algoritmo describe qué pasa en cada caso y no deja huecos.",
+          "desenlace": "Con la salida «No» dibujada, todas las ventanillas siguen el mismo procedimiento. Los alumnos saben qué llevar desde la primera vez. El diagrama se publica en la página de la escuela."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el rombo y poner una nota al pie del diagrama.",
+          "correcta": false,
+          "retroalimentacion": "Una nota al pie saca la decisión del flujo y hace más fácil saltársela.",
+          "desenlace": "Nadie lee la nota y se entregan credenciales sin revisar el comprobante. La auditoría encuentra cientos de trámites incompletos. Hay que volver a citar a esos alumnos."
+        }
+      ]
+    },
+    {
       "id": "la-busq-n",
       "subtema": "logica-algoritmos:1",
       "titulo": "El Millón de Usuarios",
@@ -346,6 +411,72 @@
           "correcta": false,
           "retroalimentacion": "Traer millones de registros al celular es lento, inseguro y expone datos de otras personas.",
           "desenlace": "La app tarda minutos en abrir y consume los datos móviles de los usuarios. Además, cualquiera podría ver correos ajenos. El área de seguridad detiene la versión antes de publicarla."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n6",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "Apellido y Después Nombre",
+      "contexto": "La lista de asistencia debe ordenarse por apellido y, cuando dos alumnos se apellidan igual, por nombre. Hoy el reporte ordena solo por apellido y los tres «Hernández» salen en un orden distinto cada vez, aunque la regla pide orden alfabético.",
+      "tecnicismos": [
+        "algoritmo-ordenamiento",
+        "orden-lexicografico"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Usar un algoritmo de ordenamiento con clave compuesta: primero apellido y luego nombre.",
+          "correcta": true,
+          "retroalimentacion": "Una clave compuesta resuelve los empates del primer criterio con el segundo, siempre en el mismo orden alfabético.",
+          "desenlace": "Con la clave compuesta, la lista sale siempre igual y los «Hernández» quedan ordenados por nombre. Los maestros encuentran a sus alumnos al instante. La lista se usa en toda la escuela."
+        },
+        {
+          "id": "b",
+          "texto": "Ordenar dos veces por apellido para que quede bien.",
+          "correcta": false,
+          "retroalimentacion": "Repetir el mismo criterio no agrega información para desempatar; el orden de los empates sigue sin definirse.",
+          "desenlace": "La lista sigue cambiando de un día a otro y los maestros se confunden al pasar lista. Un alumno aparece con falta por error. Su mamá reclama en la dirección."
+        },
+        {
+          "id": "c",
+          "texto": "Ordenar solo por nombre para evitar los empates de apellido.",
+          "correcta": false,
+          "retroalimentacion": "Cambiar el criterio rompe la regla pedida y solo traslada los empates a otros nombres repetidos.",
+          "desenlace": "Ahora la lista no sirve para nada porque nadie busca a los alumnos por nombre. Además, los «José» siguen empatados. La coordinación pide revertir el cambio."
+        }
+      ]
+    },
+    {
+      "id": "la-busq-n7",
+      "subtema": "logica-algoritmos:1",
+      "titulo": "¿Cuántos Pasos para un Millón?",
+      "contexto": "En una junta, el gerente pregunta cuántas comparaciones necesita como máximo la búsqueda binaria para encontrar un registro entre un millón ordenado. Quiere entender su complejidad para saber si vale la pena ordenar la lista antes de buscar.",
+      "tecnicismos": [
+        "busqueda-binaria",
+        "complejidad"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Un millón, porque hay que revisar todos.",
+          "correcta": false,
+          "retroalimentacion": "Eso es el peor caso de la búsqueda lineal; la binaria descarta la mitad en cada paso.",
+          "desenlace": "El gerente concluye que ordenar no sirve de nada y se queda con la búsqueda lineal. El sistema sigue lento. Meses después otra área hace el cambio y se lleva el crédito."
+        },
+        {
+          "id": "b",
+          "texto": "Unas 20, porque cada comparación descarta la mitad de los registros.",
+          "correcta": true,
+          "retroalimentacion": "La complejidad de la búsqueda binaria crece con el logaritmo de los datos: 2 elevado a 20 es más de un millón, así que bastan unas 20 comparaciones.",
+          "desenlace": "Con ese dato, el gerente aprueba ordenar la lista una vez y buscar con búsqueda binaria. Las consultas pasan de segundos a milisegundos. Tu explicación se vuelve la diapositiva favorita de la junta."
+        },
+        {
+          "id": "c",
+          "texto": "500,000, porque en promedio se encuentra a la mitad.",
+          "correcta": false,
+          "retroalimentacion": "Ese es el promedio de la búsqueda lineal; la binaria no revisa los datos uno por uno.",
+          "desenlace": "El gerente cree que la mejora será de apenas la mitad y no autoriza el cambio. El sistema sigue igual de lento en temporada alta. Los clientes se quejan de esperar."
         }
       ]
     }

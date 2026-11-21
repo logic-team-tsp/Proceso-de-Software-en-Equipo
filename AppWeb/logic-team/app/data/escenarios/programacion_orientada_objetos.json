@@ -186,6 +186,72 @@
       ]
     },
     {
+      "id": "poo-clases-n6",
+      "subtema": "programacion-oo:0",
+      "titulo": "Una Clase por Cada Perro",
+      "contexto": "La veterinaria quiere registrar a sus pacientes. Un practicante creó una clase llamada Firulais, otra Manchas y otra Pelusa, cada una con los mismos atributos. Ya van 40 clases y cada mascota nueva requiere programar.",
+      "tecnicismos": [
+        "clase",
+        "objeto"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Crear una sola clase Mascota y un objeto por cada paciente.",
+          "correcta": true,
+          "retroalimentacion": "Una clase es la plantilla y cada objeto es una instancia con sus propios datos; no se necesita una clase por mascota.",
+          "desenlace": "Con una sola clase, registrar una mascota nueva es llenar un formulario y crear un objeto. Las 40 clases se reemplazan en una tarde. El dueño de la veterinaria ya no tiene que llamar al programador por cada perro nuevo."
+        },
+        {
+          "id": "b",
+          "texto": "Seguir creando una clase por mascota, porque así cada una es única.",
+          "correcta": false,
+          "retroalimentacion": "Cada mascota es única por sus datos, no por su clase; duplicar clases multiplica el código sin necesidad.",
+          "desenlace": "Para el fin de mes hay 120 clases casi iguales y un cambio de formato obliga a editarlas todas. El practicante pasa una semana copiando y pegando. La veterinaria pide otro proveedor."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar todo en una lista de textos sin clases.",
+          "correcta": false,
+          "retroalimentacion": "Una lista de textos pierde la estructura de cada mascota y obliga a recordar en qué posición va cada dato.",
+          "desenlace": "Un día el peso de un perro queda en el lugar de su edad y el sistema calcula mal una dosis. El veterinario lo detecta a tiempo, pero el susto es grande. Se pide rehacer el registro."
+        }
+      ]
+    },
+    {
+      "id": "poo-clases-n7",
+      "subtema": "programacion-oo:0",
+      "titulo": "La Función que No Era de Nadie",
+      "contexto": "En la tienda en línea hay funciones sueltas como calcular_iva(producto), aplicar_descuento(producto) y precio_final(producto) repartidas en diez archivos distintos. Cada quien las copia a su manera y los precios no coinciden entre la app y la página.",
+      "tecnicismos": [
+        "metodo",
+        "clase"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Convertir esas funciones en métodos de la clase Producto.",
+          "correcta": true,
+          "retroalimentacion": "Un método es una función que pertenece a la clase de los datos que usa; así el cálculo vive en un solo lugar.",
+          "desenlace": "Con los métodos dentro de Producto, la app y la página calculan exactamente lo mismo. Las copias desaparecen. El área de finanzas deja de encontrar diferencias en los reportes."
+        },
+        {
+          "id": "b",
+          "texto": "Juntar todas las funciones sueltas en un archivo llamado utilidades.",
+          "correcta": false,
+          "retroalimentacion": "Moverlas a un solo archivo ayuda un poco, pero siguen separadas de los datos que usan y cualquiera puede volver a copiarlas.",
+          "desenlace": "El archivo de utilidades crece hasta tener 200 funciones sin orden. Alguien vuelve a copiar una para modificarla. Los precios vuelven a no coincidir."
+        },
+        {
+          "id": "c",
+          "texto": "Dejar que cada área tenga su propia versión del cálculo.",
+          "correcta": false,
+          "retroalimentacion": "Duplicar la lógica del negocio produce resultados distintos; cada regla debe vivir en un solo lugar.",
+          "desenlace": "En el Buen Fin, la página muestra un precio y la app cobra otro. La procuraduría del consumidor recibe quejas. La empresa tiene que respetar el precio más bajo en miles de pedidos."
+        }
+      ]
+    },
+    {
       "id": "poo-exc-n",
       "subtema": "programacion-oo:1",
       "titulo": "El Reporte que Desaparece",
@@ -350,6 +416,72 @@
           "correcta": false,
           "retroalimentacion": "Pedir discreción no resuelve la exposición: la traza de error se seguirá mostrando a cualquiera que provoque el fallo.",
           "desenlace": "Otro alumno provoca el error a propósito y obtiene la misma información. Alguien entra a la base de datos y cambia calificaciones. La escuela tiene que restaurar respaldos y presentar una denuncia."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n6",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Except Demasiado Ancho",
+      "contexto": "La función que convierte la edad escrita en un formulario tiene except Exception: y regresa 0 ante cualquier error. Un día alguien escribe mal el nombre de una variable dentro del try y el formulario guarda edad 0 para todos sin que nadie se entere.",
+      "tecnicismos": [
+        "try-except",
+        "excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Capturar solo la excepción esperada (ValueError) y dejar que las demás se vean.",
+          "correcta": true,
+          "retroalimentacion": "Hay que capturar únicamente las excepciones que se saben manejar; un except demasiado amplio también esconde errores de programación.",
+          "desenlace": "Con except ValueError, los textos inválidos se manejan bien y el error de la variable aparece de inmediato en las pruebas. Se corrige antes de salir. Las edades vuelven a guardarse correctamente."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar except Exception, porque así nunca truena.",
+          "correcta": false,
+          "retroalimentacion": "Que no truene no significa que funcione: el error de programación queda oculto y los datos se dañan en silencio.",
+          "desenlace": "Durante un mes se guardan miles de registros con edad 0. El reporte anual sale inservible. Hay que pedir a todos que vuelvan a llenar el formulario."
+        },
+        {
+          "id": "c",
+          "texto": "Quitar el try/except y confiar en que todos escriban bien la edad.",
+          "correcta": false,
+          "retroalimentacion": "Sin manejo de excepciones, cualquier texto inválido tumba el formulario; hay que manejar lo esperado y dejar ver lo inesperado.",
+          "desenlace": "La primera persona que escribe «veinte» provoca un error en pantalla. El formulario se cae varias veces al día. Soporte recibe llamadas sin parar."
+        }
+      ]
+    },
+    {
+      "id": "poo-exc-n7",
+      "subtema": "programacion-oo:1",
+      "titulo": "El Error que Llegó Sin Pistas",
+      "contexto": "La función que lee el inventario atrapa cualquier excepción de la base de datos y regresa None. Tres capas más arriba, el reporte truena con «'NoneType' object is not subscriptable» y nadie sabe que el problema real fue una conexión rechazada.",
+      "tecnicismos": [
+        "excepcion",
+        "lanzar-excepcion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dejar que la excepción suba o lanzar una excepción propia con raise que diga qué falló.",
+          "correcta": true,
+          "retroalimentacion": "Una excepción debe llegar a quien puede manejarla con la información del error original; regresar None borra esa información.",
+          "desenlace": "Ahora el reporte muestra «No se pudo conectar a la base de datos de inventario» y el equipo sabe exactamente qué revisar. El tiempo de diagnóstico pasa de horas a minutos. El jefe de sistemas te pide aplicar el mismo criterio en todo el proyecto."
+        },
+        {
+          "id": "b",
+          "texto": "Revisar en cada capa si el valor es None y regresar None otra vez.",
+          "correcta": false,
+          "retroalimentacion": "Propagar None a mano llena el código de revisiones y sigue sin decir qué falló.",
+          "desenlace": "El código se llena de if valor is None y el reporte muestra una página vacía sin explicación. Nadie sabe si no hay inventario o si falló algo. La dirección toma decisiones con datos vacíos."
+        },
+        {
+          "id": "c",
+          "texto": "Reiniciar el servidor cada vez que aparezca el error.",
+          "correcta": false,
+          "retroalimentacion": "Reiniciar puede ocultar la falla un rato, pero no explica la causa ni la corrige.",
+          "desenlace": "Los reinicios cortan otros procesos y el error regresa al día siguiente. Nadie descubre que la contraseña de la base de datos había caducado. El problema dura semanas."
         }
       ]
     }

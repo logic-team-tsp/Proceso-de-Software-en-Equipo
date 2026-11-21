@@ -211,6 +211,7 @@ def personalizar_modulo(request):
             }
             return redirect("partida_inicio")
 
+    config = escenarios.cargar()[0]
     return render(
         request,
         "personalizar_modulo.html",
@@ -220,7 +221,8 @@ def personalizar_modulo(request):
             "marcados": marcados,
             "tematicas": opciones_tematica,
             "tematica_elegida": tematica_elegida,
-            "max_eventos": escenarios.cargar()[0]["max_eventos_por_partida"],
+            "min_eventos": config.get("min_eventos_por_partida", 1),
+            "max_eventos": config["max_eventos_por_partida"],
             "error": error,
         },
     )

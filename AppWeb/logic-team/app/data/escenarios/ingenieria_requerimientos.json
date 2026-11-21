@@ -191,6 +191,73 @@
       ]
     },
     {
+      "id": "ir-fund-n6",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "El Intruso de la Lista",
+      "contexto": "El documento del punto de venta de una cadena de tiendas tiene cuatro requerimientos: registrar ventas, imprimir el ticket, cancelar una venta y atender a 200 cajas al mismo tiempo sin pasar de 2 segundos por cobro. Te piden marcar cuál es el requerimiento no funcional; los otros tres son requerimientos funcionales.",
+      "tecnicismos": [
+        "requerimiento-no-funcional",
+        "requerimiento-funcional",
+        "desempeno"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Cancelar una venta, porque no siempre se usa.",
+          "correcta": false,
+          "retroalimentacion": "Que una función se use poco no la vuelve no funcional; cancelar una venta es una acción del sistema, un requerimiento funcional.",
+          "desenlace": "Al clasificar mal, el equipo no planea pruebas de carga y se concentra en otras cosas. En la primera quincena las cajas se trabaron. El gerente pregunta por qué nadie lo previó."
+        },
+        {
+          "id": "b",
+          "texto": "Atender 200 cajas al mismo tiempo en menos de 2 segundos: es de desempeño.",
+          "correcta": true,
+          "retroalimentacion": "Un requerimiento no funcional describe qué tan bien funciona el sistema; el tiempo de respuesta con 200 cajas es desempeño, no una acción.",
+          "desenlace": "Con el requerimiento bien clasificado, el equipo prepara pruebas de carga desde el inicio. El día de quincena las 200 cajas cobran sin esperas. La cadena abre diez sucursales más con el mismo sistema."
+        },
+        {
+          "id": "c",
+          "texto": "Imprimir el ticket, porque depende de la impresora.",
+          "correcta": false,
+          "retroalimentacion": "Depender de un dispositivo no cambia que imprimir sea una función del sistema; es un requerimiento funcional.",
+          "desenlace": "El equipo trata la impresión como detalle y nadie prueba el desempeño. La primera quincena la fila llega a la calle. La cadena amenaza con cancelar el contrato."
+        }
+      ]
+    },
+    {
+      "id": "ir-fund-n7",
+      "subtema": "ingenieria-requerimientos:0",
+      "titulo": "La Ley de Datos Personales",
+      "contexto": "La app de una clínica dental guardará nombres, teléfonos y tratamientos. La ley de protección de datos personales exige aviso de privacidad y proteger esa información. Tu compañero dice que eso «no es un requerimiento funcional ni de ningún tipo, es asunto del abogado».",
+      "tecnicismos": [
+        "restriccion",
+        "requerimiento-funcional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Ignorarlo porque no lo pidió la dueña de la clínica.",
+          "correcta": false,
+          "retroalimentacion": "Las obligaciones legales aplican aunque el cliente no las mencione; ignorarlas pone en riesgo a la clínica y a los pacientes.",
+          "desenlace": "La app sale sin aviso de privacidad y un paciente presenta una queja ante la autoridad. La clínica recibe una sanción. La dueña culpa al equipo de desarrollo."
+        },
+        {
+          "id": "b",
+          "texto": "Registrarlo como restricción legal y derivar de ella los requerimientos que hagan falta, como mostrar el aviso de privacidad.",
+          "correcta": true,
+          "retroalimentacion": "Una ley es una restricción sobre el sistema; de ella salen requerimientos concretos, algunos funcionales (mostrar el aviso) y otros de seguridad.",
+          "desenlace": "Con la restricción registrada, el equipo agrega el aviso de privacidad y protege los datos desde el diseño. La revisión legal pasa sin observaciones. La clínica presume la app como segura."
+        },
+        {
+          "id": "c",
+          "texto": "Agregarlo como un comentario en el código.",
+          "correcta": false,
+          "retroalimentacion": "Un comentario no se planea, no se prueba ni se le da seguimiento; una obligación legal debe estar en la especificación.",
+          "desenlace": "Nadie lee el comentario y la app sale sin proteger los datos. Una auditoría detecta el problema. Hay que rehacer partes del sistema con prisa."
+        }
+      ]
+    },
+    {
       "id": "ir-ciclo-n",
       "subtema": "ingenieria-requerimientos:1",
       "titulo": "El Cambio de Última Hora",
@@ -353,6 +420,73 @@
           "correcta": false,
           "retroalimentacion": "Mantener funciones sin saber para qué existen acumula costo y complejidad sin beneficio claro.",
           "desenlace": "La función de fax se rompe con cada actualización y nadie sabe probarla. El equipo pierde horas cada mes. Nadie la usó nunca."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n6",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "El Cambio a Medio Sprint",
+      "contexto": "A la mitad del sprint, el cliente pide cambiar por completo la pantalla de reservaciones que el equipo ya está construyendo. No es urgente: lo vio en la app de la competencia. Hay que decidir qué hacer con la petición y con las prioridades.",
+      "tecnicismos": [
+        "sprint",
+        "backlog",
+        "priorizacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Detener el sprint y empezar el cambio de inmediato.",
+          "correcta": false,
+          "retroalimentacion": "Interrumpir el sprint por un cambio que no es urgente tira el trabajo planeado y rompe el ritmo del equipo.",
+          "desenlace": "El equipo abandona lo que llevaba y el sprint cierra sin nada terminado. El cliente se molesta porque tampoco ve el cambio completo. La siguiente revisión es incómoda para todos."
+        },
+        {
+          "id": "b",
+          "texto": "Registrar el cambio en el backlog, priorizarlo con el cliente y planearlo para el siguiente sprint.",
+          "correcta": true,
+          "retroalimentacion": "Los cambios que no son urgentes se agregan al backlog y se priorizan para el siguiente sprint; así el trabajo en curso se termina.",
+          "desenlace": "El sprint termina con lo planeado y el cambio entra como prioridad en el siguiente. El cliente ve avances y sabe cuándo llegará lo nuevo. La relación con el cliente mejora."
+        },
+        {
+          "id": "c",
+          "texto": "Hacer el cambio en secreto, en horas extra, sin decir nada.",
+          "correcta": false,
+          "retroalimentacion": "Trabajar fuera del plan oculta el costo real del cambio y agota al equipo.",
+          "desenlace": "El equipo trabaja de noche y comete errores por cansancio. El cliente cree que los cambios no cuestan nada y pide más. Dos integrantes se enferman antes del fin del proyecto."
+        }
+      ]
+    },
+    {
+      "id": "ir-ciclo-n7",
+      "subtema": "ingenieria-requerimientos:1",
+      "titulo": "«Yo Nunca Pedí Eso»",
+      "contexto": "En la entrega, la clienta afirma que nunca pidió que el sistema de una guardería enviara avisos por correo; ella quería mensajes de texto. El equipo recuerda lo contrario, pero no hay nada por escrito más allá de mensajes sueltos.",
+      "tecnicismos": [
+        "linea-base",
+        "solicitud-cambio"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Discutir con la clienta hasta que acepte lo que entregó el equipo.",
+          "correcta": false,
+          "retroalimentacion": "Discutir sin evidencia desgasta la relación; lo que faltó fue una versión aprobada de los requerimientos.",
+          "desenlace": "La discusión termina mal y la clienta retiene el pago. El equipo pierde semanas negociando. Al final se hace el cambio sin cobrarlo."
+        },
+        {
+          "id": "b",
+          "texto": "Atender el cambio como solicitud de cambio y, desde ahora, mantener una línea base firmada de los requerimientos.",
+          "correcta": true,
+          "retroalimentacion": "Una línea base aprobada es la referencia ante desacuerdos; lo que cambie después se maneja como solicitud de cambio.",
+          "desenlace": "El cambio a mensajes de texto se evalúa, se cotiza y se entrega en dos semanas. La nueva línea base queda firmada por la clienta. Las siguientes entregas no tienen discusiones."
+        },
+        {
+          "id": "c",
+          "texto": "Hacer el cambio gratis y no registrar nada.",
+          "correcta": false,
+          "retroalimentacion": "Absorber cambios sin registro repite el problema en la siguiente entrega.",
+          "desenlace": "En la siguiente entrega la clienta vuelve a decir que pidió otra cosa. El equipo no tiene cómo demostrar lo contrario. El proyecto se alarga sin fin."
         }
       ]
     },
@@ -522,6 +656,71 @@
       ]
     },
     {
+      "id": "ir-esp-n6",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "El Caso de Uso «Usar el Sistema»",
+      "contexto": "El documento de una papelería tiene un solo caso de uso llamado «Usar el sistema» que ocupa doce páginas y mezcla vender, surtir inventario, hacer cortes de caja y dar de alta empleados.",
+      "tecnicismos": [
+        "caso-uso"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Dividirlo en casos de uso por cada objetivo del actor: vender, surtir, hacer corte de caja y dar de alta empleados.",
+          "correcta": true,
+          "retroalimentacion": "Cada caso de uso describe un objetivo concreto de un actor; dividirlo así hace la especificación clara, estimable y fácil de probar.",
+          "desenlace": "Con cuatro casos de uso claros, el equipo estima cada uno por separado y los entrega en orden. El dueño entiende el avance en cada revisión. La especificación se vuelve fácil de mantener."
+        },
+        {
+          "id": "b",
+          "texto": "Dejarlo como está, porque ya describe todo.",
+          "correcta": false,
+          "retroalimentacion": "Un caso de uso que lo abarca todo no se puede estimar, priorizar ni probar por partes.",
+          "desenlace": "Nadie sabe cuánto falta para terminarlo y cada cambio toca las doce páginas. El dueño no puede ver avances. El proyecto se retrasa sin que nadie lo note a tiempo."
+        },
+        {
+          "id": "c",
+          "texto": "Convertirlo en una lista de pantallas.",
+          "correcta": false,
+          "retroalimentacion": "Una lista de pantallas describe la interfaz, no los objetivos del usuario ni los flujos que el sistema debe cumplir.",
+          "desenlace": "El equipo diseña pantallas bonitas, pero falta el flujo del corte de caja. En la primera semana de uso, la caja no cuadra. Hay que rehacer la especificación."
+        }
+      ]
+    },
+    {
+      "id": "ir-esp-n7",
+      "subtema": "ingenieria-requerimientos:2",
+      "titulo": "Dado, Cuando, Entonces",
+      "contexto": "La historia de usuario «Como cajero quiero aplicar cupones para cobrar promociones» no tiene criterios de aceptación. El tester pregunta qué pasa con un cupón vencido, con dos cupones a la vez o con un cupón de otra sucursal.",
+      "tecnicismos": [
+        "historia-usuario",
+        "criterio-aceptacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Escribir criterios de aceptación como «Dado un cupón vencido, cuando el cajero lo aplica, entonces se rechaza con un aviso».",
+          "correcta": true,
+          "retroalimentacion": "Los criterios de aceptación en formato Dado-Cuando-Entonces vuelven concreta la historia y dicen exactamente qué se debe probar.",
+          "desenlace": "Con cinco criterios de aceptación claros, el programador sabe qué construir y el tester qué probar. La función sale sin sorpresas. El cliente aprueba la historia a la primera."
+        },
+        {
+          "id": "b",
+          "texto": "Dejar que el programador decida qué hacer en cada caso.",
+          "correcta": false,
+          "retroalimentacion": "Sin criterios, cada persona interpreta la historia a su manera y la decisión de negocio queda en manos de quien programa.",
+          "desenlace": "El programador decide aceptar cupones vencidos «para no molestar al cliente». La tienda regala descuentos durante una semana. El gerente pide explicaciones."
+        },
+        {
+          "id": "c",
+          "texto": "Agregar a la historia la frase «y que funcione bien».",
+          "correcta": false,
+          "retroalimentacion": "«Que funcione bien» no es un criterio verificable; no ayuda a construir ni a probar.",
+          "desenlace": "La frase no resuelve ninguna duda del tester. En la revisión aparecen tres interpretaciones distintas. La historia regresa al tablero."
+        }
+      ]
+    },
+    {
       "id": "ir-val-n",
       "subtema": "ingenieria-requerimientos:3",
       "titulo": "La Pregunta de la Clienta",
@@ -684,6 +883,72 @@
           "correcta": false,
           "retroalimentacion": "Revertir quita el problema nuevo, pero devuelve el original; falta una forma de cambiar con seguridad.",
           "desenlace": "Los descuentos vuelven a calcularse mal y los clientes reclaman. El problema original regresa. El equipo sigue sin red de seguridad para cambiar."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n6",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "¿Verificar o Validar?",
+      "contexto": "En el plan de calidad hay dos actividades: revisar que el botón de pago mida lo que dice la especificación y preguntar a los cajeros si el nuevo flujo de cobro les sirve en hora pico. Tu compañero las clasificó al revés.",
+      "tecnicismos": [
+        "verificacion",
+        "validacion"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "La primera es verificación y la segunda es validación.",
+          "correcta": true,
+          "retroalimentacion": "Verificar es revisar contra la especificación; validar es confirmar con los usuarios que el sistema resuelve su necesidad.",
+          "desenlace": "Con las actividades bien clasificadas, el plan de calidad tiene pruebas contra la especificación y sesiones con usuarios. Ambas encuentran problemas distintos a tiempo. La auditoría elogia el plan."
+        },
+        {
+          "id": "b",
+          "texto": "Las dos son verificación, porque ambas revisan el sistema.",
+          "correcta": false,
+          "retroalimentacion": "No todo lo que revisa el sistema es verificación; preguntar a los usuarios si les sirve es validación.",
+          "desenlace": "El plan se queda sin actividades de validación y nadie habla con los cajeros. El flujo de cobro cumple la especificación, pero es lento en hora pico. Hay que rediseñarlo después de lanzarlo."
+        },
+        {
+          "id": "c",
+          "texto": "Las dos son validación, porque ambas buscan que el sistema sea bueno.",
+          "correcta": false,
+          "retroalimentacion": "Comparar contra la especificación es verificación; mezclar ambas impide planear las dos con claridad.",
+          "desenlace": "Nadie revisa la especificación a detalle y el botón sale con un tamaño distinto al acordado. La clienta lo nota en la entrega. Hay que corregirlo de prisa."
+        }
+      ]
+    },
+    {
+      "id": "ir-val-n7",
+      "subtema": "ingenieria-requerimientos:3",
+      "titulo": "El Hueco en la Matriz",
+      "contexto": "Un día antes de liberar, la matriz de trazabilidad muestra que el requerimiento «enviar recordatorio de cita un día antes» no tiene ningún caso de prueba. Tu líder pregunta qué hacer.",
+      "tecnicismos": [
+        "matriz-trazabilidad",
+        "caso-prueba"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Escribir y ejecutar el caso de prueba que falta antes de liberar.",
+          "correcta": true,
+          "retroalimentacion": "La matriz de trazabilidad sirve justo para detectar requerimientos sin prueba; cada uno debe tener al menos un caso de prueba ejecutado.",
+          "desenlace": "Al ejecutar el caso de prueba descubres que los recordatorios salían dos días antes. Lo corriges a tiempo. La liberación sale con todos los requerimientos probados."
+        },
+        {
+          "id": "b",
+          "texto": "Liberar y probarlo después, porque es una función pequeña.",
+          "correcta": false,
+          "retroalimentacion": "Una función pequeña también puede fallar frente al usuario; liberar sin probar es aceptar el riesgo a ciegas.",
+          "desenlace": "Los recordatorios salen a la hora equivocada y los pacientes llegan un día antes. La recepción se satura. La clínica pide una corrección urgente."
+        },
+        {
+          "id": "c",
+          "texto": "Borrar el requerimiento de la matriz para que no aparezca el hueco.",
+          "correcta": false,
+          "retroalimentacion": "Ocultar el hueco rompe la trazabilidad y engaña a quien revisa la calidad.",
+          "desenlace": "En la auditoría se descubre que el requerimiento desapareció de la matriz sin justificación. El equipo pierde credibilidad. Hay que rehacer la matriz completa."
         }
       ]
     }

@@ -88,7 +88,7 @@
           <div><dt>Inicias con</dt><dd>{{ perfil.vidas }} vidas · {{ perfil.xp }} XP</dd></div>
           <div class="tm-elegidos"><dt>Temas elegidos (<span id="prev-cuenta">0</span>)</dt><dd id="prev-modulo">Aún no has elegido ninguno</dd></div>
         </dl>
-        <p class="tm-nota">La partida dura hasta {{ max_eventos }} eventos.</p>
+        <p class="tm-nota">La partida dura entre {{ min_eventos }} y {{ max_eventos }} eventos. Si tus temas no alcanzan, se completa con otros de las mismas materias.</p>
 
         <!-- RN02: al menos un tema obligatorio -->
         <p class="pc-error" id="error-modulo" role="alert" {% if not error %}hidden{% endif %}>{{ error|default:"Debes seleccionar al menos un tema para continuar." }}</p>

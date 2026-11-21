@@ -516,7 +516,9 @@ def test_el_nivel_se_ve_en_el_panel_y_en_el_post_game(client):
     _jugar_hasta_el_final(client, partida)
     partida.refresh_from_db()
     datos = client.get("/api/logros/nivel/").json()
-    assert datos["xp_total"] == partida.aciertos * 10 and datos["titulo"] == "Becario"
+    reglas = logros.cargar()["nivel"]
+    titulo = logros.titulo_de(logros.nivel_de_xp(partida.aciertos * 10, reglas), reglas)
+    assert datos["xp_total"] == partida.aciertos * 10 and datos["titulo"] == titulo
     assert client.get("/api/logros/").json()["nivel"]["xp_total"] == datos["xp_total"]
     html = client.get(f"/partida/{partida.id}/fin/").content.decode()
     assert "Nivel de jugador" in html and f"+{partida.aciertos * 10} XP" in html

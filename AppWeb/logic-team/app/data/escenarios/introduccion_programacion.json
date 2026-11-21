@@ -188,6 +188,74 @@
       ]
     },
     {
+      "id": "ip-tipos-n6",
+      "subtema": "intro-programacion:0",
+      "titulo": "El 5.95 que Se Volvió 5",
+      "contexto": "El sistema de calificaciones calcula el promedio final como float y lo convierte con int() para guardarlo. Un alumno con 5.95 aparece reprobado con 5, aunque el reglamento dice que se redondea a la décima y que 6.0 aprueba. Su mamá ya pidió cita con la dirección.",
+      "tecnicismos": [
+        "entero",
+        "punto-flotante",
+        "conversion-tipos"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Seguir usando int(), porque así se ha hecho siempre.",
+          "correcta": false,
+          "retroalimentacion": "int() no redondea: trunca, es decir, corta la parte decimal. Convertir de float a entero sin pensarlo cambia el dato.",
+          "desenlace": "El alumno sigue reprobado y la dirección le da la razón a la familia. Hay que revisar a mano a todos los alumnos con promedio entre 5.5 y 5.99. La coordinación pierde una semana entera en recálculos."
+        },
+        {
+          "id": "b",
+          "texto": "Hacer una conversión explícita que siga el reglamento: round(promedio, 1) y después comparar con 6.0.",
+          "correcta": true,
+          "retroalimentacion": "Una conversión explícita debe seguir la regla del negocio: redondear a la décima antes de comparar respeta el reglamento y evita el truncamiento de int().",
+          "desenlace": "Con el redondeo del reglamento, el 5.95 queda en 6.0 y el alumno aprueba. Revisas a los demás casos parecidos y se corrigen tres boletas más. La dirección agradece que el sistema por fin cuadre con el reglamento."
+        },
+        {
+          "id": "c",
+          "texto": "Guardar el promedio como cadena de texto para no perder decimales.",
+          "correcta": false,
+          "retroalimentacion": "Guardar un número como texto impide comparar y operar correctamente; el problema era cómo se convertía, no el tipo de origen.",
+          "desenlace": "Los promedios quedan como texto y el reporte de aprobados compara «10.0» contra «6.0» letra por letra. Ahora aparecen reprobados alumnos con diez. La dirección pide regresar al sistema anterior."
+        }
+      ]
+    },
+    {
+      "id": "ip-tipos-n7",
+      "subtema": "intro-programacion:0",
+      "titulo": "El Año de Dos Dígitos",
+      "contexto": "El padrón de una casa de cultura guarda el año de nacimiento con un tipo de dato de texto de dos dígitos: «05» puede ser 1905 o 2005. Una señora de 99 años aparece como niña de primaria y el sistema la inscribe en el taller infantil. Es el viejo problema del año 2000 en pequeño.",
+      "tecnicismos": [
+        "tipo-dato",
+        "entero",
+        "variable"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Suponer que todo año menor a 30 es del siglo XXI.",
+          "correcta": false,
+          "retroalimentacion": "Una regla para adivinar el siglo sigue siendo una suposición: el dato guardado no tiene la información suficiente.",
+          "desenlace": "La regla funciona unos años, hasta que se inscribe alguien nacido en 1928 y el sistema lo vuelve bebé. Los errores regresan cada vez que alguien cae del otro lado del corte. Nadie confía en las estadísticas de edad."
+        },
+        {
+          "id": "b",
+          "texto": "Guardar el año completo de cuatro dígitos en una variable de tipo entero y corregir los registros viejos.",
+          "correcta": true,
+          "retroalimentacion": "El tipo de dato y su formato deben guardar toda la información necesaria: un año completo como entero no deja dudas y se puede comparar y restar.",
+          "desenlace": "Con el año completo, cada persona queda en el taller que le corresponde. Corriges los registros viejos con ayuda de las credenciales. La casa de cultura por fin tiene estadísticas de edad confiables."
+        },
+        {
+          "id": "c",
+          "texto": "Pedir que cada persona escriba su edad en lugar del año.",
+          "correcta": false,
+          "retroalimentacion": "La edad cambia cada año; guardarla obliga a actualizar el dato siempre y deja de ser correcta al poco tiempo.",
+          "desenlace": "Al año siguiente todas las edades están desfasadas y nadie las actualiza. Los talleres vuelven a mezclar edades. Hay que repetir la captura completa."
+        }
+      ]
+    },
+    {
       "id": "ip-control-n",
       "subtema": "intro-programacion:1",
       "titulo": "Las 50 Notificaciones",
@@ -349,6 +417,72 @@
           "correcta": false,
           "retroalimentacion": "Depender de que el usuario reclame no corrige el programa; las condiciones mal ordenadas seguirán cobrando mal a quien no se queje.",
           "desenlace": "Solo los visitantes que reclaman reciben su descuento y los demás pagan de más sin saberlo. Un periódico local publica la nota. La dirección del museo exige una corrección inmediata."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n6",
+      "subtema": "intro-programacion:1",
+      "titulo": "La Opción 7 del Cajero",
+      "contexto": "El kiosco de la cafetería muestra un menú del 1 al 5. Si alguien escribe 7, el programa sigue de largo con una opción inválida y cobra cero pesos. Debes asegurarte de que el kiosco siga preguntando hasta que se cumplan las condiciones de una opción válida.",
+      "tecnicismos": [
+        "ciclo-while",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Revisar la opción con un solo if y mostrar «opción inválida».",
+          "correcta": false,
+          "retroalimentacion": "Un if revisa una sola vez: avisa del error, pero el programa sigue de largo sin volver a preguntar.",
+          "desenlace": "El kiosco muestra el aviso, pero igual continúa y vuelve a cobrar cero. Los alumnos descubren el truco y la cafetería pierde dinero toda la semana. La gerente desconecta el kiosco."
+        },
+        {
+          "id": "b",
+          "texto": "Usar un ciclo while que vuelva a pedir la opción mientras no esté entre 1 y 5.",
+          "correcta": true,
+          "retroalimentacion": "Un ciclo while repite mientras la condición sea verdadera; aquí se repite hasta que la opción sea válida, y entonces termina.",
+          "desenlace": "El kiosco sigue preguntando hasta recibir una opción del 1 al 5. Nadie vuelve a pedir comida gratis. La gerente vuelve a confiar en el sistema y abre un segundo kiosco."
+        },
+        {
+          "id": "c",
+          "texto": "Elegir la opción 1 automáticamente cuando la opción sea inválida.",
+          "correcta": false,
+          "retroalimentacion": "Decidir por el usuario sin avisar produce pedidos equivocados; las condiciones deben manejar el error, no esconderlo.",
+          "desenlace": "Quien se equivoca de tecla recibe una torta que no pidió. La fila se llena de reclamos y devoluciones. La cocina tira comida todos los días."
+        }
+      ]
+    },
+    {
+      "id": "ip-control-n7",
+      "subtema": "intro-programacion:1",
+      "titulo": "El Último Asiento Libre",
+      "contexto": "La app de una línea de autobuses debe asignar el primer asiento libre. El ciclo for recorre los 40 asientos y guarda cada asiento libre que encuentra, así que siempre asigna el último. Las familias quedan separadas aunque haya lugares juntos al frente: el ciclo nunca se detiene al cumplirse las condiciones.",
+      "tecnicismos": [
+        "ciclo",
+        "condicional"
+      ],
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Salir del ciclo for con break en cuanto se encuentra el primer asiento libre.",
+          "correcta": true,
+          "retroalimentacion": "Cuando un ciclo busca el primer elemento que cumple una condición, debe terminar al encontrarlo; si sigue, sobrescribe el resultado.",
+          "desenlace": "Con el break, cada pasajero recibe el primer asiento libre y las familias quedan juntas. El ciclo además termina antes y la app responde más rápido. La línea de autobuses deja de recibir quejas."
+        },
+        {
+          "id": "b",
+          "texto": "Recorrer la lista al revés para que el último sea el primero.",
+          "correcta": false,
+          "retroalimentacion": "Invertir el recorrido cambia qué asiento queda al final, pero el ciclo sigue sobrescribiendo; el problema es que no se detiene.",
+          "desenlace": "Ahora todos reciben el asiento 1 aunque ya esté ocupado, porque la lógica quedó revuelta. Dos pasajeros llegan con el mismo boleto. La terminal tiene que reacomodar a mano."
+        },
+        {
+          "id": "c",
+          "texto": "Asignar los asientos al azar.",
+          "correcta": false,
+          "retroalimentacion": "Elegir al azar ignora la regla pedida y las condiciones del negocio.",
+          "desenlace": "Las familias quedan todavía más separadas y nadie entiende cómo se asignan los lugares. Las reseñas de la app caen en picada. El dueño pide volver al sistema anterior."
         }
       ]
     }
